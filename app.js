@@ -3,8 +3,14 @@ const state = {
     city: 'bucuresti',
     weather: null,
     refreshInterval: null,
-    eventsRefreshInterval: null
+    eventsRefreshInterval: null,
+    loadCityTimer: null
 };
+
+function loadCityDebounced(cityId) {
+    clearTimeout(state.loadCityTimer);
+    state.loadCityTimer = setTimeout(() => loadCity(cityId), 200);
+}
 
 // Data Store
 const citiesData = {
@@ -209,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
                 const btn = document.querySelector(`.city-btn[data-city="${closest}"]`);
                 if(btn) btn.classList.add('active');
-                loadCity(closest);
+                loadCityDebounced(closest);
             }
         });
     }
@@ -222,7 +228,7 @@ function bindEvents() {
             document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
             e.currentTarget.classList.add('active');
             if (window.innerWidth <= 768) toggleMobileMenu(false);
-            loadCity(cityId);
+            loadCityDebounced(cityId);
         });
     });
     
@@ -274,7 +280,18 @@ function bindEvents() {
             const popover = document.createElement('div');
             popover.className = 'info-popover';
             popover.innerHTML = `<p>${tip.dataset.tip}</p>`;
-            tip.appendChild(popover);
+            document.body.appendChild(popover);
+            
+            // Position fixed near the tip
+            const rect = tip.getBoundingClientRect();
+            const popW = 300;
+            let left = rect.left + rect.width / 2 - popW / 2;
+            if (left < 10) left = 10;
+            if (left + popW > window.innerWidth - 10) left = window.innerWidth - popW - 10;
+            let top = rect.bottom + 10;
+            if (top + 120 > window.innerHeight) top = rect.top - 120;
+            popover.style.left = left + 'px';
+            popover.style.top = top + 'px';
             
             // Auto-close after 5 seconds
             setTimeout(() => { if (popover.parentNode) popover.remove(); }, 5000);
@@ -368,11 +385,115 @@ function loadCity(cityId) {
         if (state.eventsRefreshInterval) clearInterval(state.eventsRefreshInterval);
         state.eventsRefreshInterval = setInterval(() => fetchAndRenderEvents(cityId), 30 * 60 * 1000);
         
+        // ====== NEW SECTIONS (Faza 2) ======
+        
+        // 7. Gold Tips
+        const goldList = document.getElementById('gold-list');
+        if (goldList) {
+            goldList.innerHTML = commonData.gold.map(g => `
+                <div class="gold-item">
+                    <div class="gold-sit">${g.sit}</div>
+                    <div class="gold-det">${g.det}</div>
+                    <span class="gold-bonus">${g.bonus}</span>
+                </div>
+            `).join('');
+        }
+        
+        // 8. Volume Zones
+        const volZones = document.getElementById('volume-zones');
+        if (volZones) {
+            volZones.innerHTML = data.volumeZones.map(vz => `
+                <div class="vol-item">
+                    <span class="vol-icon">${vz.icon}</span>
+                    <div class="vol-info">
+                        <strong>${vz.name}</strong>
+                        <p>${vz.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 9. Earnings Table (Bike vs Car)
+        renderEarningsTable('bike', data);
+        // Tab handlers
+        const tabBike = document.getElementById('tab-bike');
+        const tabCar = document.getElementById('tab-car');
+        if (tabBike && tabCar) {
+            tabBike.onclick = () => { tabBike.classList.add('active'); tabCar.classList.remove('active'); renderEarningsTable('bike', data); };
+            tabCar.onclick = () => { tabCar.classList.add('active'); tabBike.classList.remove('active'); renderEarningsTable('car', data); };
+        }
+        
+        // 10. Rules & Mistakes
+        const rulesList = document.getElementById('rules-list');
+        const mistakesList = document.getElementById('mistakes-list');
+        if (rulesList) {
+            rulesList.innerHTML = commonData.rules.map(r => `
+                <div class="rule-item do-item">
+                    <div class="rule-act">${r.act}</div>
+                    <div class="rule-res">${r.res}</div>
+                </div>
+            `).join('');
+        }
+        if (mistakesList) {
+            mistakesList.innerHTML = commonData.mistakes.map(m => `
+                <div class="rule-item dont-item">
+                    <div class="rule-act">${m.mis}</div>
+                    <div class="rule-res">${m.res}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 11. Progression
+        const progList = document.getElementById('progression-list');
+        if (progList) {
+            progList.innerHTML = commonData.progression.map(p => `
+                <div class="prog-step" data-level="${p.level}">
+                    <div class="prog-dot">
+                        <span class="prog-level">${p.level}</span>
+                    </div>
+                    <div class="prog-info">
+                        <h4>${p.title}</h4>
+                        <p>${p.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
         if (mainContent) {
             mainContent.classList.remove('loading');
             mainContent.classList.add('loaded');
         }
     }, 150);
+}
+
+// ====== EARNINGS TABLE RENDER ======
+function renderEarningsTable(vehicle, data) {
+    const container = document.getElementById('earnings-table');
+    if (!container || !data.earnings || !data.earnings[vehicle]) return;
+    
+    const rows = data.earnings[vehicle];
+    const icon = vehicle === 'bike' ? '🚲' : '🚗';
+    
+    container.innerHTML = `
+        <table class="earn-table">
+            <thead>
+                <tr>
+                    <th>${icon} Schimb</th>
+                    <th>Comenzi</th>
+                    <th>Castig Estimat</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${rows.map(r => `
+                    <tr>
+                        <td class="earn-hours">${r.hours}</td>
+                        <td>${r.orders}</td>
+                        <td class="earn-amount">${r.earning}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
 }
 
 // ====== PEAK HOURS ======
@@ -623,16 +744,65 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
         document.getElementById('snap-t-desc').innerText = trendReason;
         document.getElementById('snap-t-desc').className = trendClass;
 
-        // Progress Bars
-        document.getElementById('demand-bar').style.width = `${demandScore}%`;
+        // Progress Bars + Dynamic Color Coding (Faza 3)
+        const demandBar = document.getElementById('demand-bar');
+        const profitBar = document.getElementById('profit-bar');
+        
+        demandBar.style.width = `${demandScore}%`;
         document.getElementById('demand-val').innerText = `${demandScore}%`;
         document.getElementById('demand-reason').innerText = `Ora curenta (${baseDemand}%) + Eveniment (${eImpact}%) + Meteo (${wImpact}%)`;
 
-        document.getElementById('profit-bar').style.width = `${earningPotential}%`;
+        profitBar.style.width = `${earningPotential}%`;
         document.getElementById('profit-val').innerText = `${earningPotential}%`;
+        
+        // 3.1 Color-coded progress bars
+        const getLevel = (v) => v < 40 ? 'level-low' : v < 60 ? 'level-mid' : v < 80 ? 'level-high' : 'level-max';
+        demandBar.className = `progress-fill ${getLevel(demandScore)}`;
+        profitBar.className = `progress-fill earning-grad ${getLevel(earningPotential)}`;
+        
+        // 3.2 Pulse on status-badge when demand > 75%
+        const hotBadge = document.querySelector('.status-badge.hot');
+        if (hotBadge) {
+            if (demandScore >= 75) {
+                hotBadge.classList.add('pulsing');
+            } else {
+                hotBadge.classList.remove('pulsing');
+            }
+        }
+        
+        // 3.3 Glow effect on cards based on demand
+        const glowCards = document.querySelectorAll('.snapshot-card, .demand-card, .earning-card');
+        glowCards.forEach(card => {
+            card.classList.remove('glow-low', 'glow-mid', 'glow-high', 'glow-max');
+            if (demandScore >= 75) card.classList.add('glow-max');
+            else if (demandScore >= 55) card.classList.add('glow-high');
+            else if (demandScore >= 40) card.classList.add('glow-mid');
+        });
         
         const mulEl = document.getElementById('profit-indicator');
         mulEl.className = `mul-badge ${mulBadge}`;
         mulEl.innerText = mulText;
+    });
+}
+
+// ====== LAZY REVEAL (IntersectionObserver) ======
+if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+    // Observe cards after DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.glass-card').forEach((card, i) => {
+            if (i > 2) { // Skip first 3 (above fold)
+                card.classList.add('lazy-card');
+                revealObserver.observe(card);
+            }
+        });
     });
 }

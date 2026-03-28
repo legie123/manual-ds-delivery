@@ -1,7 +1,7 @@
 {
-  "name": "Manual DS — Dragons Delivery Command Center",
-  "short_name": "Manual DS",
-  "description": "Dragons Delivery — Live Courier Command Center. Cerere, profit, momentum, strategie in timp real.",
+  "name": "D's Delivery — Courier Command Center",
+  "short_name": "D's Delivery",
+  "description": "D's Delivery — Live Courier Command Center. Cerere, profit, momentum, strategie in timp real.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
