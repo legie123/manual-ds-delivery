@@ -15,6 +15,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Manual DS">
     <link rel="apple-touch-icon" href="dragon-logo.png">
+
+    <!-- Social Media Open Graph Tags -->
+    <meta property="og:title" content="Dragons Delivery - Command Center">
+    <meta property="og:description" content="Portalul tactic live pentru curierii Dragons Delivery. Stare trafic, ore de varf si alerte.">
+    <meta property="og:image" content="https://dragons-delivery-657910053930.europe-west1.run.app/dragon-logo.png">
+    <meta property="og:url" content="https://dragons-delivery-657910053930.europe-west1.run.app">
+    <meta property="og:type" content="website">
 </head>
 <body>
 
@@ -78,16 +85,21 @@
             <!-- HEADER GLOBAL -->
             <header class="dashboard-header">
                 <div class="header-main">
-                    <p class="mul-label" style="margin-bottom:4px;" data-i18n="title_dashboard">CERERE GLOBALA</p>
-                    <h2 id="hdr-demand">--%</h2>
-                    <div id="motivational-message" class="motivational-text">Se incarca datele tactice...</div>
+                    <h2 id="city-title">Se incarca...</h2>
+                    <p id="motivational-message" class="motivational-text">Calculam status live...</p>
                 </div>
                 <div class="header-status">
-                    <div class="status-badge hot pulsing">
-                        <span data-i18n="title_profit">POTENTIAL MINIM DE CASTIG</span>: <span id="hdr-profit" style="margin-left:4px;">--%</span>
+                    <div class="status-badge hot">
+                        <span class="icon">🔥</span> <span data-i18n="title_dashboard">Cerere</span>: <span id="hdr-demand">--%</span>
+                        <span class="info-tip" data-tip="Estimare volum comenzi. Cu cat e mai mare, cu atat mai multe curse disponibile.">?</span>
+                    </div>
+                    <div class="status-badge profit">
+                        <span class="icon">💰</span> <span data-i18n="title_profit">Profit Minim</span>: <span id="hdr-profit">--%</span>
+                        <span class="info-tip" data-tip="Potential de castig calculat din cerere, multiplicator si conditii meteo.">?</span>
                     </div>
                     <div class="status-badge momentum">
-                        <span data-i18n="lbl_momentum">MOMENTUM</span>: <span id="hdr-momentum" style="margin-left:4px;">--</span>
+                        <span class="icon">⚡</span> <span data-i18n="lbl_momentum">Momentum</span>: <span id="hdr-momentum">--</span>
+                        <span class="info-tip" data-tip="Ritmul general al pietei: ACTIV = normal, RIDICAT = crestere, MAXIM = oportunitate majora.">?</span>
                     </div>
                 </div>
             </header>
