@@ -16,14 +16,39 @@
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+body.night-mode {
+    --bg-void: #0A0000;
+    --card-bg: rgba(26, 0, 0, 0.6);
+    --card-hover: rgba(40, 0, 0, 0.8);
+    --primary-mov: #CC0000;
+    --primary-glow: #FF0000;
+    --accent-red: #FF3333;
+    --accent-gold: #FF6600;
+    --text-pure: #FFCCCC;
+    --text-muted: #995555;
+    --border-light: rgba(255, 0, 0, 0.15);
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+@keyframes meshBreathing {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 body {
-    background-color: var(--bg-void);
+    background: linear-gradient(-45deg, var(--bg-void), #1A0B2E, #0F001A, var(--bg-void));
+    background-size: 400% 400%;
+    animation: meshBreathing 18s ease infinite;
     color: var(--text-pure);
     font-family: var(--font-body);
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+body.night-mode {
+    background: linear-gradient(-45deg, var(--bg-void), #1C0505, #2B0000, var(--bg-void));
 }
 
 body::before {
