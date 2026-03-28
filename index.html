@@ -30,12 +30,15 @@
             <div class="language-selector" id="lang-menu">
                 <button id="lang-btn" class="lang-btn" aria-label="Selecteaza limba">🌐 RO <span class="arrow">▼</span></button>
                 <ul id="lang-dropdown" class="lang-dropdown">
-                    <li><button class="lang-opt" data-lang="ro">Romana (RO)</button></li>
-                    <li><button class="lang-opt" data-lang="en">English (EN)</button></li>
-                    <li><button class="lang-opt" data-lang="ar">العربية (Arabic)</button></li>
-                    <li><button class="lang-opt" data-lang="tr">Türkçe (Turkish)</button></li>
-                    <li><button class="lang-opt" data-lang="hi">हिन्दी (Hindi)</button></li>
-                    <li><button class="lang-opt" data-lang="bn">বাংলা (Bengali)</button></li>
+                    <li><button class="lang-opt" data-lang="ro">🇷🇴 Romana</button></li>
+                    <li><button class="lang-opt" data-lang="en">🇬🇧 English</button></li>
+                    <li><button class="lang-opt" data-lang="hi">🇮🇳 Hindi</button></li>
+                    <li><button class="lang-opt" data-lang="bn">🇧🇩 Bengali</button></li>
+                    <li><button class="lang-opt" data-lang="ne">🇳🇵 Nepali</button></li>
+                    <li><button class="lang-opt" data-lang="ta">🇮🇳 Tamil</button></li>
+                    <li><button class="lang-opt" data-lang="ur">🇵🇰 Urdu</button></li>
+                    <li><button class="lang-opt" data-lang="ar">🇸🇦 Arabic</button></li>
+                    <li><button class="lang-opt" data-lang="fr">🇫🇷 Francais</button></li>
                 </ul>
             </div>
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
@@ -81,12 +84,15 @@
                 <div class="header-status">
                     <div class="status-badge hot">
                         <span class="icon">🔥</span> Cerere: <span id="hdr-demand">--%</span>
+                        <span class="info-tip" data-tip="Estimare volum comenzi bazata pe ora, meteo si evenimente. Cu cat e mai mare, cu atat mai multe curse disponibile.">?</span>
                     </div>
                     <div class="status-badge profit">
                         <span class="icon">💰</span> Profit: <span id="hdr-profit">--%</span>
+                        <span class="info-tip" data-tip="Potential de castig calculat din cerere, multiplicator si conditii meteo. Reprezinta sansa ta de venit in intervalul curent.">?</span>
                     </div>
                     <div class="status-badge momentum">
                         <span class="icon">⚡</span> Momentum: <span id="hdr-momentum">--</span>
+                        <span class="info-tip" data-tip="Ritmul general al pietei: ACTIV = normal, RIDICAT = cerere in crestere, MAXIM = oportunitate majora de castig.">?</span>
                     </div>
                 </div>
             </header>
@@ -95,7 +101,7 @@
                 
                 <!-- SECTIUNEA 1: LIVE SNAPSHOT -->
                 <section class="glass-card snapshot-card">
-                    <h3 class="card-title">Live Snapshot <span id="sync-time" class="sync-time">Sync: --:--</span></h3>
+                    <h3 class="card-title">Live Snapshot <span class="info-tip" data-tip="Date in timp real: temperatura actuala, evenimente active si tendinta cererii pe urmatoarele 3 ore.">?</span> <span id="sync-time" class="sync-time">Sync: --:--</span></h3>
                     <div class="snapshot-grid">
                         <div class="snap-item meteo">
                             <span class="snap-icon" id="snap-w-icon">☁️</span>
@@ -123,7 +129,7 @@
 
                 <!-- SECTIUNEA 2: DEMAND ENGINE -->
                 <section class="glass-card demand-card">
-                    <h3 class="card-title">Cerere Estimata</h3>
+                    <h3 class="card-title">Cerere Estimata <span class="info-tip" data-tip="Volum estimat de comenzi in zona ta, calculat din: ora curenta + conditii meteo + evenimente locale. Refresh la 5 min.">?</span></h3>
                     <div class="progress-container">
                         <div class="progress-track">
                             <div id="demand-bar" class="progress-fill" style="width: 0%;"></div>
@@ -135,7 +141,7 @@
 
                 <!-- SECTIUNEA 3: EARNING POTENTIAL -->
                 <section class="glass-card earning-card">
-                    <h3 class="card-title">Potential Castig</h3>
+                    <h3 class="card-title">Potential Castig <span class="info-tip" data-tip="Castig estimat pe baza cererii curente si a multiplicatorilor activi. Mai mare in ore de varf si pe vreme rea.">?</span></h3>
                     <div class="progress-container earning-glow">
                         <div class="progress-track">
                             <div id="profit-bar" class="progress-fill earning-grad" style="width: 0%;"></div>
@@ -148,9 +154,34 @@
                     </div>
                 </section>
 
+                <!-- SECTIUNEA 3.5: PEAK HOURS -->
+                <section class="glass-card peak-card" id="peak-card">
+                    <h3 class="card-title">Ore de Varf <span class="info-tip" data-tip="Intervalele cu cel mai mare volum de comenzi. In aceste ore cererea creste semnificativ si castigul este mai mare.">?</span></h3>
+                    <div class="peak-slots">
+                        <div class="peak-slot" id="peak-lunch">
+                            <div class="peak-header"><span class="peak-emoji">🍽️</span><strong>PRANZ</strong></div>
+                            <div class="peak-time">11:30 — 14:00</div>
+                            <div class="peak-boost"><span class="boost-tag hot">+30% Cerere</span><span class="boost-tag profit">+25% Profit</span></div>
+                        </div>
+                        <div class="peak-slot" id="peak-evening">
+                            <div class="peak-header"><span class="peak-emoji">🌙</span><strong>SEARA</strong></div>
+                            <div class="peak-time">18:00 — 21:30</div>
+                            <div class="peak-boost"><span class="boost-tag hot">+45% Cerere</span><span class="boost-tag profit">+35% Profit</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTIUNEA 3.6: EVENTS FEED -->
+                <section class="glass-card events-card" id="events-card">
+                    <h3 class="card-title">Evenimente & Noutati <span class="info-tip" data-tip="Evenimente locale care influenteaza cererea: concerte, meciuri, festivaluri, blocaje trafic. Impact estimat in procente.">?</span></h3>
+                    <div class="events-list" id="events-list">
+                        <p class="events-empty">Se incarca evenimente...</p>
+                    </div>
+                </section>
+
                 <!-- SECTIUNEA 4: BEST ACTION PLAN -->
                 <section class="glass-card action-card">
-                    <h3 class="card-title">Focus & Zone</h3>
+                    <h3 class="card-title">Focus & Zone <span class="info-tip" data-tip="Zonele cu cele mai multe comenzi si cele mai bune tips-uri. Pozitioneaza-te strategic in aceste zone.">?</span></h3>
                     <ul class="action-list">
                         <li><span class="a-icon">📍</span> <div style="display:flex; flex-direction:column;"><strong>Top Zone</strong><span id="act-zones">--</span></div></li>
                         <li><span class="a-icon">🎯</span> <div style="display:flex; flex-direction:column;"><strong>Centru</strong><span id="act-center">--</span></div></li>
@@ -160,7 +191,7 @@
 
                 <!-- SECTIUNEA 5: COMENZI -->
                 <section class="glass-card orders-card">
-                    <h3 class="card-title">Distributie Comenzi</h3>
+                    <h3 class="card-title">Distributie Comenzi <span class="info-tip" data-tip="Frecventa comenzilor pe distante: scurte (rapid, volum mare), medii (echilibru), lungi (mai rar dar valoare mare).">?</span></h3>
                     <div class="mini-cards" id="orders-mini-cards">
                         <!-- Populated by JS -->
                     </div>
@@ -168,7 +199,7 @@
 
                 <!-- SECTIUNEA 6: STRATEGIE -->
                 <section class="glass-card strategy-card">
-                    <h3 class="card-title">Plan Tactic Azi</h3>
+                    <h3 class="card-title">Plan Tactic Azi <span class="info-tip" data-tip="Strategia recomandata pe 3 faze: START (dimineata), MID (pranz), PEAK (seara). Urmeaza-o pentru rezultate maxime.">?</span></h3>
                     <div class="strategy-steps" id="strategy-steps-container">
                         <!-- Populated by JS -->
                     </div>

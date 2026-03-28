@@ -1,11 +1,33 @@
 {
   "bucuresti": [
-    {"type": "concert", "name": "Concert Arena", "impact_score": 35, "start": "19:00", "end": "23:00"}
+    {"type": "concert", "name": "Concert Arena Nationala", "impact_score": 35, "start": "19:00", "end": "23:00", "status": "upcoming"},
+    {"type": "traffic", "name": "Lucrari Bulevardul Unirii", "impact_score": 15, "start": "07:00", "end": "20:00", "status": "live"},
+    {"type": "festival", "name": "Street Food Festival Herastrau", "impact_score": 25, "start": "12:00", "end": "22:00", "status": "upcoming"}
   ],
   "timisoara": [
-    {"type": "festival", "name": "Food Fest", "impact_score": 40, "start": "12:00", "end": "22:00"}
+    {"type": "festival", "name": "Food Fest Iulius Town", "impact_score": 40, "start": "12:00", "end": "22:00", "status": "upcoming"},
+    {"type": "match", "name": "Meci Poli vs Rapid", "impact_score": 30, "start": "20:00", "end": "22:00", "status": "upcoming"}
   ],
   "cluj": [
-    {"type": "match", "name": "Meci Fotbal", "impact_score": 25, "start": "20:00", "end": "22:00"}
+    {"type": "match", "name": "Meci CFR vs Steaua", "impact_score": 25, "start": "20:00", "end": "22:00", "status": "upcoming"},
+    {"type": "concert", "name": "Electric Castle Pre-Party", "impact_score": 35, "start": "18:00", "end": "02:00", "status": "upcoming"}
+  ],
+  "iasi": [
+    {"type": "festival", "name": "Festival Studentesc", "impact_score": 20, "start": "14:00", "end": "23:00", "status": "upcoming"}
+  ],
+  "brasov": [
+    {"type": "traffic", "name": "Trafic intens zona Centrul Vechi", "impact_score": 10, "start": "10:00", "end": "18:00", "status": "live"}
+  ],
+  "sibiu": [
+    {"type": "festival", "name": "FITS - Teatru Stradal", "impact_score": 30, "start": "16:00", "end": "23:00", "status": "upcoming"}
+  ],
+  "arad": [],
+  "oradea": [],
+  "targu-mures": [],
+  "ploiesti": [
+    {"type": "match", "name": "Meci Petrolul", "impact_score": 20, "start": "19:00", "end": "21:00", "status": "upcoming"}
+  ],
+  "constanta": [
+    {"type": "festival", "name": "Neversea Stage Setup", "impact_score": 15, "start": "08:00", "end": "18:00", "status": "live"}
   ]
 }

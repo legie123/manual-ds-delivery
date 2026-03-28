@@ -1,8 +1,9 @@
 const state = {
-    lang: 'ro',
+    lang: localStorage.getItem('ds-lang') || 'ro',
     city: 'bucuresti',
     weather: null,
-    refreshInterval: null
+    refreshInterval: null,
+    eventsRefreshInterval: null
 };
 
 // Data Store
@@ -249,11 +250,42 @@ function bindEvents() {
         document.querySelectorAll('.lang-opt').forEach(opt => {
             opt.addEventListener('click', (e) => {
                 const l = e.currentTarget.dataset.lang;
+                state.lang = l;
+                localStorage.setItem('ds-lang', l);
                 document.getElementById('lang-btn').innerHTML = `🌐 ${l.toUpperCase()} <span class="arrow">▼</span>`;
                 langMenu.classList.remove('show');
             });
         });
     }
+    
+    // Set initial lang button from localStorage
+    const savedLang = localStorage.getItem('ds-lang');
+    if (savedLang && langBtn) {
+        langBtn.innerHTML = `🌐 ${savedLang.toUpperCase()} <span class="arrow">▼</span>`;
+    }
+    
+    // ====== INFO TOOLTIP SYSTEM ======
+    document.querySelectorAll('.info-tip').forEach(tip => {
+        tip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close all other popovers
+            document.querySelectorAll('.info-popover').forEach(p => p.remove());
+            
+            const popover = document.createElement('div');
+            popover.className = 'info-popover';
+            popover.innerHTML = `<p>${tip.dataset.tip}</p>`;
+            tip.appendChild(popover);
+            
+            // Auto-close after 5 seconds
+            setTimeout(() => { if (popover.parentNode) popover.remove(); }, 5000);
+        });
+    });
+    // Close tooltips on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.info-tip')) {
+            document.querySelectorAll('.info-popover').forEach(p => p.remove());
+        }
+    });
 }
 
 function toggleMobileMenu(force) {
@@ -328,11 +360,87 @@ function loadCity(cityId) {
             fetchLiveMetrics(data.coords.lat, data.coords.lng, cityId);
         }, 5 * 60 * 1000); // 5 min interval
         
+        // Peak Hours Highlighting
+        updatePeakHours();
+        
+        // Events Feed
+        fetchAndRenderEvents(cityId);
+        if (state.eventsRefreshInterval) clearInterval(state.eventsRefreshInterval);
+        state.eventsRefreshInterval = setInterval(() => fetchAndRenderEvents(cityId), 30 * 60 * 1000);
+        
         if (mainContent) {
             mainContent.classList.remove('loading');
             mainContent.classList.add('loaded');
         }
     }, 150);
+}
+
+// ====== PEAK HOURS ======
+function updatePeakHours() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const currentMinutes = h * 60 + m;
+    
+    const lunchEl = document.getElementById('peak-lunch');
+    const eveningEl = document.getElementById('peak-evening');
+    
+    // Lunch: 11:30 - 14:00 (690 - 840 minutes)
+    if (lunchEl) {
+        if (currentMinutes >= 690 && currentMinutes <= 840) {
+            lunchEl.classList.add('active');
+        } else {
+            lunchEl.classList.remove('active');
+        }
+    }
+    
+    // Evening: 18:00 - 21:30 (1080 - 1290 minutes)
+    if (eveningEl) {
+        if (currentMinutes >= 1080 && currentMinutes <= 1290) {
+            eveningEl.classList.add('active');
+        } else {
+            eveningEl.classList.remove('active');
+        }
+    }
+}
+
+// ====== EVENTS FEED ======
+async function fetchAndRenderEvents(cityId) {
+    const container = document.getElementById('events-list');
+    if (!container) return;
+    
+    try {
+        const res = await fetch('./events-live.json?' + Date.now());
+        const allEvents = await res.json();
+        const cityEvents = allEvents[cityId] || [];
+        
+        if (cityEvents.length === 0) {
+            container.innerHTML = '<p class="events-empty">Niciun eveniment activ in aceasta zona.</p>';
+            return;
+        }
+        
+        const typeIcons = { concert: '🎵', match: '⚽', festival: '🎪', traffic: '🚧', event: '🎫' };
+        
+        const html = cityEvents.map(ev => {
+            const icon = typeIcons[ev.type] || '📌';
+            const statusClass = ev.status || 'upcoming';
+            const statusLabel = statusClass === 'live' ? '🔴 LIVE' : statusClass === 'upcoming' ? '🟡 UPCOMING' : '⚪ TRECUT';
+            
+            return `<div class="event-item">
+                <span class="event-icon">${icon}</span>
+                <div class="event-info">
+                    <h4>${ev.name}</h4>
+                    <p>${ev.start} — ${ev.end}</p>
+                </div>
+                <span class="event-impact">+${ev.impact_score}%</span>
+                <span class="event-status ${statusClass}">${statusLabel}</span>
+            </div>`;
+        }).join('');
+        
+        container.innerHTML = html;
+    } catch (err) {
+        container.innerHTML = '<p class="events-empty">Feed indisponibil momentan.</p>';
+    }
 }
 
 // ====== FETCH LIVE METRICS ======
