@@ -163,6 +163,27 @@ function bindEvents() {
     if(sidebarOverlay) {
         sidebarOverlay.addEventListener('click', () => toggleMobileMenu(false));
     }
+    
+    const langBtn = document.getElementById('lang-btn');
+    const langMenu = document.getElementById('lang-menu');
+    if (langBtn && langMenu) {
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-selector')) {
+                langMenu.classList.remove('show');
+            }
+        });
+        document.querySelectorAll('.lang-opt').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                const l = e.currentTarget.dataset.lang;
+                document.getElementById('lang-btn').innerHTML = `🌐 ${l.toUpperCase()} <span class="arrow">▼</span>`;
+                langMenu.classList.remove('show');
+            });
+        });
+    }
 }
 
 function toggleMobileMenu(force) {
@@ -215,16 +236,16 @@ function loadCity(cityId) {
         if (document.getElementById('strategy-steps-container')) {
             const stratHTML = `
                 <div class="step">
-                    <span class="step-num">1</span>
-                    <span class="step-txt"><strong>Start Ușor:</strong> Începe în zonele de mall-uri și birouri (${data.center}).</span>
+                    <span class="step-num">START</span>
+                    <div class="step-txt"><strong>Inițiere Segment:</strong> Aliniază-te cu arterele comerciale (${data.center}). Menține mobilitatea.</div>
                 </div>
                 <div class="step">
-                    <span class="step-num">2</span>
-                    <span class="step-txt"><strong>Shift Amiază:</strong> Mută cursorul spre zonele intens populate de fast-food-uri.</span>
+                    <span class="step-num">MID</span>
+                    <div class="step-txt"><strong>Ajustare Traseu:</strong> Calibrează spre food-court-uri și lanțuri fast-food majore.</div>
                 </div>
                 <div class="step">
-                    <span class="step-num">3</span>
-                    <span class="step-txt"><strong>Vârful de Seară:</strong> Atrage comenzile lungi (peste 5km) spre zone populare pentru tips.</span>
+                    <span class="step-num">PEAK</span>
+                    <div class="step-txt"><strong>Feriestra de Vârf:</strong> Valorifică impulsul maximal. Targetează direcțiile rezidențiale: (${topZones}).</div>
                 </div>
             `;
             document.getElementById('strategy-steps-container').innerHTML = stratHTML;
@@ -332,7 +353,7 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
 
     // 5. Trend Logic (Next 3h)
     let trendIcon = '↘️';
-    let trendReason = 'Stabil / Scădere';
+    let trendReason = 'Plafon Tactic Moderat';
     let trendClass = 'neutral';
     
     if (wData.hourly && wData.hourly.weather_code) {
@@ -341,24 +362,24 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
             if (wData.hourly.weather_code[i] >= 51) rainApproaching = true;
         }
         if (rainApproaching) {
-            trendIcon = '↗️'; trendReason = 'Ploaie așteptată (3h)'; trendClass = 'warning';
+            trendIcon = '↗️'; trendReason = 'Ploaie așteptată (3h) - Potential Creștere'; trendClass = 'warning';
         } else if (h >= 15 && h < 18) {
-            trendIcon = '↗️'; trendReason = 'Creștere spre Vârful Serii'; trendClass = 'neutral';
+            trendIcon = '↗️'; trendReason = 'Avans spre Fereastra de Vârf'; trendClass = 'neutral';
         }
     }
 
     // 6. Labels & Momentum
-    let momentum = 'LOW';
-    let motivMsg = 'Ritm relaxat. Menține energia pentru vârful de comenzi.';
-    let mulBadge = 'low', mulText = 'NORMAL';
+    let momentum = 'ACTIV';
+    let motivMsg = 'Potențial selectiv. Menține un ritm controlat și interceptează curse adiacente.';
+    let mulBadge = 'low', mulText = 'STANDARD';
     
     if (demandScore >= 75) {
-        momentum = 'HIGH';
-        motivMsg = '🔥🔥🔥 CERERE URIAȘĂ! Profită acum de multiplicatori, ieși pe zonele premium!';
+        momentum = 'MAXIM';
+        motivMsg = '🔥🔥🔥 OPORTUNITATE MAJORĂ! Profită de moment, timing perfect pentru distanțe medii în target zones!';
         mulBadge = 'aggressive'; mulText = 'AGRESIV';
     } else if (demandScore >= 55) {
-        momentum = 'MEDIUM';
-        motivMsg = '👍 Cerere în creștere. Targetează mall-uri și fast-food.';
+        momentum = 'NIVEL OPTIM';
+        motivMsg = '👍 Fereastră tactică bună. Distribuție consistentă. Poziționează-te optim.';
         mulBadge = 'high'; mulText = 'RIDICAT';
     }
 

@@ -22,9 +22,22 @@
                 <h1>Dragons Delivery</h1>
             </div>
         </div>
-        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="top-bar-right">
+            <div class="language-selector" id="lang-menu">
+                <button id="lang-btn" class="lang-btn" aria-label="Selectează limba">🌐 RO <span class="arrow">▼</span></button>
+                <ul id="lang-dropdown" class="lang-dropdown">
+                    <li><button class="lang-opt" data-lang="ro">Română (RO)</button></li>
+                    <li><button class="lang-opt" data-lang="en">English (EN)</button></li>
+                    <li><button class="lang-opt" data-lang="ar">العربية (Arabic)</button></li>
+                    <li><button class="lang-opt" data-lang="tr">Türkçe (Turkish)</button></li>
+                    <li><button class="lang-opt" data-lang="hi">हिन्दी (Hindi)</button></li>
+                    <li><button class="lang-opt" data-lang="bn">বাংলা (Bengali)</button></li>
+                </ul>
+            </div>
+            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </header>
 
     <!-- Main Layout -->
@@ -34,17 +47,17 @@
         <nav id="city-sidebar" class="city-sidebar">
             <h2 class="sidebar-title">Rețea Operațională</h2>
             <ul class="city-list" id="city-list" style="list-style:none; padding:0;">
-                <li><button class="city-btn active" data-city="bucuresti"><span class="city-icon">🏛️</span> București</button></li>
-                <li><button class="city-btn" data-city="timisoara"><span class="city-icon">🌹</span> Timișoara</button></li>
-                <li><button class="city-btn" data-city="cluj"><span class="city-icon">🏔️</span> Cluj-Napoca</button></li>
-                <li><button class="city-btn" data-city="iasi"><span class="city-icon">🏰</span> Iași</button></li>
-                <li><button class="city-btn" data-city="brasov"><span class="city-icon">⛰️</span> Brașov</button></li>
-                <li><button class="city-btn" data-city="sibiu"><span class="city-icon">🏘️</span> Sibiu</button></li>
-                <li><button class="city-btn" data-city="arad"><span class="city-icon">🌉</span> Arad</button></li>
-                <li><button class="city-btn" data-city="oradea"><span class="city-icon">♨️</span> Oradea</button></li>
-                <li><button class="city-btn" data-city="targu-mures"><span class="city-icon">🌷</span> Târgu Mureș</button></li>
-                <li><button class="city-btn" data-city="ploiesti"><span class="city-icon">🛢️</span> Ploiești</button></li>
-                <li><button class="city-btn" data-city="constanta"><span class="city-icon">⚓</span> Constanța</button></li>
+                <li><button class="city-btn active" data-city="bucuresti">București</button></li>
+                <li><button class="city-btn" data-city="timisoara">Timișoara</button></li>
+                <li><button class="city-btn" data-city="cluj">Cluj-Napoca</button></li>
+                <li><button class="city-btn" data-city="iasi">Iași</button></li>
+                <li><button class="city-btn" data-city="brasov">Brașov</button></li>
+                <li><button class="city-btn" data-city="sibiu">Sibiu</button></li>
+                <li><button class="city-btn" data-city="arad">Arad</button></li>
+                <li><button class="city-btn" data-city="oradea">Oradea</button></li>
+                <li><button class="city-btn" data-city="targu-mures">Târgu Mureș</button></li>
+                <li><button class="city-btn" data-city="ploiesti">Ploiești</button></li>
+                <li><button class="city-btn" data-city="constanta">Constanța</button></li>
             </ul>
         </nav>
 
