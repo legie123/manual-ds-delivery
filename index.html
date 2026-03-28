@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="D'S Delivery — Ghid practic pentru curieri. Training, zone premium, câștiguri estimate și strategii de livrare.">
+    <title>D'S Delivery — Courier Training Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8a2be2">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <header id="top-bar">
+        <div class="top-bar-left">
+            <img src="dragon-logo.png" alt="Dragons Delivery Logo" id="logo" class="logo">
+            <div class="brand-text">
+                <h1 id="brand-title">D'S Delivery</h1>
+                <p id="brand-subtitle">Courier Training Portal</p>
+            </div>
+        </div>
+        <div class="top-bar-right">
+            <div class="language-selector" id="language-selector">
+                <button id="lang-btn" class="lang-btn" aria-label="Select Language">
+                    <span id="lang-flag">🇷🇴</span>
+                    <span id="lang-name">Română</span>
+                    <svg class="chevron" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+                </button>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <button class="lang-option active" data-lang="ro"><span>🇷🇴</span> Română</button>
+                    <button class="lang-option" data-lang="en"><span>🇬🇧</span> English</button>
+                    <button class="lang-option" data-lang="ar"><span>🇸🇦</span> العربية</button>
+                    <button class="lang-option" data-lang="tr"><span>🇹🇷</span> Türkçe</button>
+                    <button class="lang-option" data-lang="hi"><span>🇮🇳</span> हिन्दी</button>
+                    <button class="lang-option" data-lang="bn"><span>🇧🇩</span> বাংলা</button>
+                    <button class="lang-option" data-lang="am"><span>🇪🇹</span> አማርኛ</button>
+                    <button class="lang-option" data-lang="tw"><span>🇬🇭</span> Twi</button>
+                    <button class="lang-option" data-lang="ne"><span>🇳🇵</span> नेपाली</button>
+                </div>
+            </div>
+            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="app-layout">
+
+        <!-- City Sidebar (Right side on desktop) -->
+        <nav id="city-sidebar" class="city-sidebar">
+            <div class="sidebar-header">
+                <h2 id="sidebar-title">🏙️ Selectează orașul</h2>
+            </div>
+            <ul class="city-list" id="city-list">
+                <li><button class="city-btn active" data-city="bucuresti" id="city-bucuresti">
+                    <span class="city-icon">🏛️</span>
+                    <span class="city-name">București</span>
+                    <span class="city-badge">Capital</span>
+                </button></li>
+                <li><button class="city-btn" data-city="timisoara" id="city-timisoara">
+                    <span class="city-icon">🌹</span>
+                    <span class="city-name">Timișoara</span>
+                </button></li>
+                <li><button class="city-btn" data-city="cluj" id="city-cluj">
+                    <span class="city-icon">🏔️</span>
+                    <span class="city-name">Cluj-Napoca</span>
+                </button></li>
+                <li><button class="city-btn" data-city="iasi" id="city-iasi">
+                    <span class="city-icon">🏰</span>
+                    <span class="city-name">Iași</span>
+                </button></li>
+                <li><button class="city-btn" data-city="brasov" id="city-brasov">
+                    <span class="city-icon">⛰️</span>
+                    <span class="city-name">Brașov</span>
+                </button></li>
+                <li><button class="city-btn" data-city="sibiu" id="city-sibiu">
+                    <span class="city-icon">🏘️</span>
+                    <span class="city-name">Sibiu</span>
+                </button></li>
+                <li><button class="city-btn" data-city="arad" id="city-arad">
+                    <span class="city-icon">🌉</span>
+                    <span class="city-name">Arad</span>
+                </button></li>
+                <li><button class="city-btn" data-city="oradea" id="city-oradea">
+                    <span class="city-icon">♨️</span>
+                    <span class="city-name">Oradea</span>
+                </button></li>
+                <li><button class="city-btn" data-city="targu-mures" id="city-targu-mures">
+                    <span class="city-icon">🌷</span>
+                    <span class="city-name">Târgu Mureș</span>
+                </button></li>
+                <li><button class="city-btn" data-city="ploiesti" id="city-ploiesti">
+                    <span class="city-icon">🛢️</span>
+                    <span class="city-name">Ploiești</span>
+                </button></li>
+                <li><button class="city-btn" data-city="constanta" id="city-constanta">
+                    <span class="city-icon">⚓</span>
+                    <span class="city-name">Constanța</span>
+                </button></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content" class="main-content">
+            <!-- City Header -->
+            <section class="city-header" id="city-header">
+                <div class="city-header-bg"></div>
+                <div class="city-header-content">
+                    <h2 id="city-display-name" class="city-display-name">București</h2>
+                    <div class="city-meta">
+                        <span id="center-name" class="meta-tag"><span class="meta-icon">📍</span> <span class="meta-text">Centru: Piața Unirii</span></span>
+                        <span id="city-radius" class="meta-tag"><span class="meta-icon">📏</span> <span class="meta-text">Rază: 0.5–8 km</span></span>
+                    </div>
+                </div>
+                <!-- Live Dashboard Container -->
+                <div id="live-dashboard-container"></div>
+            </section>
+
+            <!-- Section 1: Order Types -->
+            <section class="content-card" id="section-order-types">
+                <div class="card-header">
+                    <span class="card-number">01</span>
+                    <h3 id="title-order-types">📦 Tipuri de Comenzi</h3>
+                </div>
+                <p id="desc-order-types" class="card-desc">Toate cifrele sunt estimative (±).</p>
+                <div class="table-wrap">
+                    <table id="table-order-types">
+                        <thead>
+                            <tr>
+                                <th id="th-type">Tip</th>
+                                <th id="th-distance">Distanță</th>
+                                <th id="th-bike">🚲 Bicicletă/Scuter</th>
+                                <th id="th-car">🚗 Mașină</th>
+                                <th id="th-freq">Frecvență</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-order-types">
+                            <!-- Filled by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="order-notes" id="order-notes">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Section 2: Daily Earnings -->
+            <section class="content-card" id="section-earnings">
+                <div class="card-header">
+                    <span class="card-number">02</span>
+                    <h3 id="title-earnings">💰 Câștig estimativ per zi</h3>
+                </div>
+                <div class="earnings-grid">
+                    <div class="earnings-block">
+                        <h4 id="earnings-bike-title">🚲 Bicicletă / Scuter</h4>
+                        <div class="table-wrap">
+                            <table id="table-earnings-bike">
+                                <thead>
+                                    <tr>
+                                        <th id="th-hours">Ore</th>
+                                        <th id="th-orders">Comenzi</th>
+                                        <th id="th-earning">Câștig</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-earnings-bike"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="earnings-block">
+                        <h4 id="earnings-car-title">🚗 Mașină</h4>
+                        <div class="table-wrap">
+                            <table id="table-earnings-car">
+                                <thead>
+                                    <tr>
+                                        <th>Ore</th>
+                                        <th>Comenzi</th>
+                                        <th>Câștig</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-earnings-car"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="earnings-notes" id="earnings-notes"></div>
+            </section>
+
+            <!-- Section 3: Gold Hours -->
+            <section class="content-card gold-card" id="section-gold">
+                <div class="card-header">
+                    <span class="card-number">03</span>
+                    <h3 id="title-gold">⭐ Când câștigi mai mult</h3>
+                </div>
+                <div class="table-wrap">
+                    <table id="table-gold">
+                        <thead>
+                            <tr>
+                                <th id="th-situation">Situație</th>
+                                <th id="th-bonus">Bonus</th>
+                                <th id="th-details">Detalii</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-gold"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 4: Premium Zones -->
+            <section class="content-card" id="section-zones">
+                <div class="card-header">
+                    <span class="card-number">04</span>
+                    <h3 id="title-zones">📍 Zone Premium</h3>
+                </div>
+                <p id="desc-zones" class="card-desc"></p>
+                <div class="zones-grid" id="zones-grid">
+                    <!-- Premium zones filled by JS -->
+                </div>
+                <div class="zones-volume" id="zones-volume">
+                    <!-- Volume zones filled by JS -->
+                </div>
+            </section>
+
+            <!-- Section 5: Fleet Strategy -->
+            <section class="content-card strategy-card" id="section-strategy">
+                <div class="card-header">
+                    <span class="card-number">05</span>
+                    <h3 id="title-strategy">🗺️ Strategia Flotei</h3>
+                </div>
+                <p id="desc-strategy" class="card-desc"></p>
+                <div class="strategy-timeline" id="strategy-timeline">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Section 6: Rules -->
+            <section class="content-card" id="section-rules">
+                <div class="card-header">
+                    <span class="card-number">06</span>
+                    <h3 id="title-rules">📋 Regulile pentru câștig maxim</h3>
+                </div>
+                <div class="rules-list" id="rules-list">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Section 7: Mistakes -->
+            <section class="content-card mistakes-card" id="section-mistakes">
+                <div class="card-header">
+                    <span class="card-number">07</span>
+                    <h3 id="title-mistakes">⚠️ Greșeli care te costă</h3>
+                </div>
+                <div class="mistakes-list" id="mistakes-list">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Section 8: Progression -->
+            <section class="content-card progression-card" id="section-progression">
+                <div class="card-header">
+                    <span class="card-number">08</span>
+                    <h3 id="title-progression">🚀 De la Începător la PRO</h3>
+                </div>
+                <div class="progression-levels" id="progression-levels">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer" class="footer">
+                <p>2025–2026 | D'S Delivery — Dragons Alliance S.R.L. | Estimativ (±)</p>
+            </footer>
+        </main>
+
+    </div>
+
+    <!-- Mobile sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('SW Registered'))
+            .catch(err => console.log('SW Registration Failed', err));
+        }
+    </script>
+</body>
+</html>

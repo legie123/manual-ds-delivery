@@ -1,0 +1,17 @@
+{
+  "name": "Manual DS",
+  "short_name": "Manual DS",
+  "description": "D'S Delivery - Live Courier Portal",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#8a2be2",
+  "icons": [
+    {
+      "src": "dragon-logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

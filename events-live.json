@@ -1,0 +1,11 @@
+{
+  "bucuresti": [
+    {"type": "concert", "name": "Concert Arena", "impact_score": 35, "start": "19:00", "end": "23:00"}
+  ],
+  "timisoara": [
+    {"type": "festival", "name": "Food Fest", "impact_score": 40, "start": "12:00", "end": "22:00"}
+  ],
+  "cluj": [
+    {"type": "match", "name": "Meci Fotbal", "impact_score": 25, "start": "20:00", "end": "22:00"}
+  ]
+}
