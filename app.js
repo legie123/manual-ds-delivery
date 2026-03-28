@@ -138,7 +138,7 @@ const commonData = {
     ]
 };
 
-// Logic
+// ====== EVENT BINDINGS ======
 document.addEventListener('DOMContentLoaded', () => {
     bindEvents();
     loadCity(state.city);
@@ -155,22 +155,21 @@ function bindEvents() {
         });
     });
     
-    // UI toggles
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => toggleMobileMenu(true));
-    document.getElementById('sidebar-overlay').addEventListener('click', () => toggleMobileMenu(false));
-    
-    const langBtn = document.getElementById('lang-btn');
-    const langDrop = document.getElementById('lang-dropdown');
-    langBtn.addEventListener('click', () => langDrop.classList.toggle('show'));
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.language-selector')) langDrop.classList.remove('show');
-    });
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    if(mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => toggleMobileMenu(true));
+    }
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    if(sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => toggleMobileMenu(false));
+    }
 }
 
 function toggleMobileMenu(force) {
     const btn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('city-sidebar');
     const overlay = document.getElementById('sidebar-overlay');
+    if (!btn || !sidebar || !overlay) return;
     if (force) {
         btn.classList.add('active'); sidebar.classList.add('show'); overlay.classList.add('show');
     } else {
@@ -178,46 +177,77 @@ function toggleMobileMenu(force) {
     }
 }
 
+// ====== RENDER LOGIC ======
 function loadCity(cityId) {
     state.city = cityId;
     const data = citiesData[cityId];
     if (!data) return;
     
-    // Header
-    document.getElementById('city-display-name').innerText = data.name;
-    document.getElementById('center-name').innerHTML = `<span class="meta-icon">📍</span> <span class="meta-text">Centru: ${data.center}</span>`;
-    document.getElementById('city-radius').innerHTML = `<span class="meta-icon">📏</span> <span class="meta-text">Rază: ${data.radius}</span>`;
+    const mainContent = document.getElementById('main-content');
+    if(mainContent) {
+        mainContent.classList.remove('loaded');
+        mainContent.classList.add('loading');
+    }
     
-    // Update Live Metrics (Weather + Events) + Auto Refresh
-    fetchLiveMetrics(data.coords.lat, data.coords.lng, cityId);
-    if (state.refreshInterval) clearInterval(state.refreshInterval);
-    state.refreshInterval = setInterval(() => {
+    setTimeout(() => {
+        // Header
+        document.getElementById('city-title').innerText = data.name;
+        
+        // Sectiunea 4: Best Action Plan
+        const topZones = data.zones.map(z => z.name).join(', ');
+        document.getElementById('act-zones').innerText = topZones;
+        document.getElementById('act-center').innerText = data.center;
+        document.getElementById('act-radius').innerText = data.radius;
+        
+        // Sectiunea 5: Comenzi Compact
+        if (document.getElementById('orders-mini-cards')) {
+            const ordersHTML = data.orderTypes.map(ot => {
+                const icon = ot.type.includes('Scurtă') ? '🚲' : ot.type.includes('Medie') ? '🏍️' : '🚗';
+                return `<div class="m-card">
+                    <span class="mc-type"><span class="mc-icon">${icon}</span> ${ot.type} (${ot.dist})</span>
+                    <span class="mc-freq">${ot.freq}</span>
+                </div>`;
+            }).join('');
+            document.getElementById('orders-mini-cards').innerHTML = ordersHTML;
+        }
+
+        // Sectiunea 6: Strategy
+        if (document.getElementById('strategy-steps-container')) {
+            const stratHTML = `
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <span class="step-txt"><strong>Start Ușor:</strong> Începe în zonele de mall-uri și birouri (${data.center}).</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <span class="step-txt"><strong>Shift Amiază:</strong> Mută cursorul spre zonele intens populate de fast-food-uri.</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <span class="step-txt"><strong>Vârful de Seară:</strong> Atrage comenzile lungi (peste 5km) spre zone populare pentru tips.</span>
+                </div>
+            `;
+            document.getElementById('strategy-steps-container').innerHTML = stratHTML;
+        }
+        
+        // Update Live Metrics (Weather + Events) + Auto Refresh
         fetchLiveMetrics(data.coords.lat, data.coords.lng, cityId);
-    }, 5 * 60 * 1000); // 5 min interval
-    
-    // Insert Tables/Cards
-    document.getElementById('tbody-order-types').innerHTML = data.orderTypes.map(ot => `<tr><td><strong>${ot.type}</strong></td><td>${ot.dist}</td><td>${ot.bike}</td><td>${ot.car}</td><td>${ot.freq}</td></tr>`).join('');
-    document.getElementById('tbody-earnings-bike').innerHTML = data.earnings.bike.map(e => `<tr><td>${e.hours}</td><td>${e.orders}</td><td><strong>${e.earning}</strong></td></tr>`).join('');
-    document.getElementById('tbody-earnings-car').innerHTML = data.earnings.car.map(e => `<tr><td>${e.hours}</td><td>${e.orders}</td><td><strong>${e.earning}</strong></td></tr>`).join('');
-    document.getElementById('tbody-gold').innerHTML = commonData.gold.map(g => `<tr><td><strong>${g.sit}</strong></td><td style="color:var(--accent); font-weight:700;">${g.bonus}</td><td>${g.det}</td></tr>`).join('');
-    
-    // Zones
-    document.getElementById('zones-grid').innerHTML = data.zones.map(z => `<div class="zone-item"><span class="zone-icon">${z.icon}</span><div class="zone-details"><h4>${z.name}</h4><p>${z.desc}</p></div></div>`).join('');
-    document.getElementById('zones-volume').innerHTML = data.volumeZones.map(z => `<div class="zone-item volume-zone" style="margin-top: 16px;"><span class="zone-icon">${z.icon}</span><div class="zone-details"><h4>${z.name} (Volum Ridicat)</h4><p>${z.desc}</p></div></div>`).join('');
-    
-    // Global Strategy
-    document.getElementById('strategy-timeline').innerHTML = commonData.strategy.map((s, i) => `<div class="timeline-item"><div class="timeline-dot">${i+1}</div><div class="timeline-content"><h4>${s.title}</h4><p>${s.desc}</p></div></div>`).join('');
-    document.getElementById('rules-list').innerHTML = commonData.rules.map(r => `<div class="rule-item"><span class="rule-icon">✅</span><div class="rule-text"><h4>${r.act}</h4><p>${r.res}</p></div></div>`).join('');
-    document.getElementById('mistakes-list').innerHTML = commonData.mistakes.map(m => `<div class="mistake-item"><span class="rule-icon">❌</span><div class="rule-text"><h4>${m.mis}</h4><p>${m.res}</p></div></div>`).join('');
-    document.getElementById('progression-levels').innerHTML = commonData.progression.map((p, i) => `<div class="level-card level-${p.level}"><div class="level-icon">${i===0?'🚲':i===1?'🚀':i===2?'💎':'👑'}</div><h4>${p.title}</h4><p>${p.desc}</p></div>`).join('');
+        if (state.refreshInterval) clearInterval(state.refreshInterval);
+        state.refreshInterval = setInterval(() => {
+            fetchLiveMetrics(data.coords.lat, data.coords.lng, cityId);
+        }, 5 * 60 * 1000); // 5 min interval
+        
+        if (mainContent) {
+            mainContent.classList.remove('loading');
+            mainContent.classList.add('loaded');
+        }
+    }, 150);
 }
 
-// Live API Logic (Weather + Events)
+// ====== FETCH LIVE METRICS ======
 async function fetchLiveMetrics(lat, lng, cityId) {
-    const el = document.getElementById('live-dashboard-container');
-    if (!el) return;
-    
-    el.innerHTML = '<div class="live-dashboard"><p>Se calculează metricile live...</p></div>';
+    const syncTime = document.getElementById('sync-time');
+    if (syncTime) syncTime.innerText = 'Sync: Fetch...';
     
     try {
         const urlW = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,wind_speed_10m,weather_code,relative_humidity_2m&hourly=weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
@@ -231,10 +261,10 @@ async function fetchLiveMetrics(lat, lng, cityId) {
         } catch(e) { console.warn("No events file found or parsing error"); }
         
         const cityEvents = eData[cityId] || [];
-        calculateAndRenderLiveDashboard(wData, cityEvents, el);
+        calculateAndRenderLiveDashboard(wData, cityEvents);
     } catch (err) {
         console.error("Live metrics fetch error", err);
-        el.innerHTML = '<div class="live-dashboard"><p>Datele live indisponibile momentan.</p></div>';
+        if (syncTime) syncTime.innerText = 'Sync: Eroare';
     }
 }
 
@@ -249,63 +279,60 @@ function getWeatherIcon(code) {
     return '☁️';
 }
 
-function getWeatherDesc(code) {
-    if (code === 0) return 'Senin';
-    if (code >= 1 && code <= 3) return 'Parțial noros';
-    if (code >= 45 && code <= 48) return 'Ceață / Vizibilitate redusă';
-    if (code >= 51 && code <= 67) return 'Ploaie';
-    if (code >= 71 && code <= 77) return 'Ninsoare';
-    if (code >= 80 && code <= 82) return 'Averse de ploaie';
-    if (code >= 95 && code <= 99) return 'Furtună';
-    return 'Noros';
-}
-
-function calculateAndRenderLiveDashboard(wData, cityEvents, el) {
+function calculateAndRenderLiveDashboard(wData, cityEvents) {
     const cur = wData.current;
     if (!cur) return;
     
+    const temp = cur.temperature_2m;
+    const code = cur.weather_code;
+    const wind = cur.wind_speed_10m;
     const h = new Date().getHours();
     
-    // 1. Base Demand per hour
-    let baseDemand = 30; // default low
-    if (h >= 11 && h <= 14) baseDemand = 50;
-    else if (h >= 18 && h <= 22) baseDemand = 80;
-    else if (h >= 7 && h <= 10) baseDemand = 40;
-    else if (h < 7 || h > 22) baseDemand = 15;
-    
-    // 2. Weather Impact
+    // 1. Meteo Impact
     let wImpact = 0;
     let wReason = 'Vreme normală';
-    const code = cur.weather_code;
-    const temp = cur.temperature_2m;
-    const wind = cur.wind_speed_10m;
     
-    if (code >= 51) { wImpact = 30; wReason = 'Precipitații active'; }
-    else if (temp < 0) { wImpact = 15; wReason = 'Temperaturi negative'; }
-    else if (temp > 32) { wImpact = 15; wReason = 'Caniculă extremă'; }
+    if (code >= 51 && code <= 67) { wImpact = 25; wReason = 'Ploaie'; }
+    else if (code >= 71 && code <= 77) { wImpact = 40; wReason = 'Zăpadă / Viscol'; }
+    else if (code >= 95) { wImpact = 45; wReason = 'Furtună'; }
+    else if (temp < 0) { wImpact = 20; wReason = 'Îngheț'; }
+    else if (temp > 35) { wImpact = 20; wReason = 'Caniculă'; }
     else if (wind > 25) { wImpact = 15; wReason = 'Vânt puternic'; }
+    else if (code <= 3) { wImpact = 0; wReason = 'Vreme optimă'; }
     
-    // 3. Event Impact
+    // 2. Event Impact
     let eImpact = 0;
     let activeEvents = [];
     cityEvents.forEach(ev => {
-        eImpact += ev.impact_score;
-        activeEvents.push(ev.name);
+        if (ev.status === 'active') {
+            eImpact += ev.impact_score || ev.impactScore || 0;
+            activeEvents.push(ev.name);
+        }
     });
-    if (eImpact > 50) eImpact = 50; // Cap
     
-    // 4. Calculate Scores
+    const eventStatus = activeEvents.length > 0 ? 'Activ' : 'Tranzit';
+    const eventDesc = activeEvents.length > 0 ? `${activeEvents[0]}` : 'Niciun eveniment';
+
+    // 3. Base Demand (Hour Logic)
+    let baseDemand = 35; 
+    if (h >= 11 && h <= 14) baseDemand = 65; // lunch
+    else if (h >= 18 && h <= 21) baseDemand = 80; // dinner
+    else if (h >= 22 || h < 7) baseDemand = 20; // late night
+
+    // 4. Final Math
     let demandScore = baseDemand + wImpact + eImpact;
     if (demandScore > 100) demandScore = 100;
     
     let earningPotential = demandScore;
-    if (wImpact > 0 || eImpact > 20) {
-        earningPotential = Math.min(100, Math.round(demandScore * 1.15));
+    if (wImpact > 0 || eImpact > 10) { 
+        earningPotential = Math.min(100, Math.round(demandScore * 1.15)); 
+    } else if (demandScore > 60) {
+        earningPotential = Math.round(demandScore * 1.05);
     }
-    
-    // 5. Trend Logic
+
+    // 5. Trend Logic (Next 3h)
     let trendIcon = '↘️';
-    let trendReason = 'Cerere calmă/scădere';
+    let trendReason = 'Stabil / Scădere';
     let trendClass = 'neutral';
     
     if (wData.hourly && wData.hourly.weather_code) {
@@ -314,113 +341,64 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, el) {
             if (wData.hourly.weather_code[i] >= 51) rainApproaching = true;
         }
         if (rainApproaching) {
-            trendIcon = '↗️';
-            trendReason = 'Ploaie așteptată (3h)';
-            trendClass = 'negative'; // displays green for drivers (more money)
+            trendIcon = '↗️'; trendReason = 'Ploaie așteptată (3h)'; trendClass = 'warning';
         } else if (h >= 15 && h < 18) {
-            trendIcon = '↗️';
-            trendReason = 'Creștere spre Vârful Serii';
-            trendClass = 'negative';
+            trendIcon = '↗️'; trendReason = 'Creștere spre Vârful Serii'; trendClass = 'neutral';
         }
-    }
-    
-    // 6. Motivational Message
-    let motiveIcon = '🚀';
-    let motiveTitle = '';
-    let motiveText = '';
-    
-    if (demandScore > 85) {
-        motiveIcon = '🔥';
-        motiveTitle = 'CERERE URIAȘĂ!';
-        motiveText = 'Profită acum de multiplicatori, plouă cu comenzi. Ieși pe zonele premium!';
-    } else if (demandScore >= 65) {
-        motiveIcon = '👍';
-        motiveTitle = 'CERERE BUNĂ';
-        motiveText = 'Fără timpi morți. Rămâi targetat pe zone de volum și fast-food.';
-    } else {
-        motiveIcon = '☕';
-        motiveTitle = 'CERERE SLABĂ';
-        motiveText = 'Ritm relaxat. Perfect pentru o tură pe e-bike sau pauză scurtă. Mergi spre mall-uri pentru grupate.';
     }
 
-    const wIcon = getWeatherIcon(code);
-    const eventStr = activeEvents.length > 0 ? activeEvents.join(', ') : 'Niciun eveniment live';
-    const eventImpactTxt = eImpact > 0 ? `+${eImpact}%` : '0%';
-    const wImpactTxt = wImpact > 0 ? `+${wImpact}%` : '0%';
+    // 6. Labels & Momentum
+    let momentum = 'LOW';
+    let motivMsg = 'Ritm relaxat. Menține energia pentru vârful de comenzi.';
+    let mulBadge = 'low', mulText = 'NORMAL';
     
-    let forecastHTML = '';
-    if (wData.daily) {
-        for(let i=1; i<=3; i++) {
-            const date = new Date(wData.daily.time[i]);
-            const dayStr = date.toLocaleDateString('ro-RO', { weekday: 'short' });
-            const dayIcon = getWeatherIcon(wData.daily.weather_code[i]);
-            const tMax = Math.round(wData.daily.temperature_2m_max[i]);
-            const tMin = Math.round(wData.daily.temperature_2m_min[i]);
-            
-            forecastHTML += `
-                <div class="forecast-day">
-                    <span class="f-day">${dayStr}</span>
-                    <span class="f-icon">${dayIcon}</span>
-                    <span class="f-temp">${tMax}° <sub>${tMin}°</sub></span>
-                </div>
-            `;
-        }
+    if (demandScore >= 75) {
+        momentum = 'HIGH';
+        motivMsg = '🔥🔥🔥 CERERE URIAȘĂ! Profită acum de multiplicatori, ieși pe zonele premium!';
+        mulBadge = 'aggressive'; mulText = 'AGRESIV';
+    } else if (demandScore >= 55) {
+        momentum = 'MEDIUM';
+        motivMsg = '👍 Cerere în creștere. Targetează mall-uri și fast-food.';
+        mulBadge = 'high'; mulText = 'RIDICAT';
     }
-    
-    el.innerHTML = `
-        <div class="live-dashboard">
-            <div class="dashboard-metrics">
-                <div class="metric-card">
-                    <span class="metric-title">Live Meteo 🌤️</span>
-                    <span class="metric-value">${wIcon} ${Math.round(temp)}°C</span>
-                    <span class="metric-sub ${wImpact > 0 ? 'negative' : 'neutral'}">${wReason} (${wImpactTxt})</span>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-title">Evenimente Majore 🎫</span>
-                    <span class="metric-value">${activeEvents.length > 0 ? '🎉 Activ' : 'Tranzit'}</span>
-                    <span class="metric-sub ${eImpact > 0 ? 'negative' : 'neutral'}">${eventStr} (${eventImpactTxt})</span>
-                </div>
-                <div class="metric-card highlight">
-                    <span class="metric-title">Cerere Estimativă (Acum)</span>
-                    <span class="metric-value">${demandScore}%</span>
-                    <span class="metric-sub neutral">Plafon zilnic activ: ${baseDemand}%</span>
-                </div>
-                <div class="metric-card highlight" style="border-color: #ffd700;">
-                    <span class="metric-title">Potențial Câștig</span>
-                    <span class="metric-value" style="color:#ffd700;">${earningPotential}%</span>
-                    <span class="metric-sub neutral">Include surge multiplier live</span>
-                </div>
-                <div class="metric-card" style="border-style: dashed; border-color: rgba(255,255,255,0.2);">
-                    <span class="metric-title">Tendință (Urm. 3 Ore)</span>
-                    <span class="metric-value" style="font-size: 1.5rem;">${trendIcon}</span>
-                    <span class="metric-sub ${trendClass}">${trendReason}</span>
-                    <span style="font-size: 0.65rem; color: var(--text-muted); margin-top: auto;">Sync: ${new Date().toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}</span>
-                </div>
-            </div>
-            
-            <div class="motivational-box">
-                <span class="motivational-icon">${motiveIcon}</span>
-                <div class="motivational-text">
-                    <h4>${motiveTitle}</h4>
-                    <p>${motiveText}</p>
-                </div>
-            </div>
-            
-            <div class="weather-widget" style="margin-top: 0;">
-                <div class="weather-details" style="border:none; padding:0;">
-                    <div class="w-detail">
-                        <span class="w-detail-icon">💨</span>
-                        <span class="w-detail-val">${Math.round(wind)} km/h</span>
-                        <span class="w-detail-label">Vânt</span>
-                    </div>
-                    <div class="w-detail">
-                        <span class="w-detail-icon">💧</span>
-                        <span class="w-detail-val">${cur.relative_humidity_2m}%</span>
-                        <span class="w-detail-label">Umiditate</span>
-                    </div>
-                </div>
-                ${forecastHTML ? `<div class="weather-forecast">${forecastHTML}</div>` : ''}
-            </div>
-        </div>
-    `;
+
+    // ==========================================
+    // INJECT TO DOM WITH ANIMATIONS
+    // ==========================================
+    requestAnimationFrame(() => {
+        const syncEl = document.getElementById('sync-time');
+        if (syncEl) syncEl.innerText = `Sync: ${new Date().toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}`;
+        
+        // Header
+        document.getElementById('hdr-demand').innerText = `${demandScore}%`;
+        document.getElementById('hdr-profit').innerText = `${earningPotential}%`;
+        document.getElementById('hdr-momentum').innerText = momentum;
+        document.getElementById('motivational-message').innerText = motivMsg;
+        
+        // Snapshot
+        document.getElementById('snap-w-icon').innerText = getWeatherIcon(code);
+        document.getElementById('snap-w-temp').innerText = `${Math.round(temp)}°C`;
+        document.getElementById('snap-w-desc').innerText = `${wReason} (+${wImpact}%)`;
+        document.getElementById('snap-w-desc').className = wImpact > 0 ? 'warning' : 'neutral';
+        
+        document.getElementById('snap-e-status').innerText = eventStatus;
+        document.getElementById('snap-e-desc').innerText = `${eventDesc} (+${eImpact}%)`;
+        document.getElementById('snap-e-desc').className = eImpact > 0 ? 'warning' : 'neutral';
+
+        document.getElementById('snap-t-icon').innerText = trendIcon;
+        document.getElementById('snap-t-desc').innerText = trendReason;
+        document.getElementById('snap-t-desc').className = trendClass;
+
+        // Progress Bars
+        document.getElementById('demand-bar').style.width = `${demandScore}%`;
+        document.getElementById('demand-val').innerText = `${demandScore}%`;
+        document.getElementById('demand-reason').innerText = `Ora curentă (${baseDemand}%) + Eveniment (${eImpact}%) + Meteo (${wImpact}%)`;
+
+        document.getElementById('profit-bar').style.width = `${earningPotential}%`;
+        document.getElementById('profit-val').innerText = `${earningPotential}%`;
+        
+        const mulEl = document.getElementById('profit-indicator');
+        mulEl.className = `mul-badge ${mulBadge}`;
+        mulEl.innerText = mulText;
+    });
 }
