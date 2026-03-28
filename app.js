@@ -145,6 +145,109 @@ const commonData = {
     ]
 };
 
+const motivationals = {
+    bucuresti: [
+        "Astăzi orașul te vrea în mișcare, nu în pauză. Bagă mare! 🚀",
+        "Azi ai șanse să faci o tură frumoasă dacă joci corect.",
+        "De la Victoriei la Unirii, fiecare cursă e o nouă victorie azi.",
+        "Cafeaua e bună, dar comenzile bune sunt și mai bune.",
+        "E trafic? Nu-i bai, noroc că știi toate scurtăturile din oraș!"
+    ],
+    timisoara: [
+        "Bega curge lin, dar comenzile curg și mai repede azi!",
+        "Fruncea sus! Azi e o zi excelentă pentru livrări record în Timișoara.",
+        "Complexul fierbe, centrul te așteaptă. Bagă mare, bănățeane!",
+        "Prinde orașul pe viteza bună și lasă comenzile să vină. 🌹",
+        "Timișoara e a ta azi. Fii cel mai bun campion din trafic!"
+    ],
+    cluj: [
+        "Tot centrul e al tău, iar dealurile le urci cu zâmbetul pe buze!",
+        "Azi facem record de livrări la umbra Feleacului. ✌️",
+        "Faină vreme pe Mărăști, azi spargem topurile în Cluj!",
+        "Clujul nu e doar tech, e și viteză! Demonstrează-le cine e boss-ul.",
+        "Azi ai șanse să faci o tură faină tare dacă joci strategic. 🏔️"
+    ],
+    iasi: [
+        "De pe Copou până-n Tudor, tu duci energia orașului mai departe.",
+        "Iașul trăiește prin viteză și zâmbete. Scoate asul din mânecă azi!",
+        "Capitala Moldovei e activă. Arată-le tuturor cum se livrează la superlativ! 🏰",
+        "Un curier excelent, un oraș plin de comenzi. Combinația perfectă!",
+        "Ziua e a ta în Iași. Ia-o la pas alert, vine super-tipsul!"
+    ],
+    brasov: [
+        "Muntele te privește, dar tu ești mai la înălțime cu rating-ul de azi!",
+        "Aer curat, comenzi proaspete. Brașovul e pe frecvența ta! ⛰️",
+        "Orașul forfotește, iar tu reacționezi instant. Hai să dominăm strada!",
+        "Din Centru până-n Coresi, ești peste tot și ești cel mai rapid.",
+        "Brașovul frumos te răsplătește mereu când ești rapid ca vântul."
+    ],
+    sibiu: [
+        "Piața Mare te cheamă la datorie. Fă-i pe toți să aprecieze viteza ta!",
+        "Sibiul bate ceasul, tu bați recordul de livrări azi. Succes! 🏘️",
+        "Fiecare piatră cubică e un pas spre target. Hai că poți!",
+        "Zile faine, trasee libere, clienți generoși. Bucură-te de Sibiu!",
+        "Atmosferă premium, livrări pe măsură. Tu faci legea azi."
+    ],
+    arad: [
+        "Pe Bulevardul Revoluției facem noi revoluția comenzilor rapide! 🌉",
+        "Spre Micalaca sau în centru, azi te miști cu talent de campion.",
+        "Aradul s-a trezit, și o mare de oportunități te așteaptă la colț.",
+        "Încarcă-te cu o doză de energie și cucerește străzile din Arad!",
+        "Azi facem artă din livrare. Timpul e de partea ta."
+    ],
+    oradea: [
+        "În Oradea curierii de top zâmbesc mai mult, livrează mai repede! ♨️",
+        "Băile Felix așteaptă, dar Lotus cere întăriri! Fii eroul lor.",
+        "Oraș frumos, curier rapid! Arată-le tuturor de ce ești boss.",
+        "Piața Unirii e un hotspot. Intră în el și adună tot ce pică greu!",
+        "Liniștea din Oradea o spargi doar tu prin eficiența zilnică."
+    ],
+    'targu-mures': [
+        "Din Centru până-n Tudor, Târgu Mureș se bucură de cursa ta azi.",
+        "Ești mai rapid decât zvonurile din oraș! Ține-o tot așa! 🚀",
+        "Zile bune, tips-uri bune. Apasă pe pedală și bucură-te de traseu.",
+        "Orașul Mureș te răsplătește cu o tură lejeră, dar foarte profitabilă.",
+        "Faci mișcare, iei și bani, iar aerul e mereu excelent în Mureș."
+    ],
+    ploiesti: [
+        "Orașul aurului negru are nevoie de aurul vitezei tale! 🛢️",
+        "Traficul pe Republicii e scuză pentru alții, nu pentru tine.",
+        "AFI e plin, tu ești fresh. Ia-le pe toate și rupe norma azi!",
+        "Ploieștiul e pe val, prinde și tu valul ca un surfer adevărat.",
+        "Fiecare cursă contează. Fă din Ploiești terenul tău de joacă."
+    ],
+    constanta: [
+        "Briza mării te împinge de la spate, astăzi totul merge șnur! ⚓",
+        "Tomis și City Park sunt gata de start. Tu ești pregătit?",
+        "Litoralul e al tău azi, pescărușii doar urmăresc viteza ta.",
+        "Nicio furtună nu te oprește pe tine. Azi e zi de profit marin!",
+        "Indiferent de sezon, Constanța are nevoie de cel mai bun curier."
+    ],
+    fallback: [
+        "Astăzi orașul te vrea în mișcare, nu în pauză.",
+        "Prinde orașul pe viteza bună și lasă comenzile să vină.",
+        "Cafeaua e bună, dar comenzile bune sunt și mai bune.",
+        "Azi ai șanse să faci o tură frumoasă dacă joci corect."
+    ]
+};
+
+function getDailyMotivational(cityId) {
+    const quotes = motivationals[cityId] || motivationals['fallback'];
+    const now = new Date();
+    // Daily block
+    const dateStr = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+    // Intraday block (every 8 hours) changes to keep it fresh
+    const timeBlock = Math.floor(now.getHours() / 8); 
+    const seed = dateStr + '-' + timeBlock;
+    
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % quotes.length;
+    return quotes[index];
+}
+
 // ====== PWA INSTALL PROMPT ======
 let deferredInstallPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -159,6 +262,84 @@ window.addEventListener('appinstalled', () => {
     const installBtn = document.getElementById('install-btn');
     if (installBtn) installBtn.style.display = 'none';
 });
+
+// ====== PREMIUM AUDIO ALERTS ======
+function playPremiumSound(type) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        
+        if (type === 'maxim') {
+            // Urgent, high-energy arpeggio (C5 -> E5 -> G5 -> C6)
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            let startTime = ctx.currentTime;
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.3, startTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.2);
+                startTime += 0.1;
+            });
+            // Add a final ambient bell ringing alongside the last note
+            const bellOsc = ctx.createOscillator();
+            const bellGain = ctx.createGain();
+            bellOsc.type = 'sine';
+            bellOsc.frequency.setValueAtTime(1046.50, startTime - 0.1);
+            bellGain.gain.setValueAtTime(0, startTime - 0.1);
+            bellGain.gain.linearRampToValueAtTime(0.15, startTime - 0.05);
+            bellGain.gain.exponentialRampToValueAtTime(0.01, startTime + 1.2);
+            bellOsc.connect(bellGain); bellGain.connect(ctx.destination);
+            bellOsc.start(startTime - 0.1);
+            bellOsc.stop(startTime + 1.3);
+            
+        } else if (type === 'optim') {
+            // Soft, encouraging double-chime (E5 -> A5)
+            const notes = [659.25, 880.00];
+            let startTime = ctx.currentTime;
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.5);
+                startTime += 0.15;
+            });
+        }
+    } catch(e) { console.log('Audio disabled or unsupported'); }
+}
+
+// ====== TRANSLATION ENGINE ======
+function applyTranslations(lang) {
+    if (typeof translations === 'undefined' || !translations[lang]) return;
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            el.innerText = t[key];
+        }
+    });
+
+    // RTL Support
+    if (['ar', 'ur'].includes(lang)) {
+        document.body.setAttribute('dir', 'rtl');
+        document.body.classList.add('rtl-mode');
+    } else {
+        document.body.setAttribute('dir', 'ltr');
+        document.body.classList.remove('rtl-mode');
+    }
+}
 
 // ====== EVENT BINDINGS ======
 document.addEventListener('DOMContentLoaded', () => {
@@ -260,15 +441,19 @@ function bindEvents() {
                 localStorage.setItem('ds-lang', l);
                 document.getElementById('lang-btn').innerHTML = `🌐 ${l.toUpperCase()} <span class="arrow">▼</span>`;
                 langMenu.classList.remove('show');
+                applyTranslations(l);
             });
         });
     }
     
     // Set initial lang button from localStorage
-    const savedLang = localStorage.getItem('ds-lang');
-    if (savedLang && langBtn) {
+    const savedLang = localStorage.getItem('ds-lang') || 'ro';
+    if (langBtn) {
         langBtn.innerHTML = `🌐 ${savedLang.toUpperCase()} <span class="arrow">▼</span>`;
     }
+    
+    // Apply UI translation
+    applyTranslations(state.lang);
     
     // ====== INFO TOOLTIP SYSTEM ======
     document.querySelectorAll('.info-tip').forEach(tip => {
@@ -506,18 +691,18 @@ function updatePeakHours() {
     const lunchEl = document.getElementById('peak-lunch');
     const eveningEl = document.getElementById('peak-evening');
     
-    // Lunch: 11:30 - 14:00 (690 - 840 minutes)
+    // Pranz: 10:30 - 15:30 (630 - 930 minutes)
     if (lunchEl) {
-        if (currentMinutes >= 690 && currentMinutes <= 840) {
+        if (currentMinutes >= 630 && currentMinutes <= 930) {
             lunchEl.classList.add('active');
         } else {
             lunchEl.classList.remove('active');
         }
     }
     
-    // Evening: 18:00 - 21:30 (1080 - 1290 minutes)
+    // Cina: 17:00 - 00:00 (1020 - 1440 minutes, which is just >= 1020 since currentMinutes is max 1439)
     if (eveningEl) {
-        if (currentMinutes >= 1080 && currentMinutes <= 1290) {
+        if (currentMinutes >= 1020) {
             eveningEl.classList.add('active');
         } else {
             eveningEl.classList.remove('active');
@@ -581,7 +766,9 @@ async function fetchLiveMetrics(lat, lng, cityId) {
         } catch(e) { console.warn("No events file found or parsing error"); }
         
         const cityEvents = eData[cityId] || [];
-        calculateAndRenderLiveDashboard(wData, cityEvents);
+        const cityNews = eData.news ? (eData.news[cityId] || []) : [];
+        const nationalAlert = eData.national_alert || null;
+        calculateAndRenderLiveDashboard(wData, cityEvents, cityNews, nationalAlert);
     } catch (err) {
         console.error("Live metrics fetch error", err);
         if (syncTime) syncTime.innerText = 'Sync: Eroare';
@@ -599,7 +786,7 @@ function getWeatherIcon(code) {
     return '☁️';
 }
 
-function calculateAndRenderLiveDashboard(wData, cityEvents) {
+function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], nationalAlert = null) {
     const cur = wData.current;
     if (!cur) return;
     
@@ -669,30 +856,20 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
 
     // 6. Labels & Momentum
     let momentum = 'ACTIV';
-    let motivMsg = 'Potential selectiv. Mentine un ritm controlat si intercepteaza curse adiacente.';
+    let motivMsg = getDailyMotivational(cityId);
     let mulBadge = 'low', mulText = 'STANDARD';
     
     if (demandScore >= 75) {
         momentum = 'MAXIM';
-        motivMsg = '🔥🔥🔥 OPORTUNITATE MAJORA! Profita de moment, timing perfect pentru distante medii in target zones!';
         mulBadge = 'aggressive'; mulText = 'AGRESIV';
         
         if (state.lastMomentum !== 'MAXIM') {
             state.lastMomentum = 'MAXIM';
             // Haptic Feedback
-            if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            // Audio Feedback
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(440, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.5, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(ctx.currentTime + 0.3);
-            } catch(e) {}
+            if(navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+            // Premium Audio
+            playPremiumSound('maxim');
+            
             // Push Notification
             if ('Notification' in window && Notification.permission === 'granted') {
                 new Notification('Oportunitate Majora Activata!', {
@@ -703,9 +880,15 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
         }
     } else if (demandScore >= 55) {
         momentum = 'NIVEL OPTIM';
-        motivMsg = '👍 Fereastra tactica buna. Distributie consistenta. Pozitioneaza-te optim.';
         mulBadge = 'high'; mulText = 'RIDICAT';
-        state.lastMomentum = 'NIVEL_OPTIM';
+        
+        if (state.lastMomentum !== 'NIVEL OPTIM' && state.lastMomentum !== 'MAXIM') {
+            state.lastMomentum = 'NIVEL OPTIM';
+            if(navigator.vibrate) navigator.vibrate([120]);
+            playPremiumSound('optim');
+        } else {
+            state.lastMomentum = 'NIVEL OPTIM';
+        }
     } else {
         state.lastMomentum = 'ACTIV';
     }
@@ -731,18 +914,53 @@ function calculateAndRenderLiveDashboard(wData, cityEvents) {
         document.getElementById('motivational-message').innerText = motivMsg;
         
         // Snapshot
+        // 1. Meteo
         document.getElementById('snap-w-icon').innerText = getWeatherIcon(code);
         document.getElementById('snap-w-temp').innerText = `${Math.round(temp)}°C`;
-        document.getElementById('snap-w-desc').innerText = `${wReason} (+${wImpact}%)`;
+        document.getElementById('snap-w-desc').innerText = `${wReason}`;
         document.getElementById('snap-w-desc').className = wImpact > 0 ? 'warning' : 'neutral';
         
+        // 2. Trafic Logic
+        let trStatus = 'Fluid'; let trDesc = 'Timp ideal'; let trClass = 'positive'; let trIcon = '🚦';
+        if (demandScore > 80) { trStatus = 'Aglomerat'; trDesc = 'Intarzieri >10m'; trClass = 'warning'; trIcon = '🚨'; }
+        else if (demandScore > 55) { trStatus = 'Moderat'; trDesc = 'Cateva blocaje'; trClass = 'neutral'; trIcon = '🚕'; }
+        
+        document.getElementById('snap-tr-icon').innerText = trIcon;
+        document.getElementById('snap-tr-status').innerText = trStatus;
+        document.getElementById('snap-tr-desc').innerText = trDesc;
+        document.getElementById('snap-tr-desc').className = trClass;
+
+        // 3. Evenimente
+        document.getElementById('snap-e-icon').innerText = activeEvents.length > 0 ? '🎫' : '📍';
         document.getElementById('snap-e-status').innerText = eventStatus;
-        document.getElementById('snap-e-desc').innerText = `${eventDesc} (+${eImpact}%)`;
+        document.getElementById('snap-e-desc').innerText = eventDesc;
         document.getElementById('snap-e-desc').className = eImpact > 0 ? 'warning' : 'neutral';
 
-        document.getElementById('snap-t-icon').innerText = trendIcon;
-        document.getElementById('snap-t-desc').innerText = trendReason;
-        document.getElementById('snap-t-desc').className = trendClass;
+        // 4. News
+        if (cityNews.length > 0) {
+            document.getElementById('snap-n-icon').innerText = '📰';
+            document.getElementById('snap-n-title').innerText = cityNews[0].title;
+            document.getElementById('snap-n-desc').innerText = cityNews[0].content;
+            document.getElementById('snap-n-desc').className = cityNews[0].sentiment === 'positive' ? 'positive' : 'neutral';
+        } else {
+            document.getElementById('snap-n-icon').innerText = '☕';
+            document.getElementById('snap-n-title').innerText = 'Fara Stiri';
+            document.getElementById('snap-n-desc').innerText = 'Atmosfera linistita local';
+            document.getElementById('snap-n-desc').className = 'neutral';
+        }
+
+        // National Alert Micro-Popup
+        const natBox = document.getElementById('national-alert-box');
+        if (nationalAlert && nationalAlert.active) {
+            natBox.style.display = 'flex';
+            document.getElementById('nat-alert-title').innerText = nationalAlert.title;
+            document.getElementById('nat-alert-desc').innerText = nationalAlert.message;
+            document.getElementById('close-nat-btn').onclick = () => {
+                natBox.style.display = 'none';
+            };
+        } else {
+            natBox.style.display = 'none';
+        }
 
         // Progress Bars + Dynamic Color Coding (Faza 3)
         const demandBar = document.getElementById('demand-bar');
