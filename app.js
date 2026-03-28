@@ -138,10 +138,53 @@ const commonData = {
     ]
 };
 
+// ====== PWA INSTALL PROMPT ======
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const installBtn = document.getElementById('install-btn');
+    if (installBtn) installBtn.style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    const installBtn = document.getElementById('install-btn');
+    if (installBtn) installBtn.style.display = 'none';
+});
+
 // ====== EVENT BINDINGS ======
 document.addEventListener('DOMContentLoaded', () => {
     bindEvents();
     loadCity(state.city);
+    
+    // Install button click handler
+    const installBtn = document.getElementById('install-btn');
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                const result = await deferredInstallPrompt.userChoice;
+                deferredInstallPrompt = null;
+                if (result.outcome === 'accepted') {
+                    installBtn.style.display = 'none';
+                }
+            } else {
+                // iOS or already installed — show manual instructions
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                if (isIOS) {
+                    alert('Pentru a instala Manual DS:\n\n1. Apasa iconita Share (patrat cu sageata)\n2. Alege "Add to Home Screen"\n3. Confirma cu "Add"\n\nGata! Vei avea Manual DS pe ecranul principal.');
+                }
+            }
+        });
+        
+        // Show install button on iOS (no beforeinstallprompt support)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+        if (isIOS && !isStandalone) {
+            installBtn.style.display = 'flex';
+        }
+    }
     
     // Notification Permission
     if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {

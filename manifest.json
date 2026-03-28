@@ -1,17 +1,38 @@
 {
-  "name": "Manual DS",
+  "name": "Manual DS — Dragons Delivery Command Center",
   "short_name": "Manual DS",
-  "description": "D'S Delivery - Live Courier Portal",
-  "start_url": "/index.html",
+  "description": "Dragons Delivery — Live Courier Command Center. Cerere, profit, momentum, strategie in timp real.",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0a0f",
-  "theme_color": "#8a2be2",
+  "orientation": "portrait",
+  "background_color": "#08080C",
+  "theme_color": "#FFB800",
+  "categories": ["business", "productivity"],
   "icons": [
     {
       "src": "dragon-logo.png",
-      "sizes": "192x192 512x512",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "dragon-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bucuresti Dashboard",
+      "url": "./index.html?city=bucuresti",
+      "description": "Direct la dashboard-ul Bucuresti"
+    },
+    {
+      "name": "Timisoara Dashboard",
+      "url": "./index.html?city=timisoara",
+      "description": "Direct la dashboard-ul Timisoara"
     }
   ]
 }
