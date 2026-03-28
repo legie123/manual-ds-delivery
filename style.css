@@ -195,17 +195,14 @@ body::before {
 .strategy-card { grid-column: span 4; }
 
 /* 1. SNAPSHOT */
-.snapshot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 1100px) { .snapshot-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .snapshot-grid { grid-template-columns: 1fr; } }
-.snap-item { display: flex; align-items: center; gap: 14px; background: rgba(0,0,0,0.3); padding: 16px 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.02); transition: var(--transition); }
-.snap-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.06); transform: translateY(-2px); }
-.snap-icon { font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(255,255,255,0.15)); flex-shrink: 0; }
-.snap-info h4 { font-size: 1.25rem; font-weight: 800; font-family: var(--font-heading); line-height: 1.2; text-shadow: 0 0 10px rgba(255,255,255,0.1); margin-bottom: 2px; }
-.snap-info p { font-size: 0.8rem; color: #4caf50; font-weight: 600; }
-.snap-info p.neutral { color: var(--text-muted); font-weight: 500;}
-.snap-info p.warning { color: var(--accent-red); font-weight: 600;}
-.snap-info p.positive { color: #4caf50; font-weight: 600;}
+.snapshot-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+.snap-item { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 16px; background: rgba(0,0,0,0.3); padding: 16px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.02); transition: var(--transition); }
+.snap-item:hover { background: rgba(255,255,255,0.03); }
+.snap-icon { font-size: 2.5rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+.snap-info h4 { font-size: 1.4rem; font-weight: 800; font-family: var(--font-heading); line-height: 1.2; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+.snap-info p { font-size: 0.85rem; color: #4caf50; font-weight: 600; margin-top: 2px; }
+.snap-info p.neutral { color: var(--text-muted); }
+.snap-info p.warning { color: var(--accent-red); }
 .sync-time { font-size: 0.7rem; font-weight: 500; font-family: var(--font-body); color: rgba(255,255,255,0.3); letter-spacing: 0; text-transform: none; }
 
 /* PROGRESS BARS (DEMAND & EARNINGS) */

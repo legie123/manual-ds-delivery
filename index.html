@@ -91,28 +91,18 @@
                 <div class="header-status">
                     <div class="status-badge hot">
                         <span class="icon">🔥</span> <span data-i18n="title_dashboard">Cerere</span>: <span id="hdr-demand">--%</span>
-                        <span class="info-tip" data-tip="Estimare volum comenzi. Cu cat e mai mare, cu atat mai multe curse disponibile.">?</span>
+                        <span class="info-tip" data-tip="Estimare volum comenzi bazata pe ora, meteo si evenimente. Cu cat e mai mare, cu atat mai multe curse disponibile.">?</span>
                     </div>
                     <div class="status-badge profit">
-                        <span class="icon">💰</span> <span data-i18n="title_profit">Profit Minim</span>: <span id="hdr-profit">--%</span>
-                        <span class="info-tip" data-tip="Potential de castig calculat din cerere, multiplicator si conditii meteo.">?</span>
+                        <span class="icon">💰</span> <span data-i18n="title_profit">Profit</span>: <span id="hdr-profit">--%</span>
+                        <span class="info-tip" data-tip="Potential de castig calculat din cerere, multiplicator si conditii meteo. Reprezinta sansa ta de venit in intervalul curent.">?</span>
                     </div>
                     <div class="status-badge momentum">
                         <span class="icon">⚡</span> <span data-i18n="lbl_momentum">Momentum</span>: <span id="hdr-momentum">--</span>
-                        <span class="info-tip" data-tip="Ritmul general al pietei: ACTIV = normal, RIDICAT = crestere, MAXIM = oportunitate majora.">?</span>
+                        <span class="info-tip" data-tip="Ritmul general al pietei: ACTIV = normal, RIDICAT = cerere in crestere, MAXIM = oportunitate majora de castig.">?</span>
                     </div>
                 </div>
             </header>
-
-            <!-- ALERTA NATIONALA MICRO-POPUP -->
-            <div id="national-alert-box" class="national-alert-box" style="display:none;">
-                <span class="nat-icon">🚨</span>
-                <div class="nat-content">
-                    <strong id="nat-alert-title">--</strong>
-                    <span id="nat-alert-desc">--</span>
-                </div>
-                <button class="close-nat-btn" id="close-nat-btn" aria-label="Inchide">&times;</button>
-            </div>
 
             <div class="dashboard-grid">
                 
@@ -124,28 +114,21 @@
                             <span class="snap-icon" id="snap-w-icon">☁️</span>
                             <div class="snap-info">
                                 <h4 id="snap-w-temp">--°C</h4>
-                                <p id="snap-w-desc" class="neutral">Vreme normala</p>
-                            </div>
-                        </div>
-                        <div class="snap-item traffic">
-                            <span class="snap-icon" id="snap-tr-icon">🚦</span>
-                            <div class="snap-info">
-                                <h4 id="snap-tr-status">Calculam...</h4>
-                                <p id="snap-tr-desc" class="neutral">Trafic normal</p>
+                                <p id="snap-w-desc" class="neutral">Vreme normala (+0%)</p>
                             </div>
                         </div>
                         <div class="snap-item event">
-                            <span class="snap-icon" id="snap-e-icon">🎫</span>
+                            <span class="snap-icon">🎫</span>
                             <div class="snap-info">
                                 <h4 id="snap-e-status">Tranzit</h4>
-                                <p id="snap-e-desc" class="neutral">Niciun eveniment</p>
+                                <p id="snap-e-desc" class="neutral">Niciun eveniment (+0%)</p>
                             </div>
                         </div>
-                        <div class="snap-item news">
-                            <span class="snap-icon" id="snap-n-icon">📰</span>
+                        <div class="snap-item trend">
+                            <span class="snap-icon" id="snap-t-icon">↘️</span>
                             <div class="snap-info">
-                                <h4 id="snap-n-title">Fara stiri</h4>
-                                <p id="snap-n-desc" class="neutral">Atmosfera linistita</p>
+                                <h4>Tendinta 3h</h4>
+                                <p id="snap-t-desc" class="neutral">Stabil / Scadere</p>
                             </div>
                         </div>
                     </div>
@@ -177,6 +160,8 @@
                         <span id="profit-indicator" class="mul-badge low">SCAZUT</span>
                     </div>
                 </section>
+
+
 
                 <!-- SECTIUNEA 3.5: PEAK HOURS -->
                 <section class="glass-card peak-card" id="peak-card">
