@@ -196,11 +196,84 @@ body::before {
     .dashboard-header h2 { font-size: 2.8rem; }
 }
 @media (max-width: 768px) {
+    /* FIX 8: Kill lateral blue glow overflow */
+    body { overflow-x: hidden; }
+    body::before { display: none; }
+
+    /* FIX 2: Compact header */
+    #top-bar { height: 60px; padding: 0 16px; }
+    .logo { height: 34px; }
+    .brand-text h1 { font-size: 1rem; letter-spacing: 1px; }
+    .top-bar-left { gap: 12px; }
+
+    /* FIX 3: Compact lang button */
+    .lang-btn { padding: 6px 12px; font-size: 0.85rem; border-radius: 8px; gap: 6px; }
+    .lang-dropdown { width: 200px; }
+    .lang-opt { padding: 12px 18px; font-size: 0.9rem; }
+
+    /* Hamburger menu */
     .mobile-menu-btn { display: block; }
-    .city-sidebar { position: fixed; top: 70px; left: 0; bottom: 0; transform: translateX(-100%); width: 85%; max-width: 320px; }
+
+    /* Sidebar drawer */
+    .city-sidebar { position: fixed; top: 60px; left: 0; bottom: 0; transform: translateX(-100%); width: 85%; max-width: 320px; padding: 24px 12px; }
     .city-sidebar.show { transform: translateX(0); box-shadow: 10px 0 50px rgba(0,0,0,0.8); }
-    .main-content { padding: 24px 16px; }
-    .header-status { flex-direction: column; width: 100%; }
-    .status-badge { justify-content: flex-start; width: 100%; }
-    .snap-item { width: 100%; flex: 100%; }
+    .sidebar-title { font-size: 0.75rem; margin-bottom: 16px; padding-left: 8px; }
+
+    /* FIX 7: Touch-friendly city buttons */
+    .city-btn { min-height: 48px; padding: 14px 16px; font-size: 1rem; margin-bottom: 4px; border-radius: 10px; }
+
+    /* Layout */
+    .app-layout { margin-top: 60px; height: calc(100vh - 60px); }
+    .main-content { padding: 20px 14px; }
+
+    /* FIX 1: Smaller city title */
+    .header-main h2 { font-size: 2.2rem; letter-spacing: 0; }
+    .motivational-text { font-size: 0.95rem; }
+    .dashboard-header { gap: 16px; padding-bottom: 16px; margin-bottom: 24px; }
+
+    /* Badges responsive */
+    .header-status { flex-direction: column; width: 100%; gap: 8px; }
+    .status-badge { justify-content: flex-start; width: 100%; padding: 10px 16px; font-size: 0.85rem; border-radius: 20px; }
+
+    /* Grid full width */
+    .dashboard-grid { gap: 16px; }
+    .snapshot-card, .demand-card, .earning-card, .action-card, .orders-card, .strategy-card { grid-column: span 12; }
+
+    /* Snapshot items vertical */
+    .snap-item { width: 100%; flex: 100%; padding: 14px 16px; border-radius: 12px; }
+    .snap-icon { font-size: 2rem; }
+    .snap-info h4 { font-size: 1.2rem; }
+
+    /* FIX 4: Sync time readable */
+    .sync-time { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+    /* FIX 5: Smaller progress bar values */
+    .progress-val { font-size: 1.6rem; width: 70px; }
+    .card-subtext { font-size: 0.8rem; }
+    .glass-card { padding: 20px 16px; border-radius: 16px; }
+    .card-title { font-size: 0.8rem; margin-bottom: 14px; }
+
+    /* FIX 6: Compact card internals */
+    .action-list li { gap: 12px; font-size: 0.9rem; }
+    .a-icon { width: 38px; height: 38px; font-size: 1.1rem; border-radius: 10px; }
+    .m-card { padding: 12px 14px; }
+    .mc-type { font-size: 0.9rem; }
+    .step { gap: 14px; padding: 14px; }
+    .step-txt { font-size: 0.9rem; }
+    .step-num { font-size: 0.7rem; height: 26px; padding: 0 10px; }
+    .strategy-steps { gap: 14px; }
+
+    /* Multiplier compact */
+    .multiplier-box { padding-top: 12px; }
+    .mul-label { font-size: 0.75rem; }
+    .mul-badge { font-size: 0.75rem; padding: 3px 10px; }
+}
+
+/* Ultra-small screens */
+@media (max-width: 400px) {
+    .brand-text h1 { font-size: 0.85rem; }
+    .lang-btn { padding: 5px 10px; font-size: 0.8rem; }
+    .header-main h2 { font-size: 1.8rem; }
+    .progress-val { font-size: 1.4rem; width: 60px; }
+    .status-badge { font-size: 0.8rem; padding: 8px 12px; }
 }
