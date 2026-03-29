@@ -914,29 +914,51 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
         document.getElementById('motivational-message').innerText = motivMsg;
         
         // Snapshot
+        // 1. Meteo
         document.getElementById('snap-w-icon').innerText = getWeatherIcon(code);
         document.getElementById('snap-w-temp').innerText = `${Math.round(temp)}°C`;
-        document.getElementById('snap-w-desc').innerText = `${wReason} (+${wImpact}%)`;
+        document.getElementById('snap-w-desc').innerText = `${wReason}`;
         document.getElementById('snap-w-desc').className = wImpact > 0 ? 'warning' : 'neutral';
         
+        // 2. Trafic Logic
+        let trStatus = 'Fluid'; let trDesc = 'Timp ideal'; let trClass = 'positive'; let trIcon = '🚦';
+        if (demandScore > 80) { trStatus = 'Aglomerat'; trDesc = 'Intarzieri >10m'; trClass = 'warning'; trIcon = '🚨'; }
+        else if (demandScore > 55) { trStatus = 'Moderat'; trDesc = 'Cateva blocaje'; trClass = 'neutral'; trIcon = '🚕'; }
+        
+        document.getElementById('snap-tr-icon').innerText = trIcon;
+        document.getElementById('snap-tr-status').innerText = trStatus;
+        document.getElementById('snap-tr-desc').innerText = trDesc;
+        document.getElementById('snap-tr-desc').className = trClass;
+
+        // 3. Evenimente
+        document.getElementById('snap-e-icon').innerText = activeEvents.length > 0 ? '🎫' : '📍';
         document.getElementById('snap-e-status').innerText = eventStatus;
-        document.getElementById('snap-e-desc').innerText = `${eventDesc} (+${eImpact}%)`;
+        document.getElementById('snap-e-desc').innerText = eventDesc;
         document.getElementById('snap-e-desc').className = eImpact > 0 ? 'warning' : 'neutral';
 
-        document.getElementById('snap-t-icon').innerText = trendIcon;
-        document.getElementById('snap-t-desc').innerText = trendReason;
-        document.getElementById('snap-t-desc').className = trendClass;
+        // 4. News
+        if (cityNews.length > 0) {
+            document.getElementById('snap-n-icon').innerText = '📰';
+            document.getElementById('snap-n-title').innerText = cityNews[0].title;
+            document.getElementById('snap-n-desc').innerText = cityNews[0].content;
+            document.getElementById('snap-n-desc').className = cityNews[0].sentiment === 'positive' ? 'positive' : 'neutral';
+        } else {
+            document.getElementById('snap-n-icon').innerText = '☕';
+            document.getElementById('snap-n-title').innerText = 'Fara Stiri';
+            document.getElementById('snap-n-desc').innerText = 'Atmosfera linistita local';
+            document.getElementById('snap-n-desc').className = 'neutral';
+        }
 
         // National Alert Micro-Popup
         const natBox = document.getElementById('national-alert-box');
-        if (natBox && nationalAlert && nationalAlert.active) {
+        if (nationalAlert && nationalAlert.active) {
             natBox.style.display = 'flex';
             document.getElementById('nat-alert-title').innerText = nationalAlert.title;
             document.getElementById('nat-alert-desc').innerText = nationalAlert.message;
             document.getElementById('close-nat-btn').onclick = () => {
                 natBox.style.display = 'none';
             };
-        } else if (natBox) {
+        } else {
             natBox.style.display = 'none';
         }
 
@@ -978,9 +1000,6 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
         const mulEl = document.getElementById('profit-indicator');
         mulEl.className = `mul-badge ${mulBadge}`;
         mulEl.innerText = mulText;
-        
-        // Apply translations right away
-        applyTranslations();
     });
 }
 
