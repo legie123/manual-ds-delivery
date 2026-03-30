@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=15">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FFB800">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -86,21 +86,16 @@
             <!-- HEADER GLOBAL -->
             <header class="dashboard-header">
                 <div class="header-main">
-                    <h2 id="city-title">Se incarca...</h2>
-                    <p id="motivational-message" class="motivational-text">Calculam status live...</p>
+                    <p class="mul-label" style="margin-bottom:4px;" data-i18n="title_dashboard">CERERE GLOBALA</p>
+                    <h2 id="hdr-demand">--%</h2>
+                    <div id="motivational-message" class="motivational-text">Se incarca datele tactice...</div>
                 </div>
                 <div class="header-status">
-                    <div class="status-badge hot">
-                        <span class="icon">🔥</span> <span data-i18n="title_dashboard">Cerere</span>: <span id="hdr-demand">--%</span>
-                        <span class="info-tip" data-tip="Estimare volum comenzi. Cu cat e mai mare, cu atat mai multe curse disponibile.">?</span>
-                    </div>
-                    <div class="status-badge profit">
-                        <span class="icon">💰</span> <span data-i18n="title_profit">Profit Minim</span>: <span id="hdr-profit">--%</span>
-                        <span class="info-tip" data-tip="Potential de castig calculat din cerere, multiplicator si conditii meteo.">?</span>
+                    <div class="status-badge hot pulsing">
+                        <span data-i18n="title_profit">POTENTIAL MINIM DE CASTIG</span>: <span id="hdr-profit" style="margin-left:4px;">--%</span>
                     </div>
                     <div class="status-badge momentum">
-                        <span class="icon">⚡</span> <span data-i18n="lbl_momentum">Momentum</span>: <span id="hdr-momentum">--</span>
-                        <span class="info-tip" data-tip="Ritmul general al pietei: ACTIV = normal, RIDICAT = crestere, MAXIM = oportunitate majora.">?</span>
+                        <span data-i18n="lbl_momentum">MOMENTUM</span>: <span id="hdr-momentum" style="margin-left:4px;">--</span>
                     </div>
                 </div>
             </header>

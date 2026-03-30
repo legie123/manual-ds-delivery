@@ -516,7 +516,7 @@ function loadCity(cityId) {
     
     setTimeout(() => {
         // Header
-        document.getElementById('city-title').innerText = data.name;
+        // document.getElementById('city-title').innerText = data.name;
         
         // Sectiunea 4: Best Action Plan
         const topZones = data.zones.map(z => z.name).join(', ');
