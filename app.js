@@ -145,107 +145,39 @@ const commonData = {
     ]
 };
 
-const motivationals = {
-    bucuresti: [
-        "Astăzi orașul te vrea în mișcare, nu în pauză. Bagă mare! 🚀",
-        "Azi ai șanse să faci o tură frumoasă dacă joci corect.",
-        "De la Victoriei la Unirii, fiecare cursă e o nouă victorie azi.",
-        "Cafeaua e bună, dar comenzile bune sunt și mai bune.",
-        "E trafic? Nu-i bai, noroc că știi toate scurtăturile din oraș!"
-    ],
-    timisoara: [
-        "Bega curge lin, dar comenzile curg și mai repede azi!",
-        "Fruncea sus! Azi e o zi excelentă pentru livrări record în Timișoara.",
-        "Complexul fierbe, centrul te așteaptă. Bagă mare, bănățeane!",
-        "Prinde orașul pe viteza bună și lasă comenzile să vină. 🌹",
-        "Timișoara e a ta azi. Fii cel mai bun campion din trafic!"
-    ],
-    cluj: [
-        "Tot centrul e al tău, iar dealurile le urci cu zâmbetul pe buze!",
-        "Azi facem record de livrări la umbra Feleacului. ✌️",
-        "Faină vreme pe Mărăști, azi spargem topurile în Cluj!",
-        "Clujul nu e doar tech, e și viteză! Demonstrează-le cine e boss-ul.",
-        "Azi ai șanse să faci o tură faină tare dacă joci strategic. 🏔️"
-    ],
-    iasi: [
-        "De pe Copou până-n Tudor, tu duci energia orașului mai departe.",
-        "Iașul trăiește prin viteză și zâmbete. Scoate asul din mânecă azi!",
-        "Capitala Moldovei e activă. Arată-le tuturor cum se livrează la superlativ! 🏰",
-        "Un curier excelent, un oraș plin de comenzi. Combinația perfectă!",
-        "Ziua e a ta în Iași. Ia-o la pas alert, vine super-tipsul!"
-    ],
-    brasov: [
-        "Muntele te privește, dar tu ești mai la înălțime cu rating-ul de azi!",
-        "Aer curat, comenzi proaspete. Brașovul e pe frecvența ta! ⛰️",
-        "Orașul forfotește, iar tu reacționezi instant. Hai să dominăm strada!",
-        "Din Centru până-n Coresi, ești peste tot și ești cel mai rapid.",
-        "Brașovul frumos te răsplătește mereu când ești rapid ca vântul."
-    ],
-    sibiu: [
-        "Piața Mare te cheamă la datorie. Fă-i pe toți să aprecieze viteza ta!",
-        "Sibiul bate ceasul, tu bați recordul de livrări azi. Succes! 🏘️",
-        "Fiecare piatră cubică e un pas spre target. Hai că poți!",
-        "Zile faine, trasee libere, clienți generoși. Bucură-te de Sibiu!",
-        "Atmosferă premium, livrări pe măsură. Tu faci legea azi."
-    ],
-    arad: [
-        "Pe Bulevardul Revoluției facem noi revoluția comenzilor rapide! 🌉",
-        "Spre Micalaca sau în centru, azi te miști cu talent de campion.",
-        "Aradul s-a trezit, și o mare de oportunități te așteaptă la colț.",
-        "Încarcă-te cu o doză de energie și cucerește străzile din Arad!",
-        "Azi facem artă din livrare. Timpul e de partea ta."
-    ],
-    oradea: [
-        "În Oradea curierii de top zâmbesc mai mult, livrează mai repede! ♨️",
-        "Băile Felix așteaptă, dar Lotus cere întăriri! Fii eroul lor.",
-        "Oraș frumos, curier rapid! Arată-le tuturor de ce ești boss.",
-        "Piața Unirii e un hotspot. Intră în el și adună tot ce pică greu!",
-        "Liniștea din Oradea o spargi doar tu prin eficiența zilnică."
-    ],
-    'targu-mures': [
-        "Din Centru până-n Tudor, Târgu Mureș se bucură de cursa ta azi.",
-        "Ești mai rapid decât zvonurile din oraș! Ține-o tot așa! 🚀",
-        "Zile bune, tips-uri bune. Apasă pe pedală și bucură-te de traseu.",
-        "Orașul Mureș te răsplătește cu o tură lejeră, dar foarte profitabilă.",
-        "Faci mișcare, iei și bani, iar aerul e mereu excelent în Mureș."
-    ],
-    ploiesti: [
-        "Orașul aurului negru are nevoie de aurul vitezei tale! 🛢️",
-        "Traficul pe Republicii e scuză pentru alții, nu pentru tine.",
-        "AFI e plin, tu ești fresh. Ia-le pe toate și rupe norma azi!",
-        "Ploieștiul e pe val, prinde și tu valul ca un surfer adevărat.",
-        "Fiecare cursă contează. Fă din Ploiești terenul tău de joacă."
-    ],
-    constanta: [
-        "Briza mării te împinge de la spate, astăzi totul merge șnur! ⚓",
-        "Tomis și City Park sunt gata de start. Tu ești pregătit?",
-        "Litoralul e al tău azi, pescărușii doar urmăresc viteza ta.",
-        "Nicio furtună nu te oprește pe tine. Azi e zi de profit marin!",
-        "Indiferent de sezon, Constanța are nevoie de cel mai bun curier."
-    ],
-    fallback: [
-        "Astăzi orașul te vrea în mișcare, nu în pauză.",
-        "Prinde orașul pe viteza bună și lasă comenzile să vină.",
-        "Cafeaua e bună, dar comenzile bune sunt și mai bune.",
-        "Azi ai șanse să faci o tură frumoasă dacă joci corect."
-    ]
-};
+const motivationals = [
+    "Comanda e la ușă. Nu răspunde... o las pe preș.",
+    "Baterie 10%. Picioare 5%. Tips 0%. Zâmbim și livrăm!",
+    "Dacă traficul era sport olimpic, luam aurul la sărituri peste borduri.",
+    "Singurul algoritm de care ascult e mirosul de pizza din geantă.",
+    "M-a sunat clientul că vine jos. Evident că am așteptat 10 minute.",
+    "Scara blocului e beznă, liftul e stricat, comanda e la etajul 10. Normal.",
+    "Ploaie, vânt, zăpadă? Nu-i nimic, clientul vrea pufuleți de la 5 km.",
+    "A zis 'lasă la ușă' dar a scos capul când am pus punga jos. Ne-am speriat amândoi.",
+    "Sincer, GPS-ul e mai confuz decât mine prin cartierul ăsta.",
+    "Cea mai grea cursă? Shaorma aia blană, mirosind în mașină pe 5 kilometri.",
+    "Sunt curier: jumătate om, jumătate rucsac, 100% obosit.",
+    "Nu plânge că e roșu la semafor, plânge că e iar o comandă de supe pe drum.",
+    "Timp estimat: 3 min. Timp real la restaurant: O șanșă la loterie.",
+    "Clientul zice: „Las-o pe clanță”. Mda, la o ușă modernă fără clanță.",
+    "Livrăm zâmbete, dar mai mult fast-food rece dacă te zgârcești la bacșiș.",
+    "Când zice <Ajung imediat afară>, poți să închizi aplicația direct.",
+    "Curieratul: unde te bucuri sincer când vezi un lift funcțional la bloc de 10 etaje."
+];
 
 function getDailyMotivational(cityId) {
-    const quotes = motivationals[cityId] || motivationals['fallback'];
+    // Schimba gluma in functie de minutul curent (se actualizeaza la un anumit interval)
     const now = new Date();
-    // Daily block
-    const dateStr = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
-    // Intraday block (every 8 hours) changes to keep it fresh
-    const timeBlock = Math.floor(now.getHours() / 8); 
-    const seed = dateStr + '-' + timeBlock;
+    // Fiecare 5 minute se da render din nou
+    const minBlock = Math.floor(now.getMinutes() / 5); 
+    const seed = cityId + '-' + now.getHours() + '-' + minBlock;
     
     let hash = 0;
     for (let i = 0; i < seed.length; i++) {
         hash = seed.charCodeAt(i) + ((hash << 5) - hash);
     }
-    const index = Math.abs(hash) % quotes.length;
-    return quotes[index];
+    const index = Math.abs(hash) % motivationals.length;
+    return "💡 " + motivationals[index];
 }
 
 // ====== PWA INSTALL PROMPT ======
@@ -811,7 +743,7 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
     let eImpact = 0;
     let activeEvents = [];
     cityEvents.forEach(ev => {
-        if (ev.status === 'active') {
+        if (ev.status === 'live' || ev.status === 'upcoming' || ev.status === 'active') {
             eImpact += ev.impact_score || ev.impactScore || 0;
             activeEvents.push(ev.name);
         }
@@ -907,23 +839,27 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
         const syncEl = document.getElementById('sync-time');
         if (syncEl) syncEl.innerText = `Sync: ${new Date().toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}`;
         
-        // Header
-        document.getElementById('hdr-demand').innerText = `${demandScore}%`;
-        document.getElementById('hdr-profit').innerText = `${earningPotential}%`;
-        document.getElementById('hdr-momentum').innerText = momentum;
-        document.getElementById('motivational-message').innerText = motivMsg;
+        // Header (Legacy compatibility)
+        const hdrDemand = document.getElementById('hdr-demand');
+        if (hdrDemand) hdrDemand.innerText = `${demandScore}%`;
+        const hdrProfit = document.getElementById('hdr-profit');
+        if (hdrProfit) hdrProfit.innerText = `${earningPotential}%`;
+        const hdrMomentum = document.getElementById('hdr-momentum');
+        if (hdrMomentum) hdrMomentum.innerText = momentum;
+        const msgEl = document.getElementById('motivational-message');
+        if (msgEl) msgEl.innerText = motivMsg;
         
-        // Snapshot
+        // Snapshot / Tactic Module
         // 1. Meteo
         document.getElementById('snap-w-icon').innerText = getWeatherIcon(code);
         document.getElementById('snap-w-temp').innerText = `${Math.round(temp)}°C`;
         document.getElementById('snap-w-desc').innerText = `${wReason}`;
         document.getElementById('snap-w-desc').className = wImpact > 0 ? 'warning' : 'neutral';
         
-        // 2. Trafic Logic
+        // 2. Trafic Logic (Dedus pe baza algoritmului Smart)
         let trStatus = 'Fluid'; let trDesc = 'Timp ideal'; let trClass = 'positive'; let trIcon = '🚦';
-        if (demandScore > 80) { trStatus = 'Aglomerat'; trDesc = 'Intarzieri >10m'; trClass = 'warning'; trIcon = '🚨'; }
-        else if (demandScore > 55) { trStatus = 'Moderat'; trDesc = 'Cateva blocaje'; trClass = 'neutral'; trIcon = '🚕'; }
+        if (demandScore > 80 || wImpact > 30) { trStatus = 'Aglomerat'; trDesc = 'Intarzieri >10m'; trClass = 'warning'; trIcon = '🚨'; }
+        else if (demandScore > 55 || wImpact > 10) { trStatus = 'Moderat'; trDesc = 'Cateva blocaje'; trClass = 'neutral'; trIcon = '🚕'; }
         
         document.getElementById('snap-tr-icon').innerText = trIcon;
         document.getElementById('snap-tr-status').innerText = trStatus;
@@ -941,42 +877,82 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
             document.getElementById('snap-n-icon').innerText = '📰';
             document.getElementById('snap-n-title').innerText = cityNews[0].title;
             document.getElementById('snap-n-desc').innerText = cityNews[0].content;
-            document.getElementById('snap-n-desc').className = cityNews[0].sentiment === 'positive' ? 'positive' : 'neutral';
+            document.getElementById('snap-n-desc').className = cityNews[0].sentiment === 'positive' ? 'positive' : 'warning';
         } else {
-            document.getElementById('snap-n-icon').innerText = '☕';
-            document.getElementById('snap-n-title').innerText = 'Fara Stiri';
-            document.getElementById('snap-n-desc').innerText = 'Atmosfera linistita local';
-            document.getElementById('snap-n-desc').className = 'neutral';
+            document.getElementById('snap-n-icon').innerText = '📰';
+            document.getElementById('snap-n-title').innerText = 'Fara Alerte';
+            document.getElementById('snap-n-desc').innerText = 'Totul este OK local';
+            document.getElementById('snap-n-desc').className = 'positive';
         }
 
         // National Alert Micro-Popup
         const natBox = document.getElementById('national-alert-box');
-        if (nationalAlert && nationalAlert.active) {
+        if (nationalAlert && nationalAlert.active && natBox) {
             natBox.style.display = 'flex';
             document.getElementById('nat-alert-title').innerText = nationalAlert.title;
             document.getElementById('nat-alert-desc').innerText = nationalAlert.message;
             document.getElementById('close-nat-btn').onclick = () => {
                 natBox.style.display = 'none';
             };
-        } else {
+        } else if (natBox) {
             natBox.style.display = 'none';
         }
 
-        // Progress Bars + Dynamic Color Coding (Faza 3)
+        // RADAR CURIER (Cerere)
         const demandBar = document.getElementById('demand-bar');
-        const profitBar = document.getElementById('profit-bar');
+        if (demandBar) {
+            demandBar.style.width = `${demandScore}%`;
+            document.getElementById('demand-val').innerText = `${demandScore}%`;
+            const getLevel = (v) => v < 40 ? 'level-low' : v < 60 ? 'level-mid' : v < 80 ? 'level-high' : 'level-max';
+            demandBar.className = `progress-fill ${getLevel(demandScore)}`;
+        }
         
-        demandBar.style.width = `${demandScore}%`;
-        document.getElementById('demand-val').innerText = `${demandScore}%`;
-        document.getElementById('demand-reason').innerText = `Ora curenta (${baseDemand}%) + Eveniment (${eImpact}%) + Meteo (${wImpact}%)`;
+        // Radar Recommendation Logic
+        const radarRec = document.getElementById('radar-recommendation');
+        if (radarRec) {
+            let topZoneText = document.getElementById('act-zones');
+            let zoneStr = topZoneText ? topZoneText.innerText : "Centrul Orasului";
+            if (demandScore > 80) {
+                radarRec.innerText = `Directioneaza-te imediat spre ${zoneStr.split(',')[0]} (Volum Maxim) 🚀`;
+                radarRec.style.color = '#fff';
+            } else if (demandScore > 50) {
+                radarRec.innerText = `Zone bune de preluare: ${zoneStr}. Ramai conectat.`;
+                radarRec.style.color = '#ddd';
+            } else {
+                radarRec.innerText = `Cerere scazuta. Repozitioneaza-te spre noduri comerciale.`;
+                radarRec.style.color = '#aaa';
+            }
+        }
 
-        profitBar.style.width = `${earningPotential}%`;
-        document.getElementById('profit-val').innerText = `${earningPotential}%`;
+        // IMPACT MULTIPLICATOR (Profit & Evenimente combinate)
+        const profitBar = document.getElementById('profit-bar');
+        if (profitBar) {
+            profitBar.style.width = `${earningPotential}%`;
+            document.getElementById('profit-val').innerText = `${earningPotential}%`;
+            const getLevel = (v) => v < 40 ? 'level-low' : v < 60 ? 'level-mid' : v < 80 ? 'level-high' : 'level-max';
+            profitBar.className = `progress-fill earning-grad ${getLevel(earningPotential)}`;
+        }
         
-        // 3.1 Color-coded progress bars
-        const getLevel = (v) => v < 40 ? 'level-low' : v < 60 ? 'level-mid' : v < 80 ? 'level-high' : 'level-max';
-        demandBar.className = `progress-fill ${getLevel(demandScore)}`;
-        profitBar.className = `progress-fill earning-grad ${getLevel(earningPotential)}`;
+        const mulEl = document.getElementById('profit-indicator');
+        if (mulEl) {
+            mulEl.className = `mul-badge ${mulBadge}`;
+            mulEl.innerText = mulText;
+        }
+
+        // Sub-indicatori Impact
+        const peakInd = document.getElementById('impact-peak-indicator');
+        if (peakInd) {
+            if (h >= 11 && h <= 14) { peakInd.innerText = "PRANZ (+30% Cerere)"; peakInd.style.color = "#FF9800"; }
+            else if (h >= 18 && h <= 21) { peakInd.innerText = "CINA (+45% Cerere)"; peakInd.style.color = "#FF5722"; }
+            else { peakInd.innerText = "Normal"; peakInd.style.color = "#4CAF50"; }
+        }
+
+        const evInd = document.getElementById('impact-event-indicator');
+        if (evInd) {
+            if (eImpact > 10) { evInd.innerText = `Major (+${eImpact}%)`; evInd.style.color = "#F44336"; }
+            else if (eImpact > 0) { evInd.innerText = `Moderat (+${eImpact}%)`; evInd.style.color = "#FFB800"; }
+            else { evInd.innerText = "Fara Impact"; evInd.style.color = "#4CAF50"; }
+        }
         
         // 3.2 Pulse on status-badge when demand > 75%
         const hotBadge = document.querySelector('.status-badge.hot');
@@ -989,17 +965,14 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
         }
         
         // 3.3 Glow effect on cards based on demand
-        const glowCards = document.querySelectorAll('.snapshot-card, .demand-card, .earning-card');
+        // Since sections are now tactic/radar/impact, we target those
+        const glowCards = document.querySelectorAll('.tactic-card, .radar-card, .impact-card');
         glowCards.forEach(card => {
             card.classList.remove('glow-low', 'glow-mid', 'glow-high', 'glow-max');
             if (demandScore >= 75) card.classList.add('glow-max');
             else if (demandScore >= 55) card.classList.add('glow-high');
             else if (demandScore >= 40) card.classList.add('glow-mid');
         });
-        
-        const mulEl = document.getElementById('profit-indicator');
-        mulEl.className = `mul-badge ${mulBadge}`;
-        mulEl.innerText = mulText;
     });
 }
 
@@ -1024,3 +997,33 @@ if ('IntersectionObserver' in window) {
         });
     });
 }
+// tab scripts
+document.addEventListener('DOMContentLoaded', () => {
+    const hubBtns = document.querySelectorAll('.hub-btn');
+    const hubPanes = document.querySelectorAll('.hub-pane');
+
+    hubBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active from all
+            hubBtns.forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'transparent';
+                b.style.border = '1px solid rgba(255,255,255,0.1)';
+                b.style.color = '#ccc';
+            });
+            hubPanes.forEach(p => p.style.display = 'none');
+
+            // Add active to clicked
+            btn.classList.add('active');
+            btn.style.background = 'rgba(255,184,0,0.1)';
+            btn.style.border = '1px solid rgba(255,184,0,0.3)';
+            btn.style.color = '#fff';
+
+            const tabId = btn.getAttribute('data-tab');
+            const targetPane = document.getElementById('tab-' + tabId);
+            if (targetPane) {
+                targetPane.style.display = 'block';
+            }
+        });
+    });
+});

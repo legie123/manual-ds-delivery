@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=15">
+    <link rel="stylesheet" href="style.css?v=17">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FFB800">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -84,19 +84,11 @@
         <main id="main-content" class="main-content loaded">
             
             <!-- HEADER GLOBAL -->
-            <header class="dashboard-header">
-                <div class="header-main">
-                    <p class="mul-label" style="margin-bottom:4px;" data-i18n="title_dashboard">CERERE GLOBALA</p>
-                    <h2 id="hdr-demand">--%</h2>
-                    <div id="motivational-message" class="motivational-text">Se incarca datele tactice...</div>
-                </div>
-                <div class="header-status">
-                    <div class="status-badge hot pulsing">
-                        <span data-i18n="title_profit">POTENTIAL MINIM DE CASTIG</span>: <span id="hdr-profit" style="margin-left:4px;">--%</span>
-                    </div>
-                    <div class="status-badge momentum">
-                        <span data-i18n="lbl_momentum">MOMENTUM</span>: <span id="hdr-momentum" style="margin-left:4px;">--</span>
-                    </div>
+            <header class="dashboard-header" style="justify-content: center; text-align: center; border-bottom: none;">
+                <div class="header-main" style="width: 100%;">
+                    <p class="mul-label" style="margin-bottom:8px; opacity:0.7;" data-i18n="title_dashboard">CERERE GLOBALA</p>
+                    <h2 id="hdr-demand" style="font-size: 4rem; margin-bottom: 12px;">--%</h2>
+                    <div id="motivational-message" class="motivational-text" style="font-size: 1.25rem; font-style: italic; color: #fff; background: rgba(255, 184, 0, 0.15); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255, 184, 0, 0.3); display: inline-block; max-width: 90%;">Se incarca glumele de curierat...</div>
                 </div>
             </header>
 
@@ -111,10 +103,9 @@
             </div>
 
             <div class="dashboard-grid">
-                
-                <!-- SECTIUNEA 1: LIVE SNAPSHOT -->
-                <section class="glass-card snapshot-card">
-                    <h3 class="card-title"><span data-i18n="title_snapshot">Live Snapshot</span> <span class="info-tip" data-tip="Date in timp real: temperatura actuala, evenimente active si tendinta cererii pe urmatoarele 3 ore.">?</span> <span id="sync-time" class="sync-time" data-i18n="lbl_sync">Sync: --:--</span></h3>
+                <!-- MODULE 1: MODUL TACTIC -->
+                <section class="glass-card tactic-card snapshot-card">
+                    <h3 class="card-title"><span data-i18n="title_snapshot">Modul Tactic Live</span> <span class="info-tip" data-tip="Date in timp real: vreme, trafic dedus, evenimente si stiri din dispecerat.">?</span> <span id="sync-time" class="sync-time" data-i18n="lbl_sync">Sync: --:--</span></h3>
                     <div class="snapshot-grid">
                         <div class="snap-item meteo">
                             <span class="snap-icon" id="snap-w-icon">☁️</span>
@@ -127,7 +118,7 @@
                             <span class="snap-icon" id="snap-tr-icon">🚦</span>
                             <div class="snap-info">
                                 <h4 id="snap-tr-status">Calculam...</h4>
-                                <p id="snap-tr-desc" class="neutral">Trafic normal</p>
+                                <p id="snap-tr-desc" class="neutral">Trafic estimat</p>
                             </div>
                         </div>
                         <div class="snap-item event">
@@ -140,137 +131,111 @@
                         <div class="snap-item news">
                             <span class="snap-icon" id="snap-n-icon">📰</span>
                             <div class="snap-info">
-                                <h4 id="snap-n-title">Fara stiri</h4>
-                                <p id="snap-n-desc" class="neutral">Atmosfera linistita</p>
+                                <h4 id="snap-n-title">Fara alerte</h4>
+                                <p id="snap-n-desc" class="neutral">Status OK</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- SECTIUNEA 2: DEMAND ENGINE -->
-                <section class="glass-card demand-card">
-                    <h3 class="card-title">Cerere Estimata <span class="info-tip" data-tip="Volum estimat de comenzi in zona ta, calculat din: ora curenta + conditii meteo + evenimente locale. Refresh la 5 min.">?</span></h3>
+                <!-- MODULE 2: RADARUL CURIERULUI -->
+                <section class="glass-card radar-card demand-card">
+                    <h3 class="card-title">Radar Curier & Zone Active <span class="info-tip" data-tip="Volum estimat si cele mai bune zone in care sa te plasezi chiar acum.">?</span></h3>
                     <div class="progress-container">
                         <div class="progress-track">
                             <div id="demand-bar" class="progress-fill" style="width: 0%;"></div>
                         </div>
                         <span id="demand-val" class="progress-val">0%</span>
                     </div>
-                    <p id="demand-reason" class="card-subtext">Preluare date server...</p>
+                    <div class="radar-action-box" style="margin-top: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; border-left: 3px solid #ffb800;">
+                        <strong style="color:#ffb800; font-size:12px; display:block; margin-bottom:4px;">RECOMANDARE IESIRE:</strong>
+                        <span id="radar-recommendation" style="font-size:14px; font-weight:600; color:#fff;">Preluare date...</span>
+                    </div>
                 </section>
 
-                <!-- SECTIUNEA 3: EARNING POTENTIAL -->
-                <section class="glass-card earning-card">
-                    <h3 class="card-title">Potential Castig <span class="info-tip" data-tip="Castig estimat pe baza cererii curente si a multiplicatorilor activi. Mai mare in ore de varf si pe vreme rea.">?</span></h3>
+                <!-- MODULE 3: IMPACT MULTIPLICATOR -->
+                <section class="glass-card impact-card earning-card">
+                    <h3 class="card-title">Impact Multiplicator & Profit <span class="info-tip" data-tip="Cum se traduc evenimentele si orele de varf in profitul tau actual.">?</span></h3>
                     <div class="progress-container earning-glow">
                         <div class="progress-track">
                             <div id="profit-bar" class="progress-fill earning-grad" style="width: 0%;"></div>
                         </div>
                         <span id="profit-val" class="progress-val">0%</span>
                     </div>
-                    <div class="multiplier-box">
-                        <span class="mul-label">Stadiu Multiplicator:</span>
+                    
+                    <div class="multiplier-box" style="margin-bottom:12px;">
+                        <span class="mul-label">Status Curent:</span>
                         <span id="profit-indicator" class="mul-badge low">SCAZUT</span>
                     </div>
-                </section>
 
-                <!-- SECTIUNEA 3.5: PEAK HOURS -->
-                <section class="glass-card peak-card" id="peak-card">
-                    <h3 class="card-title"><span data-i18n="lbl_peak">Ore de Varf</span> <span class="info-tip" data-tip="Intervalele cu cel mai mare volum de comenzi. In aceste ore cererea creste semnificativ si castigul este mai mare.">?</span></h3>
-                    <div class="peak-slots">
-                        <div class="peak-slot" id="peak-lunch">
-                            <div class="peak-header"><span class="peak-emoji">🍽️</span><strong data-i18n="lbl_peak_lunch">PRANZ</strong></div>
-                            <div class="peak-time">10:30 — 15:30</div>
-                            <div class="peak-boost"><span class="boost-tag hot" data-i18n="lbl_demand">+30% Cerere</span><span class="boost-tag profit" data-i18n="lbl_profit">+25% Profit</span></div>
+                    <div style="display:flex; gap:10px; margin-top:12px;">
+                        <div style="flex:1; background:rgba(0,0,0,0.4); padding:10px; border-radius:8px;">
+                            <strong style="font-size:11px; color:#aaa; display:block; margin-bottom:6px;">ORE DE VARF</strong>
+                            <div id="impact-peak-indicator" style="font-size:13px; font-weight:600; color:#4CAF50;">Normal</div>
                         </div>
-                        <div class="peak-slot" id="peak-evening">
-                            <div class="peak-header"><span class="peak-emoji">🌙</span><strong data-i18n="lbl_peak_dinner">CINA</strong></div>
-                            <div class="peak-time">17:00 — 00:00</div>
-                            <div class="peak-boost"><span class="boost-tag hot" data-i18n="lbl_demand">+45% Cerere</span><span class="boost-tag profit" data-i18n="lbl_profit">+35% Profit</span></div>
+                        <div style="flex:1; background:rgba(0,0,0,0.4); padding:10px; border-radius:8px;">
+                            <strong style="font-size:11px; color:#aaa; display:block; margin-bottom:6px;">EVENIMENTE</strong>
+                            <div id="impact-event-indicator" style="font-size:13px; font-weight:600; color:#FFB800;">Fara impact</div>
                         </div>
                     </div>
                 </section>
 
-                <!-- SECTIUNEA 3.6: EVENTS FEED -->
-                <section class="glass-card events-card" id="events-card">
-                    <h3 class="card-title"><span data-i18n="title_events">Evenimente & Noutati</span> <span class="info-tip" data-tip="Evenimente locale care influenteaza cererea: concerte, meciuri, festivaluri, blocaje trafic. Impact estimat in procente.">?</span></h3>
-                    <div class="events-list" id="events-list">
-                        <p class="events-empty" data-i18n="msg_loading">Se incarca evenimente...</p>
+                <!-- MODULE 4: MANUALUL STRATEGULUI (TAB-URI) -->
+                <section class="glass-card hub-card action-card">
+                    <h3 class="card-title">Manualul Strategului <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></h3>
+                    
+                    <!-- Selector Orizontal Scrollabil -->
+                    <div class="hub-tabs" style="display:flex; overflow-x:auto; gap:8px; padding-bottom:8px; margin-bottom:16px; scrollbar-width:none;">
+                        <button class="hub-btn active" data-tab="gold" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,184,0,0.3); background:rgba(255,184,0,0.1); color:#fff; cursor:pointer;">🌟 Gold Tips</button>
+                        <button class="hub-btn" data-tab="events" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">🎫 Evenimente</button>
+                        <button class="hub-btn" data-tab="rules" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">⚖️ Regulament</button>
+                        <button class="hub-btn" data-tab="orders" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">📦 Comenzi</button>
+                        <button class="hub-btn" data-tab="earnings" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">💰 Castiguri</button>
+                        <button class="hub-btn" data-tab="progression" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">🎖️ Progresie</button>
                     </div>
-                </section>
 
-                <!-- SECTIUNEA 4: BEST ACTION PLAN -->
-                <section class="glass-card action-card">
-                    <h3 class="card-title"><span data-i18n="title_focus">Focus & Zone</span> <span class="info-tip" data-tip="Zonele cu cele mai multe comenzi si cele mai bune tips-uri. Pozitioneaza-te strategic in aceste zone.">?</span></h3>
-                    <ul class="action-list">
-                        <li><span class="a-icon">📍</span> <div style="display:flex; flex-direction:column;"><strong data-i18n="lbl_top_zones">Top Zone</strong><span id="act-zones">--</span></div></li>
-                        <li><span class="a-icon">🎯</span> <div style="display:flex; flex-direction:column;"><strong data-i18n="lbl_center">Centru</strong><span id="act-center">--</span></div></li>
-                        <li><span class="a-icon">📏</span> <div style="display:flex; flex-direction:column;"><strong data-i18n="lbl_radius">Difuzie</strong><span id="act-radius">--</span></div></li>
-                    </ul>
-                </section>
-
-                <!-- SECTIUNEA 5: COMENZI -->
-                <section class="glass-card orders-card">
-                    <h3 class="card-title"><span data-i18n="title_orders">Tip Comenzi</span></h3>
-                    <div class="mini-cards" id="orders-types">
-                        <!-- js inject -->
+                    <!-- Containerele de Date -->
+                    <div id="tab-gold" class="hub-pane active" style="display:block;">
+                        <div class="gold-list" id="gold-list"></div>
                     </div>
-                </section>
-
-                <!-- SECTIUNEA 6: STRATEGIE -->
-                <section class="glass-card strategy-card">
-                    <h3 class="card-title"><span data-i18n="title_strategy">Plan Tactic</span></h3>
-                    <div class="strategy-steps" id="strategy-list">
-                        <!-- js inject -->
+                    
+                    <div id="tab-events" class="hub-pane" style="display:none;">
+                        <div id="events-list" class="events-list"></div>
                     </div>
-                </section>
 
-                <!-- SECTIUNEA 6: GOLD TIPS -->
-                <section class="glass-card gold-card">
-                    <h3 class="card-title"><span data-i18n="title_tips">Alerte Speciale</span> <span class="info-tip" data-tip="Multiplicatori garantati. Foloseste aceste situatii pentru castig maxim.">?</span></h3>
-                    <div class="gold-list" id="gold-list"></div>
-                </section>
-
-                <!-- SECTIUNEA 7: ZONE VOLUM -->
-                <section class="glass-card volume-card">
-                    <h3 class="card-title"><span data-i18n="title_volume">Zone de Flux</span></h3>
-                    <div class="volume-zones" id="volume-list"></div>
-                </section>
-
-                <!-- SECTIUNEA 8: CASTIGURI ESTIMATE -->
-                <section class="glass-card earnings-detail-card">
-                    <h3 class="card-title"><span data-i18n="title_earnings">Castig Estimat</span> <span class="info-tip" data-tip="Media zilnica a curierilor de top din oras pentru fiecare tip de vehicul.">?</span></h3>
-                    <div class="earnings-tabs">
-                        <button class="earn-tab active" data-vehicle="bike" id="tab-bike">🚲 Bike / Scooter</button>
-                        <button class="earn-tab" data-vehicle="car" id="tab-car">🚗 Auto</button>
-                    </div>
-                    <div class="earnings-table-wrap" id="earnings-table">
-                        <!-- Populated by JS -->
-                    </div>
-                </section>
-
-                <!-- SECTIUNEA 9: RULES -->
-                <section class="glass-card rules-card">
-                    <h3 class="card-title"><span data-i18n="title_rules">Algoritm & Reguli</span> <span class="info-tip" data-tip="Algoritmul aplicatiei ofera scor intern. Respecta aceste reguli pentru a primi prioritate la comenzi mari.">?</span></h3>
-                    <div class="rules-grid">
-                        <div class="rules-col">
-                            <h4 class="rules-col-title do-title"><span data-i18n="lbl_do">ASA DA</span> (✅ Boost Algoritm)</h4>
-                            <div id="rules-do"></div>
-                        </div>
-                        <div class="rules-col">
-                            <h4 class="rules-col-title dont-title"><span data-i18n="lbl_dont">ASA NU</span> (❌ Pedeapsa Algoritm)</h4>
-                            <div id="rules-dont"></div>
+                    <div id="tab-rules" class="hub-pane" style="display:none;">
+                        <div class="rules-grid">
+                            <div class="rules-col"><h4 class="rules-col-title do-title">ASA DA</h4><div id="rules-do"></div></div>
+                            <div class="rules-col"><h4 class="rules-col-title dont-title">ASA NU</h4><div id="rules-dont"></div></div>
                         </div>
                     </div>
-                </section>
 
-                <!-- SECTIUNEA 10: PROGRESSION -->
-                <section class="glass-card progression-card">
-                    <h3 class="card-title"><span data-i18n="title_progression">Ruta Ta In Aplicatie</span></h3>
-                    <div class="progression-timeline" id="progression-list">
-                        <!-- Populated by JS -->
+                    <div id="tab-orders" class="hub-pane" style="display:none;">
+                        <div class="mini-cards" id="orders-types" style="margin-bottom:12px;"></div>
+                        <ul class="action-list">
+                            <li><span class="a-icon">📍</span> <div style="display:flex; flex-direction:column;"><strong>Top Zone</strong><span id="act-zones">--</span></div></li>
+                            <li><span class="a-icon">🎯</span> <div style="display:flex; flex-direction:column;"><strong>Centru</strong><span id="act-center">--</span></div></li>
+                            <li><span class="a-icon">📏</span> <div style="display:flex; flex-direction:column;"><strong>Difuzie</strong><span id="act-radius">--</span></div></li>
+                        </ul>
                     </div>
+
+                    <div id="tab-earnings" class="hub-pane" style="display:none;">
+                        <div class="earnings-tabs">
+                            <button class="earn-tab active" data-vehicle="bike" id="tab-bike">🚲 Bike / Moped</button>
+                            <button class="earn-tab" data-vehicle="car" id="tab-car">🚗 Auto</button>
+                        </div>
+                        <div class="earnings-table-wrap" id="earnings-table"></div>
+                    </div>
+                    
+                    <div id="tab-progression" class="hub-pane" style="display:none;">
+                        <div class="progression-timeline" id="progression-list"></div>
+                    </div>
+                    
                 </section>
+                
+                <!-- INVIZIBIL PT VECHILE ANCORE / EROARE JS FALLBACK -->
+                <div style="display:none;" id="volume-list"></div>
+                <div style="display:none;" id="strategy-list"></div>
 
             </div>
         </main>
@@ -282,7 +247,7 @@
     </div> <!-- END APP-WRAPPER -->
 
     <script src="translations.js"></script>
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=4"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {
