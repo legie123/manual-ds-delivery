@@ -191,11 +191,11 @@ body::before {
 .snapshot-card { grid-column: span 12; }
 .demand-card { grid-column: span 6; }
 .earning-card { grid-column: span 6; }
-.peak-card { grid-column: span 12; }
-.events-card { grid-column: span 12; }
-.action-card { grid-column: span 4; }
+.action-card { grid-column: span 12; }
 .orders-card { grid-column: span 4; }
-.strategy-card { grid-column: span 4; }
+.strategy-card { grid-column: span 8; }
+.volume-card { grid-column: span 8; }
+.earnings-detail-card { grid-column: span 4; }
 
 /* 1. SNAPSHOT */
 .snapshot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
