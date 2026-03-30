@@ -180,18 +180,21 @@
                     </div>
                 </section>
 
-                <!-- MODULE 4: MANUALUL STRATEGULUI (TAB-URI) -->
+                <!-- MODULE 4: INTELEPCIUNEA DRAGONILOR (TAB-URI) -->
                 <section class="glass-card hub-card action-card">
-                    <h3 class="card-title">Manualul Strategului <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></h3>
+                    <h3 class="card-title">Înțelepciunea Dragonilor <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></h3>
                     
                     <!-- Selector Orizontal Scrollabil -->
-                    <div class="hub-tabs" style="display:flex; overflow-x:auto; gap:8px; padding-bottom:8px; margin-bottom:16px; scrollbar-width:none;">
-                        <button class="hub-btn active" data-tab="gold" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,184,0,0.3); background:rgba(255,184,0,0.1); color:#fff; cursor:pointer;">🌟 Gold Tips</button>
-                        <button class="hub-btn" data-tab="events" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">🎫 Evenimente</button>
-                        <button class="hub-btn" data-tab="rules" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">⚖️ Regulament</button>
-                        <button class="hub-btn" data-tab="orders" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">📦 Comenzi</button>
-                        <button class="hub-btn" data-tab="earnings" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">💰 Castiguri</button>
-                        <button class="hub-btn" data-tab="progression" style="white-space:nowrap; padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#ccc; cursor:pointer;">🎖️ Progresie</button>
+                    <div class="hub-tabs">
+                        <button class="hub-btn active" data-tab="gold">🌟 Golden Tips</button>
+                        <button class="hub-btn" data-tab="events">🎫 Evenimente</button>
+                        <button class="hub-btn" data-tab="rules">⚖️ Regulament</button>
+                        <button class="hub-btn" data-tab="orders">📦 Comenzi</button>
+                        <button class="hub-btn" data-tab="earnings">💰 Castiguri</button>
+                        <button class="hub-btn" data-tab="progression">🎖️ Progresie</button>
+                        <button class="hub-btn" data-tab="smart-zones">🎯 Smart Zones</button>
+                        <button class="hub-btn" data-tab="smart-risk">⚠️ Smart Risk</button>
+                        <button class="hub-btn" data-tab="smart-route">🗺️ Smart Route</button>
                     </div>
 
                     <!-- Containerele de Date -->
@@ -230,6 +233,10 @@
                     <div id="tab-progression" class="hub-pane" style="display:none;">
                         <div class="progression-timeline" id="progression-list"></div>
                     </div>
+
+                    <div id="tab-smart-zones" class="hub-pane" style="display:none;"></div>
+                    <div id="tab-smart-risk" class="hub-pane" style="display:none;"></div>
+                    <div id="tab-smart-route" class="hub-pane" style="display:none;"></div>
                     
                 </section>
                 
@@ -247,7 +254,7 @@
     </div> <!-- END APP-WRAPPER -->
 
     <script src="translations.js"></script>
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=6"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {

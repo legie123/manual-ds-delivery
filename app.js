@@ -1005,19 +1005,11 @@ document.addEventListener('DOMContentLoaded', () => {
     hubBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             // Remove active from all
-            hubBtns.forEach(b => {
-                b.classList.remove('active');
-                b.style.background = 'transparent';
-                b.style.border = '1px solid rgba(255,255,255,0.1)';
-                b.style.color = '#ccc';
-            });
+            hubBtns.forEach(b => b.classList.remove('active'));
             hubPanes.forEach(p => p.style.display = 'none');
 
             // Add active to clicked
             btn.classList.add('active');
-            btn.style.background = 'rgba(255,184,0,0.1)';
-            btn.style.border = '1px solid rgba(255,184,0,0.3)';
-            btn.style.color = '#fff';
 
             const tabId = btn.getAttribute('data-tab');
             const targetPane = document.getElementById('tab-' + tabId);

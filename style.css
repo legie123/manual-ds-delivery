@@ -191,12 +191,66 @@ body::before {
 .snapshot-card { grid-column: span 12; }
 .demand-card { grid-column: span 6; }
 .earning-card { grid-column: span 6; }
-.action-card { grid-column: span 12; }
+.action-card { 
+    grid-column: span 12; 
+    background: linear-gradient(150deg, rgba(30, 5, 5, 0.85), rgba(20, 0, 30, 0.8)); 
+    border-color: rgba(255, 136, 0, 0.15);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), inset 0 0 30px rgba(255, 106, 0, 0.03), inset 0 0 20px rgba(106, 0, 255, 0.05);
+}
 .orders-card { grid-column: span 4; }
 .strategy-card { grid-column: span 8; }
 .volume-card { grid-column: span 8; }
 .earnings-detail-card { grid-column: span 4; }
 
+/* HUB TABS (INTELEPCIUNEA DRAGONILOR) */
+.hub-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.hub-tabs::-webkit-scrollbar { display: none; }
+
+.hub-btn {
+    white-space: nowrap;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: rgba(255, 136, 0, 0.05);
+    border: 1px solid rgba(255, 136, 0, 0.2);
+    color: #e0e0e0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 0 0 rgba(255, 136, 0, 0);
+}
+
+.hub-btn:hover {
+    background: rgba(255, 136, 0, 0.15);
+    border-color: rgba(255, 136, 0, 0.5);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 136, 0, 0.2), 0 0 10px rgba(106, 0, 255, 0.1);
+}
+
+.hub-btn.active {
+    background: linear-gradient(135deg, rgba(255, 106, 0, 0.4), rgba(255, 166, 0, 0.2));
+    border: 1px solid rgba(255, 136, 0, 0.8);
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 20px rgba(255, 120, 0, 0.4), 0 0 15px rgba(106, 0, 255, 0.15);
+    transform: translateY(-2px);
+    animation: premiumBreathing 3s ease-in-out infinite;
+}
+
+@keyframes premiumBreathing {
+    0% { box-shadow: 0 4px 20px rgba(255, 120, 0, 0.4), 0 0 15px rgba(106, 0, 255, 0.15); }
+    50% { box-shadow: 0 4px 25px rgba(255, 140, 0, 0.6), 0 0 25px rgba(106, 0, 255, 0.25); border-color: rgba(255, 160, 0, 1); }
+    100% { box-shadow: 0 4px 20px rgba(255, 120, 0, 0.4), 0 0 15px rgba(106, 0, 255, 0.15); }
+}
 /* 1. SNAPSHOT */
 .snapshot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 @media (max-width: 1100px) { .snapshot-grid { grid-template-columns: repeat(2, 1fr); } }
