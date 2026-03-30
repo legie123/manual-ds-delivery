@@ -700,7 +700,7 @@ async function fetchLiveMetrics(lat, lng, cityId) {
         const cityEvents = eData[cityId] || [];
         const cityNews = eData.news ? (eData.news[cityId] || []) : [];
         const nationalAlert = eData.national_alert || null;
-        calculateAndRenderLiveDashboard(wData, cityEvents, cityNews, nationalAlert);
+        calculateAndRenderLiveDashboard(wData, cityEvents, cityNews, nationalAlert, cityId);
     } catch (err) {
         console.error("Live metrics fetch error", err);
         if (syncTime) syncTime.innerText = 'Sync: Eroare';
@@ -718,7 +718,7 @@ function getWeatherIcon(code) {
     return '☁️';
 }
 
-function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], nationalAlert = null) {
+function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], nationalAlert = null, cityId = 'fallback') {
     const cur = wData.current;
     if (!cur) return;
     
