@@ -119,50 +119,61 @@ const citiesData = {
 
 const commonData = {
     gold: [
-        { sit: 'Ploaie / Ninsoare', bonus: '+20-40%', det: 'Multiplicator dinamic pe aplicatie + tips cash marit.' },
-        { sit: 'Vineri - Duminica seara', bonus: '+30%', det: 'Cea mai aglomerata perioada (18:00 - 22:00).' },
-        { sit: 'Meciuri / Sarbatori', bonus: 'Max', det: 'Cerere uriasa de fast-food.' }
+        { sit: 'Ploaie / Intemperii', bonus: '+20-40%', det: 'Multiplicator dinamic automat. Pregateste echipamentul premium.' },
+        { sit: 'Weekend Seara (18:00 - 22:00)', bonus: '+30%', det: 'Cel mai mare flux. Vaneaza restaurante exclusiviste de familie.' },
+        { sit: 'Sarbatori Locale / Sport', bonus: 'Max', det: 'Cerere mare de ridicari multiple (fast-food / finger food).' }
     ],
     strategy: [
-        { title: 'Pranz (11:30 - 14:00)', desc: 'Stai langa zone de birouri. Comenzi multe dar scurte.' },
-        { title: 'Dupa-masa (14:30 - 17:00)', desc: 'Tranzitie spre Mall-uri / Fast-food.' },
-        { title: 'Seara (18:30 - 21:30)', desc: 'Vaneaza restaurante premium. Tips-ul este cel mai mare aici.' }
+        { title: 'Tranzit Pranz (11:30 - 14:00)', desc: 'Pozitionare: Zone office si cladiri comerciale. Multiplicator volume scurte.' },
+        { title: 'Perioada de Calm (14:30 - 17:00)', desc: 'Reincarca bateria, repara bicla. Targeteaza Mall-urile periferice.' },
+        { title: 'Fereastra Elite (18:30 - 21:30)', desc: 'Ridicari lungi, tips substantial. Evita blocajele mari pe arterele principale.' }
     ],
     rules: [
-        { act: 'Ai grija la geanta', res: 'Foloseste intotdeauna izolarea termica. Clientul taxeaza mancarea rece.' },
-        { act: 'Suna o singura data', res: 'Daca nu raspunde, da SMS, asteapta 2 min. Respecta protocolul platformei.' },
-        { act: 'Verifica bauturile', res: '90% din rating-urile slabe vin de la bauturi uitate sau varsate.' }
+        { act: 'Verifica Sigiliile & Bauturile', res: 'Clientul reclama direct lipsurile. O a doua verificare elimina 90% din penalizari.' },
+        { act: 'Igienizeaza Geanta Zilnic', res: 'Ambalajele curate primesc rating maxim. Murdaria se taxeaza instant pe support.' },
+        { act: 'Traseaza Rute Alternative', res: 'Evita giratoriile majore la ora de varf. Waze te baga uneori unde e mai lent, fii analitic.' }
     ],
     mistakes: [
-        { mis: 'Stai in fata unui singur restaurant', res: 'Aplicatia prefera curierii in miscare (chiar si usoara).' },
-        { mis: 'Anulezi comenzi', res: 'Iti scade rata de acceptare, iar algoritmul iti va da comenzi mai putine.' }
+        { mis: 'Evita Refuzul Artificial', res: 'Anularile dese scad "Trust Score-ul" algoritmului. Vei primi tot mai putin radiare de la server.' },
+        { mis: 'Geanta Termica de Decor', res: 'Temperatura este o metrica esentiala ignorata. Mancare rece = Zero Tips si rating slab.' }
     ],
     progression: [
-        { level: 1, title: 'Rookie (Luna 1)', desc: 'Invata zonele si scurtaturile. Nu te stresa pe viteza, focuseaza-te pe livrari sigure.' },
-        { level: 2, title: 'Avansat (Luna 2-3)', desc: 'Incepi sa recunosti clientii recurenti si sa faci o medie buna per ora.' },
-        { level: 3, title: 'Veteran (Luna 3-6)', desc: 'Ai strategia ta. Stii ce comenzi aduc bacsis si ce zone sa eviti.' },
-        { level: 4, title: 'PRO / Top 10%', desc: 'Venit maxim. Echipament complet, folosesti multiplicatorii.' }
+        { level: 1, title: 'Inițiat (Luna 1)', desc: 'Acumulează experiență geografică pe sectorul de reședință. Concentrează-te exclusiv pe fiabilitate.' },
+        { level: 2, title: 'Strategic (Luna 2-3)', desc: 'Înțelege ferestrele orare. Învață să filtrezi comanda toxică de comanda premium.' },
+        { level: 3, title: 'Veteran (Luna 3-6)', desc: 'Maximizează rutele intercalate și cunoaște personalul de la locațiile aglomerate.' },
+        { level: 4, title: 'Dragon Master', desc: 'Sistem fluid. Venit max/h prin alinierea la PulseRadar și utilizare a tuturor zonelor multiplicator.' }
+    ],
+    smartZones: [
+        { title: 'Mall / FoodCourt', desc: 'Perfecte pentru prânz rapid și zile cu prognoză instabilă. Flux constant de ridicare.' },
+        { title: 'Ansambluri Rezidențiale Noi', desc: 'Comenzi grupate, bacșiș mare dar necesită atenție mare la orientare și interfoane.' }
+    ],
+    smartRisk: [
+        { title: 'Zero Echipament Ploaie', desc: 'Risc masiv de deteriorare device și scădere rating. Costurile de reparație anulează câștigul.' },
+        { title: 'Trafic de Tranziție', desc: 'Aglomerația de părăsire a birourilor (17:00-18:30) pe marile artere. Evită tranzitul radial de lungă distanță.' }
+    ],
+    smartRoute: [
+        { title: 'Analiza Radar', desc: 'Sincronizează-te cu direcția roșie a cererii înainte de confirmările mari. Ferește-te de dead-zones (la margine).' },
+        { title: 'Scurtături Omologate', desc: 'Utilizează benzi speciale și străzi paralele înguste ce decongestionează timpul estimat (ETA).' }
     ]
 };
 
 const motivationals = [
-    "Comanda e la ușă. Nu răspunde... o las pe preș.",
-    "Baterie 10%. Picioare 5%. Tips 0%. Zâmbim și livrăm!",
-    "Dacă traficul era sport olimpic, luam aurul la sărituri peste borduri.",
-    "Singurul algoritm de care ascult e mirosul de pizza din geantă.",
-    "M-a sunat clientul că vine jos. Evident că am așteptat 10 minute.",
-    "Scara blocului e beznă, liftul e stricat, comanda e la etajul 10. Normal.",
-    "Ploaie, vânt, zăpadă? Nu-i nimic, clientul vrea pufuleți de la 5 km.",
-    "A zis 'lasă la ușă' dar a scos capul când am pus punga jos. Ne-am speriat amândoi.",
-    "Sincer, GPS-ul e mai confuz decât mine prin cartierul ăsta.",
-    "Cea mai grea cursă? Shaorma aia blană, mirosind în mașină pe 5 kilometri.",
-    "Sunt curier: jumătate om, jumătate rucsac, 100% obosit.",
-    "Nu plânge că e roșu la semafor, plânge că e iar o comandă de supe pe drum.",
-    "Timp estimat: 3 min. Timp real la restaurant: O șanșă la loterie.",
-    "Clientul zice: „Las-o pe clanță”. Mda, la o ușă modernă fără clanță.",
-    "Livrăm zâmbete, dar mai mult fast-food rece dacă te zgârcești la bacșiș.",
-    "Când zice <Ajung imediat afară>, poți să închizi aplicația direct.",
-    "Curieratul: unde te bucuri sincer când vezi un lift funcțional la bloc de 10 etaje."
+    "Geanta termică nu este opțională. Păstrează calitatea, crești șansele la tips.",
+    "Zâmbetul aduce bacșiș. Oferă o experiență, nu doar o pungă.",
+    "Bazează-te pe date, nu pe intuiție. Folosește Radarul pentru repoziționare rapidă.",
+    "Zonele rezidențiale premium seara dublează profitul în comparație cu cele aglomerate din centru.",
+    "Prevenția bate viteza. Nu accelera inutil pe vreme rea, siguranța ta e numărul 1.",
+    "Verifică băuturile de două ori la restaurant! E cauza principală a rating-urilor slabe.",
+    "Ai grijă la scurgerile de sos. Când e nevoie, folosește un strat izolator în geantă.",
+    "Folosește ferestrele de vârf tactic. Lucrează inteligent la prânz și seară.",
+    "Algoritmul recompensează consistența și acceptarea. Nu anula comenzi dacă nu e absolut necesar.",
+    "Comunicarea e cheia. Dacă există întârzieri majore, un scurt mesaj către client face minuni.",
+    "Când plouă, multiplicatorii dinamici explodează. Echipează-te corect și capitalizează.",
+    "Poziționează-te la jumătatea distanței dintre food-court-uri în orele de tranziție.",
+    "Dacă nu ai semnal GPS bun, intră scurt într-o aplicație de hărți pentru recalibrare rapidă.",
+    "Păstrează un suport de telefon stabil și curat. Viteza de preluare scade oboseala zilnică.",
+    "Nu ignora alertele naționale. Dacă riscul meteorologic e mare, retrage-te spre zone cunoscute.",
+    "Bateria e la fel de importantă ca frânele. Ține mereu un power-bank plin de rezervă."
 ];
 
 function getDailyMotivational(cityId) {
@@ -575,6 +586,26 @@ function loadCity(cityId) {
                 </div>
             `).join('');
         }
+
+        // 12. Smart Data Render (Zones, Risk, Route)
+        const renderSmartList = (dataList, rootClass) => {
+            if (!dataList) return '';
+            return '<div class="smart-grid">' + dataList.map(item => `
+                <div class="${rootClass}-item smart-box">
+                    <h4 class="sm-title">${item.title}</h4>
+                    <p class="sm-desc">${item.desc}</p>
+                </div>
+            `).join('') + '</div>';
+        };
+
+        const szTab = document.getElementById('tab-smart-zones');
+        if (szTab) szTab.innerHTML = renderSmartList(commonData.smartZones, 'sm-zone');
+        
+        const srTab = document.getElementById('tab-smart-risk');
+        if (srTab) srTab.innerHTML = renderSmartList(commonData.smartRisk, 'sm-risk');
+        
+        const sRoTab = document.getElementById('tab-smart-route');
+        if (sRoTab) sRoTab.innerHTML = renderSmartList(commonData.smartRoute, 'sm-route');
         
         if (mainContent) {
             mainContent.classList.remove('loading');
@@ -688,14 +719,19 @@ async function fetchLiveMetrics(lat, lng, cityId) {
     
     try {
         const urlW = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,wind_speed_10m,weather_code,relative_humidity_2m&hourly=weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
-        const resW = await fetch(urlW);
+        
+        // Efectuare requesturi concurente (paralel) pt optimizare rețea
+        const [resW, resE] = await Promise.all([
+            fetch(urlW),
+            fetch('events-live.json?t=' + Date.now()).catch(e => { console.warn("Events API failed", e); return null; })
+        ]);
+        
         const wData = await resW.json();
         
         let eData = {};
-        try {
-            const resE = await fetch('events-live.json?t=' + Date.now());
+        if (resE && resE.ok) {
             eData = await resE.json();
-        } catch(e) { console.warn("No events file found or parsing error"); }
+        }
         
         const cityEvents = eData[cityId] || [];
         const cityNews = eData.news ? (eData.news[cityId] || []) : [];

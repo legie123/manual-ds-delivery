@@ -7,9 +7,9 @@
 6 silly config load:file:/opt/homebrew/etc/npmrc
 7 verbose title npm config get prefix
 8 verbose argv "config" "get" "prefix"
-9 verbose logfile logs-max:10 dir:/Users/user/Desktop/BUSSINES/Antigraity/manual Ds delivery/.npm-cache/_logs/2026-03-28T13_52_36_625Z-
-10 verbose logfile /Users/user/Desktop/BUSSINES/Antigraity/manual Ds delivery/.npm-cache/_logs/2026-03-28T13_52_36_625Z-debug-0.log
-11 silly logfile done cleaning log files
+9 verbose logfile logs-max:10 dir:/Users/user/Desktop/BUSSINES/Antigraity/manual Ds delivery/.npm-cache/_logs/2026-04-03T21_55_51_294Z-
+10 verbose logfile /Users/user/Desktop/BUSSINES/Antigraity/manual Ds delivery/.npm-cache/_logs/2026-04-03T21_55_51_294Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
 12 verbose cwd /Users/user/Desktop/BUSSINES/Antigraity/manual Ds delivery
 13 verbose os Darwin 24.1.0
 14 verbose node v22.22.1
