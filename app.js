@@ -1192,12 +1192,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnSkip = document.getElementById('tour-btn-skip');
         const btnNext = document.getElementById('tour-btn-next');
         const btnPrev = document.getElementById('tour-btn-prev');
-        const btnTutorial = document.getElementById('tutorial-btn');
         
         if (btnSkip) btnSkip.addEventListener('click', endTour);
         if (btnNext) btnNext.addEventListener('click', nextTourStep);
         if (btnPrev) btnPrev.addEventListener('click', prevTourStep);
-        if (btnTutorial) btnTutorial.addEventListener('click', () => initTour(true));
         
         // Auto-start for new device
         setTimeout(() => initTour(false), 2000);
