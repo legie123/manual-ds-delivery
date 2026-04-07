@@ -568,7 +568,7 @@ function loadCity(cityId) {
                 <div class="gold-item">
                     <div class="gold-sit">${g.sit}</div>
                     <div class="gold-det">${g.det}</div>
-                    <span class="gold-bonus">${g.bonus}</span>
+                    <span class="gold-bonus notranslate">${g.bonus}</span>
                 </div>
             `).join('');
         }
