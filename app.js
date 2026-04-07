@@ -268,19 +268,12 @@ window.googleTranslateElementInit = function() {
     new google.translate.TranslateElement({
         pageLanguage: 'ro',
         includedLanguages: 'ro,en,hi,bn,ne,ta,ur,ar,fr,tr',
-        autoDisplay: false
+        autoDisplay: true
     }, 'google_translate_element');
-    
-    // Sync initial lang after load
-    setTimeout(() => {
-       if (state.lang !== 'ro') {
-           applyTranslations(state.lang);
-       }
-    }, 500);
 };
 
 // ====== TRANSLATION ENGINE ======
-function applyTranslations(lang) {
+function applyTranslations(lang, shouldReload = false) {
     // RTL Support
     if (['ar', 'ur'].includes(lang)) {
         document.body.setAttribute('dir', 'rtl');
@@ -290,25 +283,15 @@ function applyTranslations(lang) {
         document.body.classList.remove('rtl-mode');
     }
 
-    // Google Translate Trigger
-    const select = document.querySelector('.goog-te-combo');
-    if (select) {
-        select.value = lang === 'ro' ? 'ro' : lang; // Sometimes needs exact matching
+    if (shouldReload) {
         if (lang === 'ro') {
-            // Revert to original
-            const btn = document.getElementById('google_translate_element').querySelector('iframe');
-            if (btn) {
-                const innerIframe = btn.contentWindow.document.getElementById('restore');
-                if(innerIframe) innerIframe.click();
-            }
-            // clear cookie manually just in case
             document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
         } else {
-            select.dispatchEvent(new Event('change'));
+            document.cookie = `googtrans=/ro/${lang}; path=/;`;
+            document.cookie = `googtrans=/ro/${lang}; domain=${window.location.hostname}; path=/;`;
         }
-    } else {
-        // Fallback cookie logic if script not ready
-        document.cookie = `googtrans=/ro/${lang}; path=/`;
+        window.location.reload();
     }
 }
 
@@ -408,11 +391,12 @@ function bindEvents() {
         document.querySelectorAll('.lang-opt').forEach(opt => {
             opt.addEventListener('click', (e) => {
                 const l = e.currentTarget.dataset.lang;
+                if (l === state.lang) return;
                 state.lang = l;
                 localStorage.setItem('ds-lang', l);
                 document.getElementById('lang-btn').innerHTML = `🌐 ${l.toUpperCase()} <span class="arrow">▼</span>`;
                 langMenu.classList.remove('show');
-                applyTranslations(l);
+                applyTranslations(l, true);
             });
         });
     }
