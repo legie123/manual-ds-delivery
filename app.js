@@ -472,11 +472,6 @@ function loadCity(cityId) {
         // Peak Hours Highlighting
         updatePeakHours();
         
-        // Events Feed
-        fetchAndRenderEvents(cityId);
-        if (state.eventsRefreshInterval) clearInterval(state.eventsRefreshInterval);
-        state.eventsRefreshInterval = setInterval(() => fetchAndRenderEvents(cityId), 30 * 60 * 1000);
-        
         // City News API
         fetchNews(data.name);
         
@@ -640,43 +635,35 @@ function updatePeakHours() {
     }
 }
 
-// ====== EVENTS FEED ======
-async function fetchAndRenderEvents(cityId) {
+// ====== EVENTS FEED RENDERER ======
+function renderCityEvents(cityEvents) {
     const container = document.getElementById('events-list');
     if (!container) return;
     
-    try {
-        const res = await fetch('./events-live.json?' + Date.now());
-        const allEvents = await res.json();
-        const cityEvents = allEvents[cityId] || [];
-        
-        if (cityEvents.length === 0) {
-            container.innerHTML = '<p class="events-empty">Niciun eveniment activ in aceasta zona.</p>';
-            return;
-        }
-        
-        const typeIcons = { concert: '🎵', match: '⚽', festival: '🎪', traffic: '🚧', event: '🎫' };
-        
-        const html = cityEvents.map(ev => {
-            const icon = typeIcons[ev.type] || '📌';
-            const statusClass = ev.status || 'upcoming';
-            const statusLabel = statusClass === 'live' ? '🔴 LIVE' : statusClass === 'upcoming' ? '🟡 UPCOMING' : '⚪ TRECUT';
-            
-            return `<div class="event-item">
-                <span class="event-icon">${icon}</span>
-                <div class="event-info">
-                    <h4>${ev.name}</h4>
-                    <p>${ev.start} — ${ev.end}</p>
-                </div>
-                <span class="event-impact">+${ev.impact_score}%</span>
-                <span class="event-status ${statusClass}">${statusLabel}</span>
-            </div>`;
-        }).join('');
-        
-        container.innerHTML = html;
-    } catch (err) {
-        container.innerHTML = '<p class="events-empty">Feed indisponibil momentan.</p>';
+    if (!cityEvents || cityEvents.length === 0) {
+        container.innerHTML = '<p class="events-empty">Niciun eveniment activ in aceasta zona.</p>';
+        return;
     }
+    
+    const typeIcons = { concert: '🎵', match: '⚽', festival: '🎪', traffic: '🚧', event: '🎫' };
+    
+    const html = cityEvents.map(ev => {
+        const icon = typeIcons[ev.type] || '📌';
+        const statusClass = ev.status || 'upcoming';
+        const statusLabel = statusClass === 'live' ? '🔴 LIVE' : statusClass === 'upcoming' ? '🟡 UPCOMING' : '⚪ TRECUT';
+        
+        return `<div class="event-item">
+            <span class="event-icon">${icon}</span>
+            <div class="event-info">
+                <h4>${ev.name}</h4>
+                <p>${ev.start} — ${ev.end}</p>
+            </div>
+            <span class="event-impact">+${ev.impact_score}%</span>
+            <span class="event-status ${statusClass}">${statusLabel}</span>
+        </div>`;
+    }).join('');
+    
+    container.innerHTML = html;
 }
 
 // ====== NEWS API INTEGRATION ======
@@ -713,8 +700,8 @@ async function fetchNews(cityName) {
             newsContainer.innerHTML = '<div style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Momentan nu sunt alerte majore.</div>';
         }
     } catch (error) {
-        console.error('Eroare stiri:', error);
-        newsContainer.innerHTML = '<div style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Eroare satelit. Verifică manual știrile.</div>';
+        console.warn('News RSS Rate Limited / Fallback active.');
+        newsContainer.innerHTML = '<div style="text-align:center; padding: 10px; color: #666; font-size: 0.8rem; font-style: italic; letter-spacing: 0.5px;">SYSTEM STANDBY: Citire feed locală oprită temporar.</div>';
     }
 }
 
@@ -742,6 +729,8 @@ async function fetchLiveMetrics(lat, lng, cityId) {
         const cityEvents = eData[cityId] || [];
         const cityNews = eData.news ? (eData.news[cityId] || []) : [];
         const nationalAlert = eData.national_alert || null;
+        
+        renderCityEvents(cityEvents);
         calculateAndRenderLiveDashboard(wData, cityEvents, cityNews, nationalAlert, cityId);
     } catch (err) {
         console.error("Live metrics fetch error", err);

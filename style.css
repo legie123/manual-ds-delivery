@@ -578,18 +578,6 @@ body::before {
     .status-badge { font-size: 0.8rem; padding: 8px 12px; }
 }
 
-/* ====== RTL MODE (ARABIC / URDU) ====== */
-.rtl-mode .top-bar-left { margin-right: 0; margin-left: auto; flex-direction: row-reverse; }
-.rtl-mode .top-bar-right { margin-left: 0; margin-right: auto; flex-direction: row-reverse; }
-.rtl-mode .city-sidebar { border-right: none; border-left: 1px solid var(--border-light); }
-.rtl-mode .city-btn { text-align: right; }
-.rtl-mode .lang-dropdown { right: auto; left: 0; text-align: right; }
-.rtl-mode .earn-table thead th { text-align: right; }
-.rtl-mode .rule-item { border-left: none; border-right: 3px solid transparent; }
-.rtl-mode .do-item { border-right-color: rgba(76,175,80,0.5); }
-.rtl-mode .dont-item { border-right-color: rgba(230,57,70,0.5); }
-.rtl-mode .progression-timeline { padding-left: 0; padding-right: 30px; }
-.rtl-mode .progression-timeline::before { left: auto; right: 15px; }
 
 /* ====== NEWS WIDGET & ANIMATIONS ====== */
 .news-card {
@@ -626,9 +614,3 @@ body::before {
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 184, 0, 0); }
 }
 
-/* ====== GOOGLE TRANSLATE OVERRIDES ====== */
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0px !important; }
-.goog-tooltip { display: none !important; }
-.goog-tooltip:hover { display: none !important; }
-.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; border: none !important; }
