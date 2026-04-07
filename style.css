@@ -592,6 +592,9 @@ body::before {
 .rtl-mode .progression-timeline::before { left: auto; right: 15px; }
 
 /* ====== NEWS WIDGET & ANIMATIONS ====== */
+.news-card {
+    grid-column: span 12;
+}
 .news-item {
     background: rgba(0, 0, 0, 0.4);
     padding: 10px 14px;
