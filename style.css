@@ -590,3 +590,11 @@ body::before {
 .rtl-mode .dont-item { border-right-color: rgba(230,57,70,0.5); }
 .rtl-mode .progression-timeline { padding-left: 0; padding-right: 30px; }
 .rtl-mode .progression-timeline::before { left: auto; right: 15px; }
+
+/* ====== GOOGLE TRANSLATE OVERRIDES ====== */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0px !important; }
+.goog-tooltip { display: none !important; }
+.goog-tooltip:hover { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; border: none !important; }
+#google_translate_element { display: none !important; }

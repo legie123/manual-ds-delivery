@@ -263,17 +263,24 @@ function playPremiumSound(type) {
     } catch(e) { console.log('Audio disabled or unsupported'); }
 }
 
+// Google Translate Initializer
+window.googleTranslateElementInit = function() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'ro',
+        includedLanguages: 'ro,en,hi,bn,ne,ta,ur,ar,fr,tr',
+        autoDisplay: false
+    }, 'google_translate_element');
+    
+    // Sync initial lang after load
+    setTimeout(() => {
+       if (state.lang !== 'ro') {
+           applyTranslations(state.lang);
+       }
+    }, 500);
+};
+
 // ====== TRANSLATION ENGINE ======
 function applyTranslations(lang) {
-    if (typeof translations === 'undefined' || !translations[lang]) return;
-    const t = translations[lang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) {
-            el.innerText = t[key];
-        }
-    });
-
     // RTL Support
     if (['ar', 'ur'].includes(lang)) {
         document.body.setAttribute('dir', 'rtl');
@@ -281,6 +288,27 @@ function applyTranslations(lang) {
     } else {
         document.body.setAttribute('dir', 'ltr');
         document.body.classList.remove('rtl-mode');
+    }
+
+    // Google Translate Trigger
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+        select.value = lang === 'ro' ? 'ro' : lang; // Sometimes needs exact matching
+        if (lang === 'ro') {
+            // Revert to original
+            const btn = document.getElementById('google_translate_element').querySelector('iframe');
+            if (btn) {
+                const innerIframe = btn.contentWindow.document.getElementById('restore');
+                if(innerIframe) innerIframe.click();
+            }
+            // clear cookie manually just in case
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        } else {
+            select.dispatchEvent(new Event('change'));
+        }
+    } else {
+        // Fallback cookie logic if script not ready
+        document.cookie = `googtrans=/ro/${lang}; path=/`;
     }
 }
 

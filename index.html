@@ -40,6 +40,7 @@
                 <ul id="lang-dropdown" class="lang-dropdown">
                     <li><button class="lang-opt" data-lang="ro">🇷🇴 Romana</button></li>
                     <li><button class="lang-opt" data-lang="en">🇬🇧 English</button></li>
+                    <li><button class="lang-opt" data-lang="tr">🇹🇷 Turca</button></li>
                     <li><button class="lang-opt" data-lang="hi">🇮🇳 Hindi</button></li>
                     <li><button class="lang-opt" data-lang="bn">🇧🇩 Bengali</button></li>
                     <li><button class="lang-opt" data-lang="ne">🇳🇵 Nepali</button></li>
@@ -258,8 +259,9 @@
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     </div> <!-- END APP-WRAPPER -->
 
-    <script src="translations.js"></script>
-    <script src="app.js?v=6"></script>
+    <div style="display:none;" id="google_translate_element"></div>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="app.js?v=7"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {
