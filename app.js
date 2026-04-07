@@ -1050,3 +1050,156 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// ====== ONBOARDING TOUR (SNIPER ENGINE) ======
+const tourSteps = [
+    {
+        selector: '#city-sidebar',
+        title: 'Selector Oraș',
+        text: 'Aici alegi orașul în care operezi. Radarul și statisticile se vor adapta automat zonelor tale teritoriale.',
+        position: 'bottom'
+    },
+    {
+        selector: '.snapshot-card',
+        title: 'Modul Tactic Live',
+        text: 'Panoul principal de control. Analizează vremea, traficul și alertele majore care pot influența masiv volumul de comenzi.',
+        position: 'bottom'
+    },
+    {
+        selector: '.demand-card',
+        title: 'Radar Curier',
+        text: 'Termometrul pieței. Îți va oferi procentul estimat de efort și cele mai optime zone de preluare în timp real.',
+        position: 'top'
+    },
+    {
+        selector: '.earning-card',
+        title: 'Impact & Profit',
+        text: 'Multiplicatorul vizual. Un status maxim cauzat de aglomerație sau ploi garantează profit extrem prin bonusuri zonale.',
+        position: 'top'
+    },
+    {
+        selector: '.hub-card',
+        title: 'Înțelepciunea Dragonilor',
+        text: 'Manualul de performanță. Glisează lateral peste tab-uri pentru acces rapid la Castiguri Orar, Asa DA/NU și Golden Tips.',
+        position: 'top'
+    }
+];
+
+let currentTourStep = 0;
+let isTourActive = false;
+
+function initTour(force = false) {
+    if (!force && localStorage.getItem('ds_tour_completed') === 'true') return;
+    
+    // Close mobile menu if open before tour
+    const sidebar = document.getElementById('city-sidebar');
+    const overlayMenu = document.getElementById('sidebar-overlay');
+    if (sidebar && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        if (overlayMenu) overlayMenu.classList.remove('active');
+    }
+
+    currentTourStep = 0;
+    isTourActive = true;
+    
+    const overlay = document.getElementById('tour-overlay');
+    if(overlay) overlay.classList.add('tour-active');
+    
+    const totalEl = document.getElementById('tour-step-total');
+    if(totalEl) totalEl.innerText = tourSteps.length;
+    
+    renderTourStep();
+}
+
+function renderTourStep() {
+    // Remove previous highlights
+    document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
+    
+    const step = tourSteps[currentTourStep];
+    const targetEl = document.querySelector(step.selector);
+    
+    if (!targetEl) { console.warn('Tour target missing:', step.selector); endTour(); return; }
+    
+    // Scroll into view safely
+    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Slight delay for smooth scroll before highlight
+    setTimeout(() => {
+        targetEl.classList.add('tour-highlighted');
+        
+        const box = document.getElementById('tour-box');
+        if(!box) return;
+        
+        document.getElementById('tour-title').innerText = step.title;
+        document.getElementById('tour-content').innerText = step.text;
+        document.getElementById('tour-step-current').innerText = currentTourStep + 1;
+        
+        // Buttons
+        document.getElementById('tour-btn-prev').style.display = currentTourStep === 0 ? 'none' : 'block';
+        document.getElementById('tour-btn-next').innerText = currentTourStep === tourSteps.length - 1 ? 'Finalizare' : 'Următorul';
+        
+        // Positioning
+        const rect = targetEl.getBoundingClientRect();
+        const boxHeight = box.offsetHeight || 150;
+        let top = rect.bottom + window.scrollY + 20;
+        let left = rect.left + window.scrollX + (rect.width / 2) - 150; // Center horiz
+        
+        if (step.position === 'top') {
+            top = rect.top + window.scrollY - boxHeight - 20;
+        }
+
+        // Prevent off-screen left/right
+        if (left + 320 > window.innerWidth) left = window.innerWidth - 320;
+        if (left < 10) left = 10;
+        
+        // Prevent off-screen top
+        if (top < window.scrollY + 10) top = rect.bottom + window.scrollY + 20;
+        
+        box.style.top = top + 'px';
+        box.style.left = left + 'px';
+        box.classList.add('tour-box-active');
+    }, 450); // delay pt ecran mobil
+}
+
+function nextTourStep() {
+    if (currentTourStep >= tourSteps.length - 1) {
+        endTour();
+    } else {
+        currentTourStep++;
+        renderTourStep();
+    }
+}
+
+function prevTourStep() {
+    if (currentTourStep > 0) {
+        currentTourStep--;
+        renderTourStep();
+    }
+}
+
+function endTour() {
+    isTourActive = false;
+    document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
+    const overlay = document.getElementById('tour-overlay');
+    const box = document.getElementById('tour-box');
+    if(overlay) overlay.classList.remove('tour-active');
+    if(box) box.classList.remove('tour-box-active');
+    localStorage.setItem('ds_tour_completed', 'true');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const btnSkip = document.getElementById('tour-btn-skip');
+        const btnNext = document.getElementById('tour-btn-next');
+        const btnPrev = document.getElementById('tour-btn-prev');
+        const btnTutorial = document.getElementById('tutorial-btn');
+        
+        if (btnSkip) btnSkip.addEventListener('click', endTour);
+        if (btnNext) btnNext.addEventListener('click', nextTourStep);
+        if (btnPrev) btnPrev.addEventListener('click', prevTourStep);
+        if (btnTutorial) btnTutorial.addEventListener('click', () => initTour(true));
+        
+        // Auto-start for new device
+        setTimeout(() => initTour(false), 2000);
+    }, 800);
+});

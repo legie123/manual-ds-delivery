@@ -38,7 +38,9 @@
             </div>
         </div>
         <div class="top-bar-right">
-
+            <button id="tutorial-btn" class="tutorial-btn" aria-label="Ghid Interactiv">
+                <span>❔</span> Ghid
+            </button>
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
                 <span class="install-icon">📲</span>
                 <span class="install-text">INSTALEAZA</span>
@@ -253,6 +255,23 @@
     <!-- Mobile sidebar overlay -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     </div> <!-- END APP-WRAPPER -->
+
+    <!-- ONBOARDING TOUR HTML -->
+    <div id="tour-overlay" class="tour-overlay"></div>
+    <div id="tour-box" class="tour-box">
+        <div class="tour-header">
+            <span id="tour-title" class="tour-title">Ghid</span>
+            <span class="tour-step-counter"><span id="tour-step-current">1</span>/<span id="tour-step-total">5</span></span>
+        </div>
+        <div id="tour-content" class="tour-content">Welcome!</div>
+        <div class="tour-nav">
+            <button id="tour-btn-skip" class="tour-btn">Skip</button>
+            <div style="display:flex; gap:8px; margin-left:auto;">
+                <button id="tour-btn-prev" class="tour-btn" style="display:none;">Înapoi</button>
+                <button id="tour-btn-next" class="tour-btn primary">Următorul</button>
+            </div>
+        </div>
+    </div>
 
 
     <script src="app.js?v=27"></script>

@@ -614,3 +614,113 @@ body::before {
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 184, 0, 0); }
 }
 
+/* ====== ONBOARDING TOUR (SNIPER ENGINE) ====== */
+.tour-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+.tour-overlay.tour-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.tour-highlighted {
+    position: relative !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 4px #ffb800, 0 0 30px rgba(255, 184, 0, 0.6) !important;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card) !important;
+    pointer-events: none;
+}
+.tour-box {
+    position: absolute;
+    z-index: 10000;
+    background: #111;
+    color: #fff;
+    border: 1px solid #ffb800;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, top 0.3s ease, left 0.3s ease;
+    pointer-events: none;
+}
+.tour-box.tour-box-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.tour-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,184,0,0.3);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+.tour-title {
+    color: #ffb800;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.tour-step-counter {
+    color: #aaa;
+    font-size: 12px;
+}
+.tour-content {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ddd;
+    margin-bottom: 16px;
+}
+.tour-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.tour-btn {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.2s;
+    font-family: inherit;
+}
+.tour-btn:hover { background: rgba(255,255,255,0.2); }
+.tour-btn.primary { background: #ffb800; color: #000; }
+.tour-btn.primary:hover { background: #e6a600; box-shadow: 0 0 10px rgba(255,184,0,0.4); }
+
+.tutorial-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 184, 0, 0.4);
+    color: #ffb800;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.2s;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.tutorial-btn:hover {
+    background: rgba(255, 184, 0, 0.1);
+    border-color: #ffb800;
+}
