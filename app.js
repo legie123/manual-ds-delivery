@@ -1,5 +1,4 @@
 const state = {
-    lang: localStorage.getItem('ds-lang') || 'ro',
     city: 'bucuresti',
     weather: null,
     refreshInterval: null,
@@ -273,56 +272,10 @@ function playPremiumSound(type) {
     } catch(e) { console.log('Audio disabled or unsupported'); }
 }
 
-// Google Translate Initializer
-window.googleTranslateElementInit = function() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'ro',
-        includedLanguages: 'ro,en,hi,bn,ne,ta,ur,ar,fr,tr',
-        autoDisplay: true
-    }, 'google_translate_element');
-};
-
-// ====== TRANSLATION ENGINE ======
-function applyTranslations(lang, shouldReload = false) {
-    // RTL Support
-    if (['ar', 'ur'].includes(lang)) {
-        document.body.setAttribute('dir', 'rtl');
-        document.body.classList.add('rtl-mode');
-    } else {
-        document.body.setAttribute('dir', 'ltr');
-        document.body.classList.remove('rtl-mode');
-    }
-
-    if (shouldReload) {
-        if (lang === 'ro') {
-            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
-        } else {
-            document.cookie = `googtrans=/ro/${lang}; path=/;`;
-            document.cookie = `googtrans=/ro/${lang}; domain=${window.location.hostname}; path=/;`;
-        }
-        window.location.reload();
-    }
-}
 
 // ====== EVENT BINDINGS ======
 document.addEventListener('DOMContentLoaded', () => {
-    // Shield Anti-Banner & Anti-Body-Shift
-    const observer = new MutationObserver(() => {
-        document.querySelectorAll('.skiptranslate, .goog-te-banner-frame').forEach(el => {
-            if (el.id !== 'google_translate_element') {
-                el.style.display = 'none !important';
-                el.style.visibility = 'hidden';
-                el.style.opacity = '0';
-            }
-        });
-        if (document.body.style.top !== '0px' || document.body.style.marginTop !== '0px') {
-            document.body.style.setProperty('top', '0px', 'important');
-            document.body.style.setProperty('margin-top', '0px', 'important');
-        }
-    });
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style', 'class'] });
+
 
     bindEvents();
     loadCity(state.city);
@@ -403,39 +356,7 @@ function bindEvents() {
         sidebarOverlay.addEventListener('click', () => toggleMobileMenu(false));
     }
     
-    const langBtn = document.getElementById('lang-btn');
-    const langMenu = document.getElementById('lang-menu');
-    if (langBtn && langMenu) {
-        langBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langMenu.classList.toggle('show');
-        });
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) {
-                langMenu.classList.remove('show');
-            }
-        });
-        document.querySelectorAll('.lang-opt').forEach(opt => {
-            opt.addEventListener('click', (e) => {
-                const l = e.currentTarget.dataset.lang;
-                if (l === state.lang) return;
-                state.lang = l;
-                localStorage.setItem('ds-lang', l);
-                document.getElementById('lang-btn').innerHTML = `🌐 ${l.toUpperCase()} <span class="arrow">▼</span>`;
-                langMenu.classList.remove('show');
-                applyTranslations(l, true);
-            });
-        });
-    }
-    
-    // Set initial lang button from localStorage
-    const savedLang = localStorage.getItem('ds-lang') || 'ro';
-    if (langBtn) {
-        langBtn.innerHTML = `🌐 ${savedLang.toUpperCase()} <span class="arrow">▼</span>`;
-    }
-    
-    // Apply UI translation
-    applyTranslations(state.lang);
+
     
     // ====== INFO TOOLTIP SYSTEM ======
     document.querySelectorAll('.info-tip').forEach(tip => {

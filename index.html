@@ -8,19 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=26">
+    <link rel="stylesheet" href="style.css?v=27">
     <link rel="manifest" href="manifest.json">
-    <style>
-        /* Anti-Google Translate Visual Glitches Hard-Lock */
-        body { top: 0px !important; margin-top: 0 !important; position: static !important; }
-        .goog-te-banner-frame, .skiptranslate { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
-        font { background: transparent !important; color: inherit !important; box-shadow: none !important; }
-    </style>
+
     <meta name="theme-color" content="#FFB800">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Manual DS">
     <link rel="apple-touch-icon" href="dragon-logo.png">
+    <link rel="icon" type="image/png" href="dragon-logo.png">
 
     <!-- Social Media Open Graph Tags -->
     <meta property="og:title" content="Dragons Delivery - Command Center">
@@ -41,21 +38,7 @@
             </div>
         </div>
         <div class="top-bar-right">
-            <div class="language-selector" id="lang-menu">
-                <button id="lang-btn" class="lang-btn" aria-label="Selecteaza limba">🌐 RO <span class="arrow">▼</span></button>
-                <ul id="lang-dropdown" class="lang-dropdown">
-                    <li><button class="lang-opt" data-lang="ro">🇷🇴 Romana</button></li>
-                    <li><button class="lang-opt" data-lang="en">🇬🇧 English</button></li>
-                    <li><button class="lang-opt" data-lang="tr">🇹🇷 Turca</button></li>
-                    <li><button class="lang-opt" data-lang="hi">🇮🇳 Hindi</button></li>
-                    <li><button class="lang-opt" data-lang="bn">🇧🇩 Bengali</button></li>
-                    <li><button class="lang-opt" data-lang="ne">🇳🇵 Nepali</button></li>
-                    <li><button class="lang-opt" data-lang="ta">🇮🇳 Tamil</button></li>
-                    <li><button class="lang-opt" data-lang="ur">🇵🇰 Urdu</button></li>
-                    <li><button class="lang-opt" data-lang="ar">🇸🇦 Arabic</button></li>
-                    <li><button class="lang-opt" data-lang="fr">🇫🇷 Francais</button></li>
-                </ul>
-            </div>
+
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
                 <span class="install-icon">📲</span>
                 <span class="install-text">INSTALEAZA</span>
@@ -271,9 +254,8 @@
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     </div> <!-- END APP-WRAPPER -->
 
-    <div id="google_translate_element" style="position:fixed; top:-10000px; left:-10000px; opacity:0; pointer-events:none;"></div>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="app.js?v=26"></script>
+
+    <script src="app.js?v=27"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {
