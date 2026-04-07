@@ -1052,11 +1052,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ====== ONBOARDING TOUR (SNIPER ENGINE) ======
-const tourSteps = [
+const getTourSteps = () => [
     {
-        selector: '#city-sidebar',
+        selector: window.innerWidth <= 768 ? '.mobile-menu-btn' : '#city-sidebar',
         title: 'Selector Oraș',
-        text: 'Aici alegi orașul în care operezi. Radarul și statisticile se vor adapta automat zonelor tale teritoriale.',
+        text: 'Aici alegi orașul în care operezi. Radarul și statisticile se vor adapta automat zonelor tale.',
         position: 'bottom'
     },
     {
@@ -1105,8 +1105,9 @@ function initTour(force = false) {
     const overlay = document.getElementById('tour-overlay');
     if(overlay) overlay.classList.add('tour-active');
     
+    const stepsArr = getTourSteps();
     const totalEl = document.getElementById('tour-step-total');
-    if(totalEl) totalEl.innerText = tourSteps.length;
+    if(totalEl) totalEl.innerText = stepsArr.length;
     
     renderTourStep();
 }
@@ -1115,7 +1116,8 @@ function renderTourStep() {
     // Remove previous highlights
     document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
     
-    const step = tourSteps[currentTourStep];
+    const stepsArr = getTourSteps();
+    const step = stepsArr[currentTourStep];
     const targetEl = document.querySelector(step.selector);
     
     if (!targetEl) { console.warn('Tour target missing:', step.selector); endTour(); return; }
@@ -1136,7 +1138,7 @@ function renderTourStep() {
         
         // Buttons
         document.getElementById('tour-btn-prev').style.display = currentTourStep === 0 ? 'none' : 'block';
-        document.getElementById('tour-btn-next').innerText = currentTourStep === tourSteps.length - 1 ? 'Finalizare' : 'Următorul';
+        document.getElementById('tour-btn-next').innerText = currentTourStep === stepsArr.length - 1 ? 'Finalizare' : 'Următorul';
         
         // Positioning
         const rect = targetEl.getBoundingClientRect();
@@ -1162,7 +1164,8 @@ function renderTourStep() {
 }
 
 function nextTourStep() {
-    if (currentTourStep >= tourSteps.length - 1) {
+    const stepsArr = getTourSteps();
+    if (currentTourStep >= stepsArr.length - 1) {
         endTour();
     } else {
         currentTourStep++;
@@ -1196,6 +1199,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnSkip) btnSkip.addEventListener('click', endTour);
         if (btnNext) btnNext.addEventListener('click', nextTourStep);
         if (btnPrev) btnPrev.addEventListener('click', prevTourStep);
+        
+        // Secret reset by clicking the logo
+        const topLogo = document.querySelector('.logo');
+        if (topLogo) {
+            topLogo.addEventListener('click', () => {
+                localStorage.removeItem('ds_tour_completed');
+                initTour(true);
+            });
+        }
         
         // Auto-start for new device
         setTimeout(() => initTour(false), 2000);

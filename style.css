@@ -626,6 +626,31 @@ body::before {
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
+
+/* =========================================================================
+   GTranslate Override
+   ========================================================================= */
+.goog-te-banner-frame { display: none !important; }
+body { top: 0px !important; }
+#google_translate_element select {
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffb800;
+    border: 1px solid rgba(255, 184, 0, 0.4);
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+    outline: none;
+    cursor: pointer;
+}
+#google_translate_element select:hover {
+    border-color: #ffb800;
+}
+.goog-te-gadget { color: transparent !important; }
+.goog-logo-link { display: none !important; }
+
 .tour-overlay.tour-active {
     opacity: 1;
     pointer-events: auto;

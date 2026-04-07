@@ -38,6 +38,8 @@
             </div>
         </div>
         <div class="top-bar-right">
+            <!-- GTranslate Widget -->
+            <div id="google_translate_element" style="margin-right: 15px; z-index: 100;"></div>
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
                 <span class="install-icon">📲</span>
                 <span class="install-text">INSTALEAZA</span>
@@ -272,6 +274,13 @@
 
 
     <script src="app.js?v=27"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'ro', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {
