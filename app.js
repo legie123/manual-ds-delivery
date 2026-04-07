@@ -297,6 +297,23 @@ function applyTranslations(lang, shouldReload = false) {
 
 // ====== EVENT BINDINGS ======
 document.addEventListener('DOMContentLoaded', () => {
+    // Shield Anti-Banner & Anti-Body-Shift
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('.skiptranslate, .goog-te-banner-frame').forEach(el => {
+            if (el.id !== 'google_translate_element') {
+                el.style.display = 'none !important';
+                el.style.visibility = 'hidden';
+                el.style.opacity = '0';
+            }
+        });
+        if (document.body.style.top !== '0px' || document.body.style.marginTop !== '0px') {
+            document.body.style.setProperty('top', '0px', 'important');
+            document.body.style.setProperty('margin-top', '0px', 'important');
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style', 'class'] });
+
     bindEvents();
     loadCity(state.city);
     

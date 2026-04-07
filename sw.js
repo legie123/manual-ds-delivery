@@ -1,10 +1,9 @@
-const CACHE_NAME = 'ds-manual-v20';
+const CACHE_NAME = 'ds-manual-v21';
 const urlsToCache = [
   './',
   './index.html',
-  './style.css?v=19',
-  './app.js?v=6',
-  './translations.js',
+  './style.css?v=20',
+  './app.js?v=8',
   './manifest.json',
   './dragon-logo.png'
 ];
