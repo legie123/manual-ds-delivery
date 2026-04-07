@@ -119,41 +119,51 @@ const citiesData = {
 
 const commonData = {
     gold: [
-        { sit: 'Ploaie / Intemperii', bonus: '+20-40%', det: 'Multiplicator dinamic automat. Pregateste echipamentul premium.' },
-        { sit: 'Weekend Seara (18:00 - 22:00)', bonus: '+30%', det: 'Cel mai mare flux. Vaneaza restaurante exclusiviste de familie.' },
-        { sit: 'Sarbatori Locale / Sport', bonus: 'Max', det: 'Cerere mare de ridicari multiple (fast-food / finger food).' }
+        { sit: 'Ploaie / Intemperii', bonus: '+40-60%', det: 'Multiplicator dinamic automat, volum de comenzi dublat. Clienții sunt mai recunoscători (Tips masiv). Pregătește echipamentul premium de ploaie complet impermeabil.' },
+        { sit: 'Weekend Seara (18:00 - 22:00)', bonus: '+30%', det: 'Apogeul industriei. Evită fast-food-urile mici și vânează restaurantele exclusiviste cu platouri mari de familie sau evenimente de grup.' },
+        { sit: 'Meciuri de Fotbal / Națională / Evenimente Sportive', bonus: 'Max', det: 'Cerere imensă pentru fast-food și sucuri/beri (ridicări multiple). Fii online cu o oră înainte de startul meciului.' },
+        { sit: 'Prânz Corporate (11:30 - 13:30)', bonus: '+15-20%', det: 'Concentrare maximă pe zonele office/business. Comenzi de business lunch care deschid ferestre excelente de bacșiș direct pe card.' }
     ],
     strategy: [
-        { title: 'Tranzit Pranz (11:30 - 14:00)', desc: 'Pozitionare: Zone office si cladiri comerciale. Multiplicator volume scurte.' },
-        { title: 'Perioada de Calm (14:30 - 17:00)', desc: 'Reincarca bateria, repara bicla. Targeteaza Mall-urile periferice.' },
-        { title: 'Fereastra Elite (18:30 - 21:30)', desc: 'Ridicari lungi, tips substantial. Evita blocajele mari pe arterele principale.' }
+        { title: 'Tranzit Prânz (11:30 - 14:00)', desc: 'Poziționare: Zone office și clădiri comerciale (Business Park). Multiplicator uriaș pe volume de distanțe scurte.' },
+        { title: 'Perioada de Calm (14:30 - 17:00)', desc: 'Reîncarcă bateria, igienizează geanta, hidratează-te. Targetează mall-urile periferice și patiseriile pentru gustări ocazionale.' },
+        { title: 'Fereastra Elite (18:30 - 21:30)', desc: 'Ridicări lungi, tips masiv numerar. Evită marile bulevarde blocate de trafic. Folosește trasee prin cartiere rezidențiale liniștite.' }
     ],
     rules: [
-        { act: 'Verifica Sigiliile & Bauturile', res: 'Clientul reclama direct lipsurile. O a doua verificare elimina 90% din penalizari.' },
-        { act: 'Igienizeaza Geanta Zilnic', res: 'Ambalajele curate primesc rating maxim. Murdaria se taxeaza instant pe support.' },
-        { act: 'Traseaza Rute Alternative', res: 'Evita giratoriile majore la ora de varf. Waze te baga uneori unde e mai lent, fii analitic.' }
+        { act: 'Verifică Sigiliile & Băuturile ÎNTOTDEAUNA', res: 'Clientul reclamă direct lipsurile ție, nu aplicației. O secundă prețioasă alocată verificării elimină 99% din penalizări și rating 1.' },
+        { act: 'Igienizează Geanta Termică Zilnic', res: 'Ambalajele curate scot în evidență profesionalismul și asigură bacșiș extrem. O geantă cu miros greu alterează comanda și se penalizează pe suport!' },
+        { act: 'Trasează Rute Alternative & Cunoaște Sensurile', res: 'Waze sau Google Maps nu cunosc barierele fizice temporare (de ex. piețe volante, șantiere de bloc). Fii mai inteligent decât GPS-ul!' },
+        { act: 'Folosește Textul Standard la Client', res: 'Anunță clar clientul prin mesaj în aplicație: "Am ajuns. Vă aștept la poartă/intrare." Nu apela din prima secundă, dă preaviz politicos cu 2 minute înainte.' },
+        { act: 'Tranzacții Impecabile și Mărunțiș', res: 'Dacă faci livrări cash, ține întotdeauna pe tine minim 50 RON în fracții mici pentru rest. "Nu am rest" garantează zero bacșiș și frustrare.' },
+        { act: 'Contact Cu Suportul Când Există Blocaje', res: 'Dacă un tip de mâncare/sos s-a vărsat integral din vina ambalajului, fă poză pe loc și contactează dispeceratul înainte să apeși Livrat! Autocorectează problema.' }
     ],
     mistakes: [
-        { mis: 'Evita Refuzul Artificial', res: 'Anularile dese scad "Trust Score-ul" algoritmului. Vei primi tot mai putin radiare de la server.' },
-        { mis: 'Geanta Termica de Decor', res: 'Temperatura este o metrica esentiala ignorata. Mancare rece = Zero Tips si rating slab.' }
+        { mis: 'Viteza Falsă pe Vreme Rea', res: 'Niciun bonus pe ploaie nu acoperă zile de stat în ghips și o bicicletă sau trotinetă distrusă. Rămâi calculat la trecerile de pietoni alunecoase!' },
+        { mis: 'Evită Refuzul Artificial Repetat', res: 'Anulările dese scad "Trust Score-ul algoritmului". Vei primi tot mai rar comenzi profitabile, fiind trimis treptat la curse grele/lejere.' },
+        { mis: 'Portul Genții Termice ca Decor / Simplu Rucsac', res: 'Temperatura este piesa cheie. Mâncare rece = Muncă degeaba, Tips anulat, Rating Minim.' },
+        { mis: 'Nerezolvarea Cererilor Speciale de Acces', res: 'Dacă notele spun clar "Sunați la 14# la interfon", nu ignora și nu bate în geam.' },
+        { mis: 'Blocarea Benziilor sau a Stațiilor de Autobuz', res: 'Poliția locală sancționează aspru curierii indisciplinați. O singură amendă de oprire pe trecere de pietoni iți anulează câștigul întregii zile.' }
     ],
     progression: [
-        { level: 1, title: 'Inițiat (Luna 1)', desc: 'Acumulează experiență geografică pe sectorul de reședință. Concentrează-te exclusiv pe fiabilitate.' },
-        { level: 2, title: 'Strategic (Luna 2-3)', desc: 'Înțelege ferestrele orare. Învață să filtrezi comanda toxică de comanda premium.' },
-        { level: 3, title: 'Veteran (Luna 3-6)', desc: 'Maximizează rutele intercalate și cunoaște personalul de la locațiile aglomerate.' },
-        { level: 4, title: 'Dragon Master', desc: 'Sistem fluid. Venit max/h prin alinierea la PulseRadar și utilizare a tuturor zonelor multiplicator.' }
+        { level: 1, title: 'Inițiat (Luna 1)', desc: 'Acumulează experiență geografică pe sectorul tău. Concentrează-te 100% pe fiabilitate, zero vărsări și zero greșeli. Ratingul determină viitorul.' },
+        { level: 2, title: 'Strategic (Luna 2-3)', desc: 'Înțelege ferestrele orare. Învață să filtrezi comanda mică dar ușoară de comanda colosală dar din zone cu timpi uriași de așteptare.' },
+        { level: 3, title: 'Veteran (Luna 3-6)', desc: 'Maximizează rutele intercalate și order-urile suprapuse. Salută cu numele managerii și ospătarii, obții status de prioritate în prep-time.' },
+        { level: 4, title: 'Dragon Master', desc: 'Flux sistemic. Cunoști fiecare sens unic, resimți din instinct zonele de val înainte de rapoarte și ai un venit constant ridicat indiferent de criză.' }
     ],
     smartZones: [
-        { title: 'Mall / FoodCourt', desc: 'Perfecte pentru prânz rapid și zile cu prognoză instabilă. Flux constant de ridicare.' },
-        { title: 'Ansambluri Rezidențiale Noi', desc: 'Comenzi grupate, bacșiș mare dar necesită atenție mare la orientare și interfoane.' }
+        { title: 'Complex FoodCourt / Mall', desc: 'Sursă constantă 12:00-22:00. Parcarea complicată este compensată de posibilitatea de pachet dublu/ridicări multiple la un singur trip.' },
+        { title: 'Ansambluri Rezidențiale Dense Noi', desc: 'Seara, acestea explodează în comenzi duble, dar necesită atenție majoră la cartografieri (străzi noi lipsă pe GPS, interfoane defecte).' },
+        { title: 'Zone Universitare / Cămine', desc: 'Comenzi masive de fast-food (volume mari, recurente, dar tips ceva mai redus). Excelente pentru a face numărul vizat de misiuni scurte (Quest-uri).' }
     ],
     smartRisk: [
-        { title: 'Zero Echipament Ploaie', desc: 'Risc masiv de deteriorare device și scădere rating. Costurile de reparație anulează câștigul.' },
-        { title: 'Trafic de Tranziție', desc: 'Aglomerația de părăsire a birourilor (17:00-18:30) pe marile artere. Evită tranzitul radial de lungă distanță.' }
+        { title: 'Lipsa Echipamentului Termic / Ploaie', desc: 'Risc iminent de distrugere atât a preparatului cât și a telefonului personal. Costurile unui display umezit anulează efortul pe 3 săptămâni.' },
+        { title: 'Trafic de Tranziție "Bară la Bară"', desc: 'Evită tranzitul pe arterele principale orizontale (17:00-18:30). Risc enorm de a pierde o oră într-un singur sens. Navighează prin rețea capilară (străduțe).' },
+        { title: 'Oboseala vizuală cronică pe timp de noapte', desc: 'Faruri puternice, lipsa de iluminat în zone de șantiere rezidențiale. Poartă mereu ochelari de protecție sau lentile anti-orbire la volan/pe bicicletă.' }
     ],
     smartRoute: [
-        { title: 'Analiza Radar', desc: 'Sincronizează-te cu direcția roșie a cererii înainte de confirmările mari. Ferește-te de dead-zones (la margine).' },
-        { title: 'Scurtături Omologate', desc: 'Utilizează benzi speciale și străzi paralele înguste ce decongestionează timpul estimat (ETA).' }
+        { title: 'Analiza Anticipativă a Radarului', desc: 'Când un nor roșu crește (Global Demand), nu alerga spre centrul lui dacă e super aglomerat de trafic. Plasează-te inteligent fix la "marginea frontului" pentru preluări instantanee, libere de trafic.' },
+        { title: 'Scurtăturile Informale', desc: 'Trecerea prin gangurile blocurilor, poduri pietonale, alei între parcuri. Învățarea acestor secrete de cartier taie ETA-ul cu 25% la bicicletă.' },
+        { title: 'Asocierea cu Clădirea', desc: 'Identifică clădirile mari după detalii, nu doar după număr. Numerele de stradă se pierd noaptea, arhitectura clădirii și vitrinele te ghidează vizual instant.' }
     ]
 };
 
@@ -480,6 +490,10 @@ function loadCity(cityId) {
     const data = citiesData[cityId];
     if (!data) return;
     
+    // Set City Title
+    const cityTitle = document.getElementById('selected-city-title');
+    if (cityTitle) cityTitle.textContent = data.name;
+    
     const mainContent = document.getElementById('main-content');
     if(mainContent) {
         mainContent.classList.remove('loaded');
@@ -541,6 +555,9 @@ function loadCity(cityId) {
         fetchAndRenderEvents(cityId);
         if (state.eventsRefreshInterval) clearInterval(state.eventsRefreshInterval);
         state.eventsRefreshInterval = setInterval(() => fetchAndRenderEvents(cityId), 30 * 60 * 1000);
+        
+        // City News API
+        fetchNews(data.name);
         
         // ====== NEW SECTIONS (Faza 2) ======
         
@@ -738,6 +755,45 @@ async function fetchAndRenderEvents(cityId) {
         container.innerHTML = html;
     } catch (err) {
         container.innerHTML = '<p class="events-empty">Feed indisponibil momentan.</p>';
+    }
+}
+
+// ====== NEWS API INTEGRATION ======
+async function fetchNews(cityName) {
+    const newsContainer = document.getElementById('city-news-feed');
+    if (!newsContainer) return;
+    
+    newsContainer.innerHTML = '<div class="news-loading-pulse" style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Caută știri locale...</div>';
+    
+    try {
+        const query = encodeURIComponent(cityName + ' trafic OR stiri');
+        const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${query}&hl=ro&gl=RO&ceid=RO:ro`);
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+        
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('API Error');
+        const data = await response.json();
+        
+        if (data.status === 'ok' && data.items && data.items.length > 0) {
+            const articles = data.items.slice(0, 4);
+            newsContainer.innerHTML = articles.map(item => {
+                const titleParts = item.title.split(' - ');
+                const cleanTitle = titleParts[0] || item.title;
+                const source = item.source || titleParts.pop() || 'Sursă Locală';
+                
+                return `
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-item">
+                    <span class="news-title">${cleanTitle}</span>
+                    <span class="news-source">${source} &bull; ${new Date(item.pubDate.replace(/-/g, '/')).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}</span>
+                </a>
+                `;
+            }).join('');
+        } else {
+            newsContainer.innerHTML = '<div style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Momentan nu sunt alerte majore.</div>';
+        }
+    } catch (error) {
+        console.error('Eroare stiri:', error);
+        newsContainer.innerHTML = '<div style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Eroare satelit. Verifică manual știrile.</div>';
     }
 }
 

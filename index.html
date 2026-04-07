@@ -93,6 +93,7 @@
             <!-- HEADER GLOBAL -->
             <header class="dashboard-header" style="justify-content: center; text-align: center; border-bottom: none;">
                 <div class="header-main" style="width: 100%;">
+                    <h1 id="selected-city-title" style="font-size: 1.5rem; color: #ffb800; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">--</h1>
                     <p class="mul-label" style="margin-bottom:8px; opacity:0.7;" data-i18n="title_dashboard">CERERE GLOBALA</p>
                     <h2 id="hdr-demand" style="font-size: 4rem; margin-bottom: 12px;">--%</h2>
                     <div id="motivational-message" class="motivational-text" style="font-size: 1.25rem; font-style: italic; color: #fff; background: rgba(255, 184, 0, 0.15); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255, 184, 0, 0.3); display: inline-block; max-width: 90%;">Se incarca glumele de curierat...</div>
@@ -191,21 +192,21 @@
                 <section class="glass-card hub-card action-card">
                     <h3 class="card-title">
                         <span>Înțelepciunea Dragonilor <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></span>
-                        <span class="swipe-hint">Glisează <span class="swipe-arrow">👉</span></span>
+                        <span class="swipe-hint" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:bold; color:#ffb800; background:rgba(255,184,0,0.1); padding:4px 8px; border-radius:12px; animation: pulse 2s infinite;">Glisează <span class="swipe-arrow" style="font-size:16px;">👉</span></span>
                     </h3>
                     
                     <!-- Selector Orizontal Scrollabil -->
                     <div class="hub-tabs-wrapper">
                         <div class="hub-tabs">
                             <button class="hub-btn active" data-tab="gold">🌟 Golden Tips</button>
-                        <button class="hub-btn" data-tab="events">🎫 Evenimente</button>
-                        <button class="hub-btn" data-tab="rules">⚖️ Regulament</button>
-                        <button class="hub-btn" data-tab="orders">📦 Comenzi</button>
-                        <button class="hub-btn" data-tab="earnings">💰 Castiguri</button>
-                        <button class="hub-btn" data-tab="progression">🎖️ Progresie</button>
-                        <button class="hub-btn" data-tab="smart-zones">🎯 Smart Zones</button>
-                        <button class="hub-btn" data-tab="smart-risk">⚠️ Smart Risk</button>
-                        <button class="hub-btn" data-tab="smart-route">🗺️ Smart Route</button>
+                            <button class="hub-btn" data-tab="events">🎫 Evenimente</button>
+                            <button class="hub-btn" data-tab="rules">⚖️ Regulament</button>
+                            <button class="hub-btn" data-tab="orders">📦 Comenzi</button>
+                            <button class="hub-btn" data-tab="earnings">💰 Castiguri</button>
+                            <button class="hub-btn" data-tab="progression">🎖️ Progresie</button>
+                            <button class="hub-btn" data-tab="smart-zones">🎯 Smart Zones</button>
+                            <button class="hub-btn" data-tab="smart-risk">⚠️ Smart Risk</button>
+                            <button class="hub-btn" data-tab="smart-route">🗺️ Smart Route</button>
                         </div>
                     </div>
 
@@ -252,7 +253,14 @@
                     
                 </section>
                 
-                <!-- INVIZIBIL PT VECHILE ANCORE / EROARE JS FALLBACK -->
+                <!-- MODULE 5: LOCAL CITY NEWS -->
+                <section class="glass-card news-card" style="margin-top:20px; border-top: 2px solid rgba(255,184,0,0.5);">
+                    <h3 class="card-title">Știri Locale <span class="info-tip" data-tip="Ultimele știri importante și de trafic direct din orașul selectat.">?</span></h3>
+                    <div id="city-news-feed" class="news-feed-container" style="display: flex; flex-direction: column; gap: 8px;">
+                        <div class="news-loading-pulse" style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Caută știri locale...</div>
+                    </div>
+                </section>
+
                 <div style="display:none;" id="volume-list"></div>
                 <div style="display:none;" id="strategy-list"></div>
 
