@@ -795,6 +795,21 @@ iframe.skiptranslate,
     opacity: 0 !important; 
     height: 0 !important; 
 }
+
+/* KILL ANNOYING POPUP TOOLTIP ON TAP */
+#goog-gt-tt, 
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover { 
+    display: none !important; 
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+.goog-text-highlight { 
+    background-color: transparent !important; 
+    box-shadow: none !important; 
+}
+
 #google_translate_element select {
     background: rgba(0, 0, 0, 0.8);
     color: #ffb800;
