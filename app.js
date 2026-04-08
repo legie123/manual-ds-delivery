@@ -1046,13 +1046,31 @@ if ('IntersectionObserver' in window) {
                 document.getElementById('current-flag').innerText = targetFlag;
                 langDropdown.classList.remove('active');
                 
+                const host = window.location.hostname;
+                if (targetLang === 'ro') {
+                    // Romanian is base language, wipe all translation cookies to restore original
+                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${host};`;
+                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${host};`;
+                    window.location.reload();
+                    return;
+                }
+                
                 // Trigger Google Translate
                 const gtSelect = document.querySelector('.goog-te-combo');
                 if (gtSelect) {
                     gtSelect.value = targetLang;
-                    gtSelect.dispatchEvent(new Event('change'));
+                    if (typeof Event === 'function') {
+                        gtSelect.dispatchEvent(new Event('change'));
+                    } else {
+                        const event = document.createEvent('HTMLEvents');
+                        event.initEvent('change', true, true);
+                        gtSelect.dispatchEvent(event);
+                    }
                 } else {
                     document.cookie = `googtrans=/ro/${targetLang}; path=/;`;
+                    document.cookie = `googtrans=/ro/${targetLang}; path=/; domain=${host};`;
+                    document.cookie = `googtrans=/ro/${targetLang}; path=/; domain=.${host};`;
                     window.location.reload();
                 }
             });
