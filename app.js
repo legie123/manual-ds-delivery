@@ -1020,6 +1020,56 @@ if ('IntersectionObserver' in window) {
 
     // Observe cards after DOM ready
     document.addEventListener('DOMContentLoaded', () => {
+    
+    // ====== LANGUAGE SELECTOR (GTranslate Injector) ======
+    const currentLang = document.getElementById('current-lang');
+    const langDropdown = document.getElementById('lang-dropdown');
+    
+    if (currentLang && langDropdown) {
+        currentLang.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langDropdown.contains(e.target) && !currentLang.contains(e.target)) {
+                langDropdown.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.lang-opt').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetLang = e.target.getAttribute('data-lang');
+                const targetFlag = e.target.getAttribute('data-flag');
+                
+                document.getElementById('current-code').innerText = targetLang.toUpperCase();
+                document.getElementById('current-flag').innerText = targetFlag;
+                langDropdown.classList.remove('active');
+                
+                // Trigger Google Translate
+                const gtSelect = document.querySelector('.goog-te-combo');
+                if (gtSelect) {
+                    gtSelect.value = targetLang;
+                    gtSelect.dispatchEvent(new Event('change'));
+                } else {
+                    document.cookie = `googtrans=/ro/${targetLang}; path=/;`;
+                    window.location.reload();
+                }
+            });
+        });
+        
+        // Init visual state based on cookie
+        const match = document.cookie.match(/googtrans=\/ro\/([a-z]{2})/);
+        if (match && match[1]) {
+            const code = match[1];
+            const btn = document.querySelector(`.lang-opt[data-lang="${code}"]`);
+            if (btn) {
+                document.getElementById('current-code').innerText = code.toUpperCase();
+                document.getElementById('current-flag').innerText = btn.getAttribute('data-flag');
+            }
+        }
+    }
+
         document.querySelectorAll('.glass-card').forEach((card, i) => {
             if (i > 2) { // Skip first 3 (above fold)
                 card.classList.add('lazy-card');

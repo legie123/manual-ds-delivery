@@ -38,8 +38,23 @@
             </div>
         </div>
         <div class="top-bar-right">
-            <!-- GTranslate Widget -->
-            <div id="google_translate_element" style="margin-right: 15px; z-index: 100;"></div>
+            <div class="lang-selector-container" id="lang-selector">
+                <div class="current-lang" id="current-lang">
+                    <span class="lang-flag" id="current-flag">🌐</span>
+                    <span class="lang-code" id="current-code">RO</span>
+                </div>
+                <ul class="lang-dropdown" id="lang-dropdown">
+                    <li><button class="lang-opt" data-lang="ro" data-flag="🇷🇴">🇷🇴 Romana</button></li>
+                    <li><button class="lang-opt" data-lang="en" data-flag="🇬🇧">🇬🇧 English</button></li>
+                    <li><button class="lang-opt" data-lang="ar" data-flag="🇸🇾">🇸🇾 Araba</button></li>
+                    <li><button class="lang-opt" data-lang="tr" data-flag="🇹🇷">🇹🇷 Turca</button></li>
+                    <li><button class="lang-opt" data-lang="hi" data-flag="🇮🇳">🇮🇳 Hindi</button></li>
+                    <li><button class="lang-opt" data-lang="bn" data-flag="🇧🇩">🇧🇩 Bengali</button></li>
+                    <li><button class="lang-opt" data-lang="ne" data-flag="🇳🇵">🇳🇵 Nepali</button></li>
+                </ul>
+            </div>
+            <!-- Hid GTranslate -->
+            <div id="google_translate_element" style="display:none;"></div>
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
                 <span class="install-icon">📲</span>
                 <span class="install-text">INSTALEAZA</span>
