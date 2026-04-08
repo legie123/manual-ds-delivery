@@ -1102,8 +1102,8 @@ function initTour(force = false) {
     currentTourStep = 0;
     isTourActive = true;
     
-    const overlay = document.getElementById('tour-overlay');
-    if(overlay) overlay.classList.add('tour-active');
+    const hole = document.getElementById('tour-hole');
+    if(hole) hole.classList.add('tour-active');
     
     const stepsArr = getTourSteps();
     const totalEl = document.getElementById('tour-step-total');
@@ -1127,6 +1127,17 @@ function renderTourStep() {
     
     // Slight delay for smooth scroll before highlight
     setTimeout(() => {
+        const rect = targetEl.getBoundingClientRect();
+        const hole = document.getElementById('tour-hole');
+        
+        // Position the physical hole using Viewport Coordinates (Fixed position)
+        if (hole) {
+            hole.style.top = (rect.top - 5) + 'px';
+            hole.style.left = (rect.left - 5) + 'px';
+            hole.style.width = (rect.width + 10) + 'px';
+            hole.style.height = (rect.height + 10) + 'px';
+        }
+        
         targetEl.classList.add('tour-highlighted');
         
         const box = document.getElementById('tour-box');
@@ -1141,7 +1152,6 @@ function renderTourStep() {
         document.getElementById('tour-btn-next').innerText = currentTourStep === stepsArr.length - 1 ? 'Finalizare' : 'Următorul';
         
         // Positioning
-        const rect = targetEl.getBoundingClientRect();
         const boxHeight = box.offsetHeight || 150;
         let top = rect.bottom + window.scrollY + 20;
         let left = rect.left + window.scrollX + (rect.width / 2) - 150; // Center horiz
@@ -1183,9 +1193,9 @@ function prevTourStep() {
 function endTour() {
     isTourActive = false;
     document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
-    const overlay = document.getElementById('tour-overlay');
+    const hole = document.getElementById('tour-hole');
     const box = document.getElementById('tour-box');
-    if(overlay) overlay.classList.remove('tour-active');
+    if(hole) hole.classList.remove('tour-active');
     if(box) box.classList.remove('tour-box-active');
     localStorage.setItem('ds_tour_completed', 'true');
 }
