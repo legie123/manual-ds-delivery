@@ -8,10 +8,10 @@ const state = {
 
 function loadCityDebounced(cityId) {
     clearTimeout(state.loadCityTimer);
-    state.loadCityTimer = setTimeout(() => loadCity(cityId), 200);
+    state.loadCityTimer = setTimeout(() => {
+        loadCity(cityId);
+    }, 200);
 }
-
-// Data Store
 const citiesData = {
     bucuresti: {
         id: 'bucuresti', name: 'Bucuresti', icon: '🏛️', center: 'Piata Unirii, Victoriei', radius: '1 - 10 km', coords: { lat: 44.4268, lng: 26.1025 },
@@ -1105,7 +1105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             // Remove active from all
             hubBtns.forEach(b => b.classList.remove('active'));
-            hubPanes.forEach(p => p.style.display = 'none');
+            hubPanes.forEach(p => p.classList.remove('active'));
 
             // Add active to clicked
             btn.classList.add('active');
@@ -1113,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tabId = btn.getAttribute('data-tab');
             const targetPane = document.getElementById('tab-' + tabId);
             if (targetPane) {
-                targetPane.style.display = 'block';
+                targetPane.classList.add('active');
             }
         });
     });
@@ -1278,16 +1278,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnNext) btnNext.addEventListener('click', nextTourStep);
         if (btnPrev) btnPrev.addEventListener('click', prevTourStep);
         
-        // Secret reset by clicking the logo
+        // Secret trigger for interactive guide
         const topLogo = document.querySelector('.logo');
         if (topLogo) {
             topLogo.addEventListener('click', () => {
-                localStorage.removeItem('ds_tour_completed');
                 initTour(true);
             });
         }
         
-        // Auto-start for new device
-        setTimeout(() => initTour(false), 2000);
     }, 800);
 });

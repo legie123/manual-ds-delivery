@@ -830,3 +830,60 @@ iframe.skiptranslate,
 .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
 .goog-te-gadget span { display: none !important; }
 .goog-logo-link { display: none !important; }
+
+/* TRANSLATION SAFE TABS */
+.hub-pane {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -10;
+    height: 0;
+    overflow: hidden;
+}
+.hub-pane.active {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+    height: auto;
+    overflow: visible;
+}
+
+/* PHONE INTEGRATION */
+.mobile-tel-btn {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 0, 50, 0.15) 0%, rgba(255, 0, 50, 0.05) 100%);
+    border: 1px solid rgba(255, 0, 50, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(255, 0, 50, 0.1);
+}
+.mobile-tel-btn:hover, .mobile-tel-btn:active {
+    background: linear-gradient(135deg, rgba(255, 0, 50, 0.3) 0%, rgba(255, 0, 50, 0.1) 100%);
+    transform: translateY(-2px);
+    border-color: #ff0055;
+    box-shadow: 0 6px 20px rgba(255, 0, 50, 0.2);
+}
+.tel-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 2px 5px rgba(255,80,80,0.5));
+}
+.tel-details {
+    display: flex;
+    flex-direction: column;
+}
+.tel-details strong {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.tel-details span {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 2px;
+}
