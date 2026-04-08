@@ -1,0 +1,146 @@
+// =========================================================================
+// CINEMATIC PROMO ENGINE
+// Trigger: Tap 3 times on the Dragon Logo or Brand Text
+// =========================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    let tapCount = 0;
+    let tapTimeout;
+
+    const brandArea = document.querySelector('.brand-text');
+    if(brandArea) {
+        brandArea.addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapTimeout);
+            if(tapCount >= 3) {
+                tapCount = 0;
+                startCinematicPromo();
+            } else {
+                tapTimeout = setTimeout(() => { tapCount = 0; }, 800);
+            }
+        });
+    }
+
+    function startCinematicPromo() {
+        console.log("🎬 CINEMATIC ENGINE INITIATED");
+        
+        // 1. Setup UI Overlay
+        let overlay = document.getElementById('cinematic-overlay');
+        if(!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'cinematic-overlay';
+            
+            const textElement = document.createElement('div');
+            textElement.className = 'cinematic-text';
+            textElement.id = 'cinematic-text-box';
+            
+            const bigCta = document.createElement('div');
+            bigCta.className = 'cinematic-big-cta';
+            bigCta.innerText = 'APPLY NOW';
+            bigCta.id = 'cinematic-cta';
+
+            overlay.appendChild(textElement);
+            document.body.appendChild(overlay);
+            document.body.appendChild(bigCta);
+        }
+        
+        // Ensure starting at top
+        window.scrollTo({top: 0, behavior: 'instant'});
+        overlay.classList.add('active');
+        
+        const textBox = document.getElementById('cinematic-text-box');
+        const ctaBox = document.getElementById('cinematic-cta');
+        
+        // Helper to show text
+        const showText = (text, duration, topPos = "50%") => {
+            return new Promise(resolve => {
+                textBox.classList.remove('visible');
+                setTimeout(() => {
+                    textBox.innerText = text;
+                    textBox.style.top = topPos;
+                    textBox.classList.add('visible');
+                    setTimeout(() => {
+                        resolve();
+                    }, duration);
+                }, 400); // transition out delay
+            });
+        };
+
+        // Helper to smooth scroll
+        const scrollToTarget = (selector, offset = 100) => {
+            const el = document.querySelector(selector);
+            if(el) {
+                const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+                return el;
+            }
+            return null;
+        };
+
+        // Helper to apply glow
+        const applyGlow = (el) => {
+            if(el) el.classList.add('cinematic-glow');
+        };
+        const removeGlow = (el) => {
+            if(el) el.classList.remove('cinematic-glow');
+        };
+
+        // ====== SCRIPT SEQUENCE ======
+        const runFlow = async () => {
+            // [HOOK]
+            await showText("This is not just a delivery platform.", 2500, "30%");
+            await showText("This is a system built for performance.", 2500, "30%");
+
+            // [INTRO]
+            await showText("Dragon Delivery connects couriers with real earning potential and full support.", 3000, "20%");
+            
+            // [SCROLL BENEFITS]
+            textBox.classList.remove('visible');
+            const metricsCard = scrollToTarget('.stats-grid', 150);
+            applyGlow(metricsCard);
+            await showText("From competitive earnings...", 2500, "60%");
+            removeGlow(metricsCard);
+
+            const toolsCard = scrollToTarget('.tools-section', 150);
+            applyGlow(toolsCard);
+            await showText("To full onboarding support...", 2500, "40%");
+            removeGlow(toolsCard);
+
+            // [SMART UI / POPUPS SECTION]
+            textBox.classList.remove('visible');
+            await showText("Notice the smart interaction layers.", 2000, "15%");
+            
+            // Open a modal to show UI
+            const weatherBtn = document.querySelector('.weather-card');
+            if(weatherBtn) weatherBtn.click();
+            await showText("Every element is designed to guide, convert, and simplify decisions.", 3500, "80%");
+            
+            // Close modal
+            const closeBtn = document.querySelector('#weather-modal .close-btn');
+            if(closeBtn) closeBtn.click();
+            
+            // [UX FOCUS]
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            await showText("Clean structure. Fast navigation. High clarity.", 2500, "25%");
+            await showText("This is built for action, not just browsing.", 2500, "25%");
+
+            // [CLOSING]
+            await showText("If you're ready to scale your income...", 2500, "40%");
+            await showText("Dragon Delivery is already moving.", 2500, "40%");
+
+            // [BIG CTA]
+            textBox.classList.remove('visible');
+            overlay.classList.remove('active');
+            
+            setTimeout(() => {
+                ctaBox.classList.add('visible');
+                // Keep the CTA visible for a few seconds then cleanup
+                setTimeout(() => {
+                    ctaBox.classList.remove('visible');
+                }, 4000);
+            }, 800);
+        };
+
+        runFlow();
+    }
+});
