@@ -35,30 +35,17 @@
         <div class="top-bar-left">
             <img src="dragon-logo.png" alt="Dragons Delivery Logo" class="logo">
             <div class="brand-text">
-                <h1>Dragons Delivery</h1>
+                <h1 data-i18n="app_name">Dragons Delivery</h1>
             </div>
         </div>
         <div class="top-bar-right">
-            <div class="lang-selector-container" id="lang-selector">
-                <div class="current-lang" id="current-lang">
-                    <span class="lang-flag" id="current-flag">🌐</span>
-                    <span class="lang-code" id="current-code">RO</span>
-                </div>
-                <ul class="lang-dropdown" id="lang-dropdown">
-                    <li><button class="lang-opt" data-lang="ro" data-flag="🇷🇴">🇷🇴 Romana</button></li>
-                    <li><button class="lang-opt" data-lang="en" data-flag="🇬🇧">🇬🇧 English</button></li>
-                    <li><button class="lang-opt" data-lang="ar" data-flag="🇸🇾">🇸🇾 Araba</button></li>
-                    <li><button class="lang-opt" data-lang="tr" data-flag="🇹🇷">🇹🇷 Turca</button></li>
-                    <li><button class="lang-opt" data-lang="hi" data-flag="🇮🇳">🇮🇳 Hindi</button></li>
-                    <li><button class="lang-opt" data-lang="bn" data-flag="🇧🇩">🇧🇩 Bengali</button></li>
-                    <li><button class="lang-opt" data-lang="ne" data-flag="🇳🇵">🇳🇵 Nepali</button></li>
-                </ul>
+            <div class="header-lang-display" id="header-lang-display">
+                <span id="header-flag">🇷🇴</span>
+                <span id="header-code">RO</span>
             </div>
-            <!-- Hid GTranslate -->
-            <div id="google_translate_element" style="position:fixed; top:-10000px; left:-10000px; opacity:0; pointer-events:none;"></div>
             <button id="install-btn" class="install-btn" style="display:none;" aria-label="Instaleaza aplicatia">
                 <span class="install-icon">📲</span>
-                <span class="install-text">INSTALEAZA</span>
+                <span class="install-text" data-i18n="install">INSTALEAZA</span>
             </button>
             <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
                 <span></span><span></span><span></span>
@@ -71,7 +58,7 @@
 
         <!-- City Sidebar -->
         <nav id="city-sidebar" class="city-sidebar">
-            <h2 class="sidebar-title">Retea Operationala</h2>
+            <h2 class="sidebar-title" data-i18n="operational_network">Retea Operationala</h2>
             <ul class="city-list" id="city-list" style="list-style:none; padding:0;">
                 <li><button class="city-btn active" data-city="bucuresti">Bucuresti</button></li>
                 <li><button class="city-btn" data-city="timisoara">Timisoara</button></li>
@@ -91,8 +78,8 @@
                 <a href="tel:+40700000000" class="mobile-tel-btn">
                     <span class="tel-icon">📞</span>
                     <div class="tel-details">
-                        <strong>Dispecerat Live</strong>
-                        <span>Apasă pentru apelare</span>
+                        <strong data-i18n="dispatch_title">Dispecerat Live</strong>
+                        <span data-i18n="dispatch_sub">Apasă pentru apelare</span>
                     </div>
                 </a>
             </div>
@@ -105,9 +92,9 @@
             <header class="dashboard-header" style="justify-content: center; text-align: center; border-bottom: none;">
                 <div class="header-main" style="width: 100%;">
                     <h1 id="selected-city-title" style="font-size: 1.5rem; color: #ffb800; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">--</h1>
-                    <p class="mul-label" style="margin-bottom:8px; opacity:0.7;">CERERE GLOBALA</p>
+                    <p class="mul-label" data-i18n="global_demand" style="margin-bottom:8px; opacity:0.7;">CERERE GLOBALA</p>
                     <h2 id="hdr-demand" style="font-size: 4rem; margin-bottom: 12px;">--%</h2>
-                    <div id="motivational-message" class="motivational-text" style="font-size: 1.25rem; font-style: italic; color: #fff; background: rgba(255, 184, 0, 0.15); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255, 184, 0, 0.3); display: inline-block; max-width: 90%;">Se incarca glumele de curierat...</div>
+                    <div id="motivational-message" class="motivational-text" data-i18n="loading_jokes" style="font-size: 1.25rem; font-style: italic; color: #fff; background: rgba(255, 184, 0, 0.15); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255, 184, 0, 0.3); display: inline-block; max-width: 90%;">Se incarca glumele de curierat...</div>
                 </div>
             </header>
 
@@ -124,34 +111,34 @@
             <div class="dashboard-grid">
                 <!-- MODULE 1: MODUL TACTIC -->
                 <section class="glass-card tactic-card snapshot-card">
-                    <h3 class="card-title">Modul Tactic Live <span class="info-tip" data-tip="Date in timp real: vreme, trafic dedus, evenimente si stiri din dispecerat.">?</span> <span id="sync-time" class="sync-time">Sync: --:--</span></h3>
+                    <h3 class="card-title"><span data-i18n="tactic_module">Modul Tactic Live</span> <span class="info-tip" data-tip="Date in timp real: vreme, trafic dedus, evenimente si stiri din dispecerat.">?</span> <span id="sync-time" class="sync-time">Sync: --:--</span></h3>
                     <div class="snapshot-grid">
                         <div class="snap-item meteo">
                             <span class="snap-icon" id="snap-w-icon">☁️</span>
                             <div class="snap-info">
                                 <h4 id="snap-w-temp">--°C</h4>
-                                <p id="snap-w-desc" class="neutral">Vreme normala</p>
+                                <p id="snap-w-desc" class="neutral" data-i18n="weather_normal">Vreme normala</p>
                             </div>
                         </div>
                         <div class="snap-item traffic">
                             <span class="snap-icon" id="snap-tr-icon">🚦</span>
                             <div class="snap-info">
                                 <h4 id="snap-tr-status">Calculam...</h4>
-                                <p id="snap-tr-desc" class="neutral">Trafic estimat</p>
+                                <p id="snap-tr-desc" class="neutral" data-i18n="traffic_estimated">Trafic estimat</p>
                             </div>
                         </div>
                         <div class="snap-item event">
                             <span class="snap-icon" id="snap-e-icon">🎫</span>
                             <div class="snap-info">
                                 <h4 id="snap-e-status">Tranzit</h4>
-                                <p id="snap-e-desc" class="neutral">Niciun eveniment</p>
+                                <p id="snap-e-desc" class="neutral" data-i18n="events_none">Niciun eveniment</p>
                             </div>
                         </div>
                         <div class="snap-item news">
                             <span class="snap-icon" id="snap-n-icon">📰</span>
                             <div class="snap-info">
                                 <h4 id="snap-n-title">Fara alerte</h4>
-                                <p id="snap-n-desc" class="neutral">Status OK</p>
+                                <p id="snap-n-desc" class="neutral" data-i18n="news_status_ok">Status OK</p>
                             </div>
                         </div>
                     </div>
@@ -159,7 +146,7 @@
 
                 <!-- MODULE 2: RADARUL CURIERULUI -->
                 <section class="glass-card radar-card demand-card">
-                    <h3 class="card-title">Radar Curier & Zone Active <span class="info-tip" data-tip="Volum estimat si cele mai bune zone in care sa te plasezi chiar acum.">?</span></h3>
+                    <h3 class="card-title"><span data-i18n="radar_title">Radar Curier & Zone Active</span> <span class="info-tip" data-tip="Volum estimat si cele mai bune zone in care sa te plasezi chiar acum.">?</span></h3>
                     <div class="progress-container">
                         <div class="progress-track">
                             <div id="demand-bar" class="progress-fill" style="width: 0%;"></div>
@@ -168,13 +155,13 @@
                     </div>
                     <div class="radar-action-box" style="margin-top: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; border-left: 3px solid #ffb800;">
                         <strong style="color:#ffb800; font-size:12px; display:block; margin-bottom:4px;">RECOMANDARE IESIRE:</strong>
-                        <span id="radar-recommendation" style="font-size:14px; font-weight:600; color:#fff;">Preluare date...</span>
+                        <span id="radar-recommendation" style="font-size:14px; font-weight:600; color:#fff;" data-i18n="recommendation_loading">Preluare date...</span>
                     </div>
                 </section>
 
                 <!-- MODULE 3: IMPACT MULTIPLICATOR -->
                 <section class="glass-card impact-card earning-card">
-                    <h3 class="card-title">Impact Multiplicator & Profit <span class="info-tip" data-tip="Cum se traduc evenimentele si orele de varf in profitul tau actual.">?</span></h3>
+                    <h3 class="card-title"><span data-i18n="impact_title">Impact Multiplicator & Profit</span> <span class="info-tip" data-tip="Cum se traduc evenimentele si orele de varf in profitul tau actual.">?</span></h3>
                     <div class="progress-container earning-glow">
                         <div class="progress-track">
                             <div id="profit-bar" class="progress-fill earning-grad" style="width: 0%;"></div>
@@ -184,17 +171,17 @@
                     
                     <div class="multiplier-box" style="margin-bottom:12px;">
                         <span class="mul-label">Status Curent:</span>
-                        <span id="profit-indicator" class="mul-badge low">SCAZUT</span>
+                        <span id="profit-indicator" class="mul-badge low" data-i18n="profit_low">SCAZUT</span>
                     </div>
 
                     <div style="display:flex; gap:10px; margin-top:12px;">
                         <div style="flex:1; background:rgba(0,0,0,0.4); padding:10px; border-radius:8px;">
                             <strong style="font-size:11px; color:#aaa; display:block; margin-bottom:6px;">ORE DE VARF</strong>
-                            <div id="impact-peak-indicator" style="font-size:13px; font-weight:600; color:#4CAF50;">Normal</div>
+                            <div id="impact-peak-indicator" style="font-size:13px; font-weight:600; color:#4CAF50;" data-i18n="peak_normal">Normal</div>
                         </div>
                         <div style="flex:1; background:rgba(0,0,0,0.4); padding:10px; border-radius:8px;">
                             <strong style="font-size:11px; color:#aaa; display:block; margin-bottom:6px;">EVENIMENTE</strong>
-                            <div id="impact-event-indicator" style="font-size:13px; font-weight:600; color:#FFB800;">Fara impact</div>
+                            <div id="impact-event-indicator" style="font-size:13px; font-weight:600; color:#FFB800;" data-i18n="impact_none">Fara impact</div>
                         </div>
                     </div>
                 </section>
@@ -202,22 +189,22 @@
                 <!-- MODULE 4: INTELEPCIUNEA DRAGONILOR (TAB-URI) -->
                 <section class="glass-card hub-card action-card">
                     <h3 class="card-title">
-                        <span>Înțelepciunea Dragonilor <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></span>
-                        <span class="swipe-hint" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:bold; color:#ffb800; background:rgba(255,184,0,0.1); padding:4px 8px; border-radius:12px; animation: pulse 2s infinite;">Glisează <span class="swipe-arrow" style="font-size:16px;">👉</span></span>
+                        <span data-i18n="wisdom_title">Înțelepciunea Dragonilor <span class="info-tip" data-tip="Date statice, strategii si secrete de livrare in oras.">?</span></span>
+                        <span class="swipe-hint" data-i18n="swipe_hint" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:bold; color:#ffb800; background:rgba(255,184,0,0.1); padding:4px 8px; border-radius:12px; animation: pulse 2s infinite;">Glisează <span class="swipe-arrow" style="font-size:16px;">👉</span></span>
                     </h3>
                     
                     <!-- Selector Orizontal Scrollabil -->
                     <div class="hub-tabs-wrapper">
                         <div class="hub-tabs">
-                            <button class="hub-btn active" data-tab="gold">🌟 Golden Tips</button>
-                            <button class="hub-btn" data-tab="events">🎫 Evenimente</button>
-                            <button class="hub-btn" data-tab="rules">⚖️ Regulament</button>
-                            <button class="hub-btn" data-tab="orders">📦 Comenzi</button>
-                            <button class="hub-btn" data-tab="earnings">💰 Castiguri</button>
-                            <button class="hub-btn" data-tab="progression">🎖️ Progresie</button>
-                            <button class="hub-btn" data-tab="smart-zones">🎯 Smart Zones</button>
-                            <button class="hub-btn" data-tab="smart-risk">⚠️ Smart Risk</button>
-                            <button class="hub-btn" data-tab="smart-route">🗺️ Smart Route</button>
+                            <button class="hub-btn active" data-tab="gold" data-i18n="tab_gold">🌟 Golden Tips</button>
+                            <button class="hub-btn" data-tab="events" data-i18n="tab_events">🎫 Evenimente</button>
+                            <button class="hub-btn" data-tab="rules" data-i18n="tab_rules">⚖️ Regulament</button>
+                            <button class="hub-btn" data-tab="orders" data-i18n="tab_orders">📦 Comenzi</button>
+                            <button class="hub-btn" data-tab="earnings" data-i18n="tab_earnings">💰 Castiguri</button>
+                            <button class="hub-btn" data-tab="progression" data-i18n="tab_progression">🎖️ Progresie</button>
+                            <button class="hub-btn" data-tab="smart-zones" data-i18n="tab_zones">🎯 Smart Zones</button>
+                            <button class="hub-btn" data-tab="smart-risk" data-i18n="tab_risk">⚠️ Smart Risk</button>
+                            <button class="hub-btn" data-tab="smart-route" data-i18n="tab_route">🗺️ Smart Route</button>
                         </div>
                     </div>
 
@@ -268,9 +255,9 @@
 
             <!-- MODULE 5: LOCAL CITY NEWS -->
             <section class="glass-card news-card" style="margin-top:20px; border-top: 2px solid rgba(255,184,0,0.5);">
-                <h3 class="card-title">Știri Locale <span class="info-tip" data-tip="Ultimele știri importante și de trafic direct din orașul selectat.">?</span></h3>
+                <h3 class="card-title" data-i18n="local_news">Știri Locale <span class="info-tip" data-tip="Ultimele știri importante și de trafic direct din orașul selectat.">?</span></h3>
                 <div id="city-news-feed" class="news-feed-container" style="display: flex; flex-direction: column; gap: 8px;">
-                    <div class="news-loading-pulse" style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Caută știri locale...</div>
+                    <div class="news-loading-pulse" data-i18n="news_searching" style="text-align:center; padding: 10px; color: #aaa; font-style: italic;">Caută știri locale...</div>
                 </div>
             </section>
 
@@ -278,35 +265,61 @@
 
     </div>
 
-    <!-- Mobile sidebar overlay -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
-    </div> <!-- END APP-WRAPPER -->
+    <!-- FRESH PREMIUM LANGUAGE PORTAL -->
+    <div class="portal-trigger" id="lang-trigger" aria-label="Change Language">
+        <span id="portal-flag">🇷🇴</span>
+        <span id="portal-code">RO</span>
+    </div>
 
-    <!-- ONBOARDING TOUR HTML -->
-    <div id="tour-hole" class="tour-hole"></div>
-    <div id="tour-box" class="tour-box">
-        <div class="tour-header">
-            <span id="tour-title" class="tour-title">Ghid</span>
-            <span class="tour-step-counter"><span id="tour-step-current">1</span>/<span id="tour-step-total">5</span></span>
-        </div>
-        <div id="tour-content" class="tour-content">Welcome!</div>
-        <div class="tour-nav">
-            <button id="tour-btn-skip" class="tour-btn">Skip</button>
-            <div style="display:flex; gap:8px; margin-left:auto;">
-                <button id="tour-btn-prev" class="tour-btn" style="display:none;">Înapoi</button>
-                <button id="tour-btn-next" class="tour-btn primary">Următorul</button>
+    <div class="portal-overlay" id="portal-overlay">
+        <div class="portal-card glass">
+            <button class="portal-close" id="close-portal" aria-label="Close">&times;</button>
+            <div class="portal-header">
+                <div class="portal-icon">🌐</div>
+                <h2 data-i18n="select_language">Alege Limba / Select Language</h2>
+            </div>
+            <div class="portal-grid">
+                <button class="lang-btn-opt" data-lang="ro">
+                    <span class="opt-flag">🇷🇴</span>
+                    <span class="opt-name">Română</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="en">
+                    <span class="opt-flag">🇬🇧</span>
+                    <span class="opt-name">English</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="ar">
+                    <span class="opt-flag">🇸🇾</span>
+                    <span class="opt-name">العربية</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="tr">
+                    <span class="opt-flag">🇹🇷</span>
+                    <span class="opt-name">Türkçe</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="hi">
+                    <span class="opt-flag">🇮🇳</span>
+                    <span class="opt-name">हिन्दी</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="bn">
+                    <span class="opt-flag">🇧🇩</span>
+                    <span class="opt-name">বাংলা</span>
+                </button>
+                <button class="lang-btn-opt" data-lang="ne">
+                    <span class="opt-flag">🇳🇵</span>
+                    <span class="opt-name">नेपाली</span>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Mobile sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    </div> <!-- END APP-WRAPPER -->
+
+
+
+    <script src="translations.js?v=1"></script>
     <script src="cinematic.js?v=2"></script>
-    <script src="app.js?v=29"></script>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'ro', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="app.js?v=31"></script>
 
     <script>
         if ('serviceWorker' in navigator) {

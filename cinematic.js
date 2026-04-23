@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const bigCta = document.createElement('div');
             bigCta.className = 'cinematic-big-cta';
-            bigCta.innerText = 'APPLY NOW';
+            bigCta.innerText = t('cine_cta');
             bigCta.id = 'cinematic-cta';
 
             overlay.appendChild(textElement);
@@ -88,32 +88,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // ====== SCRIPT SEQUENCE ======
         const runFlow = async () => {
             // [HOOK]
-            await showText("This is not just a delivery platform.", 2500, "30%");
-            await showText("This is a system built for performance.", 2500, "30%");
+            await showText(t('cine_intro_1'), 2500, "30%");
+            await showText(t('cine_intro_2'), 2500, "30%");
 
             // [INTRO]
-            await showText("Dragon Delivery connects couriers with real earning potential and full support.", 3000, "20%");
+            await showText(t('cine_intro_3'), 3000, "20%");
             
             // [SCROLL BENEFITS]
             textBox.classList.remove('visible');
             const metricsCard = scrollToTarget('.stats-grid', 150);
             applyGlow(metricsCard);
-            await showText("From competitive earnings...", 2500, "60%");
+            await showText(t('cine_earnings'), 2500, "60%");
             removeGlow(metricsCard);
 
             const toolsCard = scrollToTarget('.tools-section', 150);
             applyGlow(toolsCard);
-            await showText("To full onboarding support...", 2500, "40%");
+            await showText(t('cine_onboarding'), 2500, "40%");
             removeGlow(toolsCard);
 
             // [SMART UI / POPUPS SECTION]
             textBox.classList.remove('visible');
-            await showText("Notice the smart interaction layers.", 2000, "15%");
+            await showText(t('cine_interact'), 2000, "15%");
             
             // Open a modal to show UI
             const weatherBtn = document.querySelector('.weather-card');
             if(weatherBtn) weatherBtn.click();
-            await showText("Every element is designed to guide, convert, and simplify decisions.", 3500, "80%");
+            await showText(t('cine_design'), 3500, "80%");
             
             // Close modal
             const closeBtn = document.querySelector('#weather-modal .close-btn');
@@ -121,12 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // [UX FOCUS]
             window.scrollTo({top: 0, behavior: 'smooth'});
-            await showText("Clean structure. Fast navigation. High clarity.", 2500, "25%");
-            await showText("This is built for action, not just browsing.", 2500, "25%");
+            await showText(t('cine_ux'), 2500, "25%");
+            await showText(t('cine_action'), 2500, "25%");
 
             // [CLOSING]
-            await showText("If you're ready to scale your income...", 2500, "40%");
-            await showText("Dragon Delivery is already moving.", 2500, "40%");
+            await showText(t('cine_ready'), 2500, "40%");
+            await showText(t('cine_moving'), 2500, "40%");
 
             // [BIG CTA]
             textBox.classList.remove('visible');

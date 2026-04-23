@@ -1,10 +1,152 @@
 const state = {
-    city: 'bucuresti',
-    weather: null,
+    city: localStorage.getItem('selectedCity') || 'bucuresti',
+    language: localStorage.getItem('appLanguage') || 'ro',
     refreshInterval: null,
-    eventsRefreshInterval: null,
-    loadCityTimer: null
+    metricsInterval: null
 };
+
+class I18nManager {
+    constructor() {
+        this.currentLang = localStorage.getItem('appLanguage') || 'ro';
+        this.flags = { ro: '🇷🇴', en: '🇬🇧', ar: '🇸🇾', tr: '🇹🇷', hi: '🇮🇳', bn: '🇧🇩', ne: '🇳🇵' };
+    }
+
+    init() {
+        this.applyLanguage(this.currentLang);
+        this.setupListeners();
+        this.setupObserver();
+        console.log(`🌐 i18n Engine: Active [${this.currentLang.toUpperCase()}]`);
+    }
+
+    setupListeners() {
+        const trigger = document.getElementById('lang-trigger');
+        const overlay = document.getElementById('portal-overlay');
+        const closeBtn = document.getElementById('close-portal');
+
+        if (trigger && overlay) {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                overlay.classList.add('active');
+                if (window.navigator.vibrate) window.navigator.vibrate(5);
+            });
+        }
+
+        if (closeBtn && overlay) {
+            closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.classList.remove('active');
+            });
+        }
+
+        // Language options click
+        document.querySelectorAll('.lang-btn-opt').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                this.setLanguage(lang);
+                if (overlay) overlay.classList.remove('active');
+            });
+        });
+    }
+
+    setLanguage(lang) {
+        if (window.navigator.vibrate) window.navigator.vibrate(15);
+        this.currentLang = lang;
+        localStorage.setItem('appLanguage', lang);
+        state.language = lang;
+        this.applyLanguage(lang);
+        
+        // Reload city data to reflect translation in dynamic content
+        if (typeof loadCity === 'function' && state.city) {
+            loadCity(state.city);
+        }
+    }
+
+    applyLanguage(lang) {
+        const flag = this.flags[lang] || '🌐';
+        
+        // Update both floating trigger and header display
+        const pFlag = document.getElementById('portal-flag');
+        const pCode = document.getElementById('portal-code');
+        const hFlag = document.getElementById('header-flag');
+        const hCode = document.getElementById('header-code');
+        
+        if (pFlag) pFlag.textContent = flag;
+        if (pCode) pCode.textContent = lang.toUpperCase();
+        if (hFlag) hFlag.textContent = flag;
+        if (hCode) hCode.textContent = lang.toUpperCase();
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+        this.translatePage();
+        this.updateActiveUI(lang);
+    }
+
+    translatePage() {
+        document.querySelectorAll('[data-i18n]').forEach(el => this.translateElement(el));
+    }
+
+    translateElement(el) {
+        const key = el.getAttribute('data-i18n');
+        const translation = this.t(key);
+        if (!translation) return;
+
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = translation;
+        } else {
+            // Robust preservation: only update direct text nodes
+            let hasUpdated = false;
+            Array.from(el.childNodes).forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
+                    node.textContent = translation;
+                    hasUpdated = true;
+                }
+            });
+            
+            // If no text node found (e.g. empty element meant to be filled), just set textContent
+            if (!hasUpdated && el.children.length === 0) {
+                el.textContent = translation;
+            }
+        }
+    }
+
+    t(key) {
+        if (typeof TRANSLATIONS === 'undefined') return key;
+        const dict = TRANSLATIONS[this.currentLang] || TRANSLATIONS['ro'];
+        return dict[key] || (TRANSLATIONS['ro'] && TRANSLATIONS['ro'][key]) || key;
+    }
+
+    updateActiveUI(lang) {
+        document.querySelectorAll('.lang-btn-opt').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+    }
+
+    setupObserver() {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) {
+                        if (node.hasAttribute('data-i18n')) this.translateElement(node);
+                        node.querySelectorAll('[data-i18n]').forEach(el => this.translateElement(el));
+                    }
+                });
+            });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+}
+
+// Global instance
+const i18n = new I18nManager();
+window.t = i18n.t.bind(i18n); // Global alias for easier access
+
+document.addEventListener('DOMContentLoaded', () => {
+    i18n.init();
+});
 
 function loadCityDebounced(cityId) {
     clearTimeout(state.loadCityTimer);
@@ -14,48 +156,54 @@ function loadCityDebounced(cityId) {
 }
 const citiesData = {
     bucuresti: {
-        id: 'bucuresti', name: 'Bucuresti', icon: '🏛️', center: 'Piata Unirii, Victoriei', radius: '1 - 10 km', coords: { lat: 44.4268, lng: 26.1025 },
+        id: 'bucuresti', nameKey: 'bucuresti', icon: '🏛️', centerKey: 'buc_center', radius: '1 - 10 km', coords: { lat: 44.4268, lng: 26.1025 },
         zones: [
-            { icon: '⭐', name: 'Zona Nord', desc: 'Floreasca, Dorobanti, Herastrau (tips mari)' },
-            { icon: '🏢', name: 'Zona Centru', desc: 'Universitate, Unirii, Romana (volum masiv)' }
+            { icon: '⭐', nameKey: 'zone_nord', descKey: 'zone_nord_desc' },
+            { icon: '🏢', nameKey: 'zone_centru', descKey: 'zone_centru_desc' }
         ],
-        volumeZones: [ { icon: '🍔', name: 'Mall-uri', desc: 'AFI, Mega Mall, Promenada - ridicari rapide Multiple' } ],
+        volumeZones: [ { icon: '🍔', nameKey: 'malls', descKey: 'malls_desc' } ],
         orderTypes: [
-            { type: 'Scurta', dist: '0.5 - 2 km', bike: '6-8/zi', car: '2-4/zi', freq: 'Frecvent' },
-            { type: 'Medie', dist: '2 - 5 km', bike: '8-12/zi', car: '10-15/zi', freq: 'Foarte Frecvent' },
-            { type: 'Lunga', dist: '5 - 10 km', bike: 'Rar', car: '12-18/zi', freq: 'Zilnic' }
+            { typeKey: 'order_type_short', dist: '0.5 - 2 km', bike: '6-8/zi', car: '2-4/zi', freqKey: 'freq_frequent' },
+            { typeKey: 'order_type_medium', dist: '2 - 5 km', bike: '8-12/zi', car: '10-15/zi', freqKey: 'freq_very_frequent' },
+            { typeKey: 'order_type_long', dist: '5 - 10 km', bike: 'Rar', car: '12-18/zi', freqKey: 'freq_daily' }
         ],
         earnings: {
-            bike: [ { hours: '4h', orders: '8 - 12', earning: '150 - 250 RON' }, { hours: '8h', orders: '16 - 24', earning: '250 - 400 RON' } ],
-            car: [ { hours: '4h', orders: '6 - 10', earning: '120 - 200 RON' }, { hours: '8h', orders: '15 - 25', earning: '250 - 450 RON' } ]
+            bike: [ { hoursKey: 'hours_4', orders: '8 - 12', earning: '150 - 250 RON' }, { hoursKey: 'hours_8', orders: '16 - 24', earning: '250 - 400 RON' } ],
+            car: [ { hoursKey: 'hours_4', orders: '6 - 10', earning: '120 - 200 RON' }, { hoursKey: 'hours_8', orders: '15 - 25', earning: '250 - 450 RON' } ]
         }
     },
     timisoara: {
-        id: 'timisoara', name: 'Timisoara', icon: '🌹', center: 'Piata Unirii, Iulius Town', radius: '1 - 7 km', coords: { lat: 45.7489, lng: 21.2087 },
-        zones: [ { icon: '⭐', name: 'Iulius Town', desc: 'Comenzi corporate, tips excelent' }, { icon: '🏢', name: 'Complex Studentesc', desc: 'Volum urias seara, distante scurte' } ],
-        volumeZones: [ { icon: '🍔', name: 'Shopping City', desc: 'Food court aglomerat' } ],
+        id: 'timisoara', nameKey: 'timisoara', icon: '🌹', centerKey: 'tim_center', radius: '1 - 7 km', coords: { lat: 45.7489, lng: 21.2087 },
+        zones: [ 
+            { icon: '⭐', nameKey: 'iulius_town', descKey: 'iulius_town_desc' }, 
+            { icon: '🏢', nameKey: 'complex_stud', descKey: 'complex_stud_desc' } 
+        ],
+        volumeZones: [ { icon: '🍔', nameKey: 'shopping_city', descKey: 'shopping_city_desc' } ],
         orderTypes: [
-            { type: 'Scurta', dist: '0.5 - 1.5 km', bike: '10-15/zi', car: '5-8/zi', freq: 'Frecvent' },
-            { type: 'Medie', dist: '1.5 - 4 km', bike: '5-10/zi', car: '10-15/zi', freq: 'Foarte Frecvent' },
-            { type: 'Lunga', dist: '4 - 7 km', bike: 'Rar', car: '5-12/zi', freq: 'Normal' }
+            { typeKey: 'order_type_short', dist: '0.5 - 1.5 km', bike: '10-15/zi', car: '5-8/zi', freqKey: 'freq_frequent' },
+            { typeKey: 'order_type_medium', dist: '1.5 - 4 km', bike: '5-10/zi', car: '10-15/zi', freqKey: 'freq_very_frequent' },
+            { typeKey: 'order_type_long', dist: '4 - 7 km', bike: 'Rar', car: '5-12/zi', freqKey: 'freq_normal' }
         ],
         earnings: {
-            bike: [ { hours: '4h', orders: '10 - 15', earning: '180 - 250 RON' }, { hours: '8h', orders: '20 - 28', earning: '300 - 450 RON' } ],
-            car: [ { hours: '4h', orders: '8 - 12', earning: '150 - 220 RON' }, { hours: '8h', orders: '18 - 25', earning: '280 - 400 RON' } ]
+            bike: [ { hoursKey: 'hours_4', orders: '10 - 15', earning: '180 - 250 RON' }, { hoursKey: 'hours_8', orders: '20 - 28', earning: '300 - 450 RON' } ],
+            car: [ { hoursKey: 'hours_4', orders: '8 - 12', earning: '150 - 220 RON' }, { hoursKey: 'hours_8', orders: '18 - 25', earning: '280 - 400 RON' } ]
         }
     },
     cluj: {
-        id: 'cluj', name: 'Cluj-Napoca', icon: '🏔️', center: 'Piata Unirii, Iulius', radius: '1 - 8 km', coords: { lat: 46.7712, lng: 23.5901 },
-        zones: [ { icon: '⭐', name: 'Centru', desc: 'Restaurante premium' }, { icon: '🏢', name: 'Marasti', desc: 'Studenti' } ],
-        volumeZones: [ { icon: '🍔', name: 'VIVO!', desc: 'Preluari grupate' } ],
+        id: 'cluj', nameKey: 'cluj', icon: '🏔️', centerKey: 'cluj_center', radius: '1 - 8 km', coords: { lat: 46.7712, lng: 23.5901 },
+        zones: [ 
+            { icon: '⭐', nameKey: 'centru', descKey: 'centru_premium_desc' }, 
+            { icon: '🏢', nameKey: 'marasti', descKey: 'marasti_desc' } 
+        ],
+        volumeZones: [ { icon: '🍔', nameKey: 'vivo', descKey: 'vivo_desc' } ],
         orderTypes: [
-            { type: 'Scurta', dist: '1 - 2.5 km', bike: '12-18/zi', car: '4-8/zi', freq: 'Frecvent' },
-            { type: 'Medie', dist: '2.5 - 5 km', bike: '4-8/zi', car: '12-20/zi', freq: 'Frecvent' },
-            { type: 'Lunga', dist: '5+ km', bike: 'Evitat', car: '8-15/zi', freq: 'Normal' }
+            { typeKey: 'order_type_short', dist: '1 - 2.5 km', bike: '12-18/zi', car: '4-8/zi', freqKey: 'freq_frequent' },
+            { typeKey: 'order_type_medium', dist: '2.5 - 5 km', bike: '4-8/zi', car: '12-20/zi', freqKey: 'freq_frequent' },
+            { typeKey: 'order_type_long', dist: '5+ km', bike: 'Evitat', car: '8-15/zi', freqKey: 'freq_normal' }
         ],
         earnings: {
-            bike: [ { hours: '5h', orders: '12 - 18', earning: '200 - 300 RON' }, { hours: '10h', orders: '25 - 35', earning: '400 - 600 RON' } ],
-            car: [ { hours: '5h', orders: '10 - 15', earning: '180 - 280 RON' }, { hours: '10h', orders: '20 - 30', earning: '350 - 550 RON' } ]
+            bike: [ { hoursKey: 'hours_5', orders: '12 - 18', earning: '200 - 300 RON' }, { hoursKey: 'hours_10', orders: '25 - 35', earning: '400 - 600 RON' } ],
+            car: [ { hoursKey: 'hours_5', orders: '10 - 15', earning: '180 - 280 RON' }, { hoursKey: 'hours_10', orders: '20 - 30', earning: '350 - 550 RON' } ]
         }
     },
     iasi: {
@@ -337,15 +485,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function bindEvents() {
-    document.querySelectorAll('.city-btn').forEach(btn => {
+    document.querySelectorAll('.lang-opt').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const cityId = e.currentTarget.dataset.city;
-            document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
-            e.currentTarget.classList.add('active');
-            if (window.innerWidth <= 768) toggleMobileMenu(false);
-            loadCityDebounced(cityId);
+            const lang = e.currentTarget.dataset.lang;
+            setLanguage(lang);
+            const dropdown = document.getElementById('lang-dropdown');
+            if (dropdown) dropdown.classList.remove('show');
         });
     });
+
+    // Toggle dropdown
+    const langSelector = document.getElementById('lang-selector');
+    if (langSelector) {
+        langSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = document.getElementById('lang-dropdown');
+            if (dropdown) dropdown.classList.toggle('show');
+        });
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', () => {
+        const dropdown = document.getElementById('lang-dropdown');
+        if (dropdown) dropdown.classList.remove('show');
+    });
+
+    // Initial Interface Update
+    updateInterface();
+    updateLangSelectorUI();
     
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     if(mobileMenuBtn) {
@@ -884,24 +1051,36 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
         // 1. Meteo
         document.getElementById('snap-w-icon').innerText = getWeatherIcon(code);
         document.getElementById('snap-w-temp').innerText = `${Math.round(temp)}°C`;
-        document.getElementById('snap-w-desc').innerText = `${wReason}`;
-        document.getElementById('snap-w-desc').className = wImpact > 0 ? 'warning' : 'neutral';
+        const wDescEl = document.getElementById('snap-w-desc');
+        wDescEl.innerText = t(wReasonKey);
+        wDescEl.setAttribute('data-i18n', wReasonKey);
+        wDescEl.className = wImpact > 0 ? 'warning' : 'neutral';
         
-        // 2. Trafic Logic (Dedus pe baza algoritmului Smart)
-        let trStatus = 'Fluid'; let trDesc = 'Timp ideal'; let trClass = 'positive'; let trIcon = '🚦';
-        if (demandScore > 80 || wImpact > 30) { trStatus = 'Aglomerat'; trDesc = 'Intarzieri >10m'; trClass = 'warning'; trIcon = '🚨'; }
-        else if (demandScore > 55 || wImpact > 10) { trStatus = 'Moderat'; trDesc = 'Cateva blocaje'; trClass = 'neutral'; trIcon = '🚕'; }
+        // 2. Trafic Logic
+        let trStatusKey = 'traffic_fluid'; let trDescKey = 'traffic_desc_ideal'; let trClass = 'positive'; let trIcon = '🚦';
+        if (demandScore > 80 || wImpact > 30) { trStatusKey = 'traffic_heavy'; trDescKey = 'traffic_desc_delay'; trClass = 'warning'; trIcon = '🚨'; }
+        else if (demandScore > 55 || wImpact > 10) { trStatusKey = 'traffic_moderate'; trDescKey = 'traffic_desc_moderate'; trClass = 'neutral'; trIcon = '🚕'; }
         
         document.getElementById('snap-tr-icon').innerText = trIcon;
-        document.getElementById('snap-tr-status').innerText = trStatus;
-        document.getElementById('snap-tr-desc').innerText = trDesc;
-        document.getElementById('snap-tr-desc').className = trClass;
+        const trStatusEl = document.getElementById('snap-tr-status');
+        trStatusEl.innerText = t(trStatusKey);
+        trStatusEl.setAttribute('data-i18n', trStatusKey);
+        
+        const trDescEl = document.getElementById('snap-tr-desc');
+        trDescEl.innerText = t(trDescKey);
+        trDescEl.setAttribute('data-i18n', trDescKey);
+        trDescEl.className = trClass;
 
         // 3. Evenimente
         document.getElementById('snap-e-icon').innerText = activeEvents.length > 0 ? '🎫' : '📍';
-        document.getElementById('snap-e-status').innerText = eventStatus;
-        document.getElementById('snap-e-desc').innerText = eventDesc;
-        document.getElementById('snap-e-desc').className = eImpact > 0 ? 'warning' : 'neutral';
+        const eStatusEl = document.getElementById('snap-e-status');
+        eStatusEl.innerText = activeEvents.length > 0 ? t('events_active') : t('events_tranzit');
+        eStatusEl.setAttribute('data-i18n', activeEvents.length > 0 ? 'events_active' : 'events_tranzit');
+
+        const eDescEl = document.getElementById('snap-e-desc');
+        eDescEl.innerText = activeEvents.length > 0 ? eventStatus : t('events_none');
+        if (activeEvents.length === 0) eDescEl.setAttribute('data-i18n', 'events_none');
+        eDescEl.className = eImpact > 0 ? 'warning' : 'neutral';
 
         // 4. News
         if (cityNews.length > 0) {
@@ -1021,72 +1200,8 @@ if ('IntersectionObserver' in window) {
     // Observe cards after DOM ready
     document.addEventListener('DOMContentLoaded', () => {
     
-    // ====== LANGUAGE SELECTOR (GTranslate Injector) ======
-    const currentLang = document.getElementById('current-lang');
-    const langDropdown = document.getElementById('lang-dropdown');
-    
-    if (currentLang && langDropdown) {
-        currentLang.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langDropdown.classList.toggle('active');
-        });
 
-        document.addEventListener('click', (e) => {
-            if (!langDropdown.contains(e.target) && !currentLang.contains(e.target)) {
-                langDropdown.classList.remove('active');
-            }
-        });
 
-        document.querySelectorAll('.lang-opt').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetLang = e.target.getAttribute('data-lang');
-                const targetFlag = e.target.getAttribute('data-flag');
-                
-                document.getElementById('current-code').innerText = targetLang.toUpperCase();
-                document.getElementById('current-flag').innerText = targetFlag;
-                langDropdown.classList.remove('active');
-                
-                const host = window.location.hostname;
-                if (targetLang === 'ro') {
-                    // Romanian is base language, wipe all translation cookies to restore original
-                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${host};`;
-                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${host};`;
-                    window.location.reload();
-                    return;
-                }
-                
-                // Trigger Google Translate
-                const gtSelect = document.querySelector('.goog-te-combo');
-                if (gtSelect) {
-                    gtSelect.value = targetLang;
-                    if (typeof Event === 'function') {
-                        gtSelect.dispatchEvent(new Event('change'));
-                    } else {
-                        const event = document.createEvent('HTMLEvents');
-                        event.initEvent('change', true, true);
-                        gtSelect.dispatchEvent(event);
-                    }
-                } else {
-                    document.cookie = `googtrans=/ro/${targetLang}; path=/;`;
-                    document.cookie = `googtrans=/ro/${targetLang}; path=/; domain=${host};`;
-                    document.cookie = `googtrans=/ro/${targetLang}; path=/; domain=.${host};`;
-                    window.location.reload();
-                }
-            });
-        });
-        
-        // Init visual state based on cookie
-        const match = document.cookie.match(/googtrans=\/ro\/([a-z]{2})/);
-        if (match && match[1]) {
-            const code = match[1];
-            const btn = document.querySelector(`.lang-opt[data-lang="${code}"]`);
-            if (btn) {
-                document.getElementById('current-code').innerText = code.toUpperCase();
-                document.getElementById('current-flag').innerText = btn.getAttribute('data-flag');
-            }
-        }
-    }
 
         document.querySelectorAll('.glass-card').forEach((card, i) => {
             if (i > 2) { // Skip first 3 (above fold)
@@ -1118,173 +1233,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-// ====== ONBOARDING TOUR (SNIPER ENGINE) ======
-const getTourSteps = () => [
-    {
-        selector: window.innerWidth <= 768 ? '.mobile-menu-btn' : '#city-sidebar',
-        title: 'Selector Oraș',
-        text: 'Aici alegi orașul în care operezi. Radarul și statisticile se vor adapta automat zonelor tale.',
-        position: 'bottom'
-    },
-    {
-        selector: '.snapshot-card',
-        title: 'Modul Tactic Live',
-        text: 'Panoul principal de control. Analizează vremea, traficul și alertele majore care pot influența masiv volumul de comenzi.',
-        position: 'bottom'
-    },
-    {
-        selector: '.demand-card',
-        title: 'Radar Curier',
-        text: 'Termometrul pieței. Îți va oferi procentul estimat de efort și cele mai optime zone de preluare în timp real.',
-        position: 'top'
-    },
-    {
-        selector: '.earning-card',
-        title: 'Impact & Profit',
-        text: 'Multiplicatorul vizual. Un status maxim cauzat de aglomerație sau ploi garantează profit extrem prin bonusuri zonale.',
-        position: 'top'
-    },
-    {
-        selector: '.hub-card',
-        title: 'Înțelepciunea Dragonilor',
-        text: 'Manualul de performanță. Glisează lateral peste tab-uri pentru acces rapid la Castiguri Orar, Asa DA/NU și Golden Tips.',
-        position: 'top'
-    }
-];
-
-let currentTourStep = 0;
-let isTourActive = false;
-
-function initTour(force = false) {
-    if (!force && localStorage.getItem('ds_tour_completed') === 'true') return;
-    
-    // Close mobile menu if open before tour
-    const sidebar = document.getElementById('city-sidebar');
-    const overlayMenu = document.getElementById('sidebar-overlay');
-    if (sidebar && sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
-        if (overlayMenu) overlayMenu.classList.remove('active');
-    }
-
-    currentTourStep = 0;
-    isTourActive = true;
-    
-    const hole = document.getElementById('tour-hole');
-    if(hole) hole.classList.add('tour-active');
-    
-    const stepsArr = getTourSteps();
-    const totalEl = document.getElementById('tour-step-total');
-    if(totalEl) totalEl.innerText = stepsArr.length;
-    
-    renderTourStep();
-}
-
-function renderTourStep() {
-    // Remove previous highlights
-    document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
-    
-    const stepsArr = getTourSteps();
-    const step = stepsArr[currentTourStep];
-    const targetEl = document.querySelector(step.selector);
-    
-    if (!targetEl) { console.warn('Tour target missing:', step.selector); endTour(); return; }
-    
-    // Scroll into view safely
-    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-    // Slight delay for smooth scroll before highlight
-    setTimeout(() => {
-        const rect = targetEl.getBoundingClientRect();
-        const hole = document.getElementById('tour-hole');
-        
-        // Position the physical hole using Viewport Coordinates (Fixed position)
-        if (hole) {
-            hole.style.top = (rect.top - 5) + 'px';
-            hole.style.left = (rect.left - 5) + 'px';
-            hole.style.width = (rect.width + 10) + 'px';
-            hole.style.height = (rect.height + 10) + 'px';
-        }
-        
-        targetEl.classList.add('tour-highlighted');
-        
-        const box = document.getElementById('tour-box');
-        if(!box) return;
-        
-        document.getElementById('tour-title').innerText = step.title;
-        document.getElementById('tour-content').innerText = step.text;
-        document.getElementById('tour-step-current').innerText = currentTourStep + 1;
-        
-        // Buttons
-        document.getElementById('tour-btn-prev').style.display = currentTourStep === 0 ? 'none' : 'block';
-        document.getElementById('tour-btn-next').innerText = currentTourStep === stepsArr.length - 1 ? 'Finalizare' : 'Următorul';
-        
-        // Positioning
-        const boxHeight = box.offsetHeight || 150;
-        let top = rect.bottom + window.scrollY + 20;
-        let left = rect.left + window.scrollX + (rect.width / 2) - 150; // Center horiz
-        
-        if (step.position === 'top') {
-            top = rect.top + window.scrollY - boxHeight - 20;
-        }
-
-        // Prevent off-screen left/right
-        if (left + 320 > window.innerWidth) left = window.innerWidth - 320;
-        if (left < 10) left = 10;
-        
-        // Prevent off-screen top
-        if (top < window.scrollY + 10) top = rect.bottom + window.scrollY + 20;
-        
-        box.style.top = top + 'px';
-        box.style.left = left + 'px';
-        box.classList.add('tour-box-active');
-    }, 450); // delay pt ecran mobil
-}
-
-function nextTourStep() {
-    const stepsArr = getTourSteps();
-    if (currentTourStep >= stepsArr.length - 1) {
-        endTour();
-    } else {
-        currentTourStep++;
-        renderTourStep();
-    }
-}
-
-function prevTourStep() {
-    if (currentTourStep > 0) {
-        currentTourStep--;
-        renderTourStep();
-    }
-}
-
-function endTour() {
-    isTourActive = false;
-    document.querySelectorAll('.tour-highlighted').forEach(el => el.classList.remove('tour-highlighted'));
-    const hole = document.getElementById('tour-hole');
-    const box = document.getElementById('tour-box');
-    if(hole) hole.classList.remove('tour-active');
-    if(box) box.classList.remove('tour-box-active');
-    localStorage.setItem('ds_tour_completed', 'true');
-}
-
+// Secret trigger for interactive guide
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-        const btnSkip = document.getElementById('tour-btn-skip');
-        const btnNext = document.getElementById('tour-btn-next');
-        const btnPrev = document.getElementById('tour-btn-prev');
-        
-        if (btnSkip) btnSkip.addEventListener('click', endTour);
-        if (btnNext) btnNext.addEventListener('click', nextTourStep);
-        if (btnPrev) btnPrev.addEventListener('click', prevTourStep);
-        
-        // Secret trigger for interactive guide
         const topLogo = document.querySelector('.logo');
         if (topLogo) {
-            topLogo.addEventListener('click', () => {
-                initTour(true);
+            topLogo.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Secret access triggered');
+                // You can add secret features here
             });
         }
-        
     }, 800);
 });
