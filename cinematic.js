@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const bigCta = document.createElement('div');
             bigCta.className = 'cinematic-big-cta';
-            bigCta.innerText = t('cine_cta');
+            bigCta.innerText = t('cine_moving');
             bigCta.id = 'cinematic-cta';
 
             overlay.appendChild(textElement);
@@ -88,32 +88,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // ====== SCRIPT SEQUENCE ======
         const runFlow = async () => {
             // [HOOK]
-            await showText(t('cine_intro_1'), 2500, "30%");
-            await showText(t('cine_intro_2'), 2500, "30%");
+            await showText(t('cine_hero'), 2500, "30%");
+            await showText(t('cine_tagline'), 2500, "30%");
 
             // [INTRO]
-            await showText(t('cine_intro_3'), 3000, "20%");
+            await showText(t('cine_tactical'), 3000, "20%");
             
             // [SCROLL BENEFITS]
             textBox.classList.remove('visible');
             const metricsCard = scrollToTarget('.stats-grid', 150);
             applyGlow(metricsCard);
-            await showText(t('cine_earnings'), 2500, "60%");
+            await showText(t('cine_smart'), 2500, "60%");
             removeGlow(metricsCard);
 
             const toolsCard = scrollToTarget('.tools-section', 150);
             applyGlow(toolsCard);
-            await showText(t('cine_onboarding'), 2500, "40%");
+            await showText(t('cine_demand'), 2500, "40%");
             removeGlow(toolsCard);
 
             // [SMART UI / POPUPS SECTION]
             textBox.classList.remove('visible');
-            await showText(t('cine_interact'), 2000, "15%");
+            await showText(t('cine_city'), 2000, "15%");
             
             // Open a modal to show UI
             const weatherBtn = document.querySelector('.weather-card');
             if(weatherBtn) weatherBtn.click();
-            await showText(t('cine_design'), 3500, "80%");
+            await showText(t('cine_premium'), 3500, "80%");
             
             // Close modal
             const closeBtn = document.querySelector('#weather-modal .close-btn');

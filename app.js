@@ -8,7 +8,7 @@ const state = {
 class I18nManager {
     constructor() {
         this.currentLang = localStorage.getItem('appLanguage') || 'ro';
-        this.flags = { ro: '🇷🇴', en: '🇬🇧', ar: '🇸🇾', tr: '🇹🇷', hi: '🇮🇳', bn: '🇧🇩', ne: '🇳🇵' };
+        this.languages = typeof LANGUAGES !== 'undefined' ? LANGUAGES : [];
     }
 
     init() {
@@ -65,7 +65,8 @@ class I18nManager {
     }
 
     applyLanguage(lang) {
-        const flag = this.flags[lang] || '🌐';
+        const langConfig = this.languages.find(l => l.code === lang) || { flag: '🌐', dir: 'ltr' };
+        const flag = langConfig.flag;
         
         // Update both floating trigger and header display
         const pFlag = document.getElementById('portal-flag');
@@ -79,7 +80,7 @@ class I18nManager {
         if (hCode) hCode.textContent = lang.toUpperCase();
 
         document.documentElement.lang = lang;
-        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+        document.documentElement.dir = langConfig.dir;
 
         this.translatePage();
         this.updateActiveUI(lang);
@@ -156,7 +157,7 @@ function loadCityDebounced(cityId) {
 }
 const citiesData = {
     bucuresti: {
-        id: 'bucuresti', nameKey: 'bucuresti', icon: '🏛️', centerKey: 'buc_center', radius: '1 - 10 km', coords: { lat: 44.4268, lng: 26.1025 },
+        id: 'bucuresti', name: 'București', nameKey: 'bucuresti', icon: '🏛️', center: 'Piața Romană / Universitate / Floreasca', centerKey: 'buc_center', radius: '1 - 10 km', coords: { lat: 44.4268, lng: 26.1025 },
         zones: [
             { icon: '⭐', nameKey: 'zone_nord', descKey: 'zone_nord_desc' },
             { icon: '🏢', nameKey: 'zone_centru', descKey: 'zone_centru_desc' }
@@ -173,7 +174,7 @@ const citiesData = {
         }
     },
     timisoara: {
-        id: 'timisoara', nameKey: 'timisoara', icon: '🌹', centerKey: 'tim_center', radius: '1 - 7 km', coords: { lat: 45.7489, lng: 21.2087 },
+        id: 'timisoara', name: 'Timișoara', nameKey: 'timisoara', icon: '🌹', center: 'Iulius Town / Complex Studențesc', centerKey: 'tim_center', radius: '1 - 7 km', coords: { lat: 45.7489, lng: 21.2087 },
         zones: [ 
             { icon: '⭐', nameKey: 'iulius_town', descKey: 'iulius_town_desc' }, 
             { icon: '🏢', nameKey: 'complex_stud', descKey: 'complex_stud_desc' } 
@@ -190,7 +191,7 @@ const citiesData = {
         }
     },
     cluj: {
-        id: 'cluj', nameKey: 'cluj', icon: '🏔️', centerKey: 'cluj_center', radius: '1 - 8 km', coords: { lat: 46.7712, lng: 23.5901 },
+        id: 'cluj', name: 'Cluj-Napoca', nameKey: 'cluj', icon: '🏔️', center: 'Centru / Mărăști', centerKey: 'cluj_center', radius: '1 - 8 km', coords: { lat: 46.7712, lng: 23.5901 },
         zones: [ 
             { icon: '⭐', nameKey: 'centru', descKey: 'centru_premium_desc' }, 
             { icon: '🏢', nameKey: 'marasti', descKey: 'marasti_desc' } 
@@ -485,35 +486,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function bindEvents() {
-    document.querySelectorAll('.lang-opt').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const lang = e.currentTarget.dataset.lang;
-            setLanguage(lang);
-            const dropdown = document.getElementById('lang-dropdown');
-            if (dropdown) dropdown.classList.remove('show');
+    // City sidebar button handlers
+    document.querySelectorAll('.city-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cityId = btn.getAttribute('data-city');
+            document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            localStorage.setItem('selectedCity', cityId);
+            state.city = cityId;
+            toggleMobileMenu(false);
+            loadCityDebounced(cityId);
         });
     });
 
-    // Toggle dropdown
-    const langSelector = document.getElementById('lang-selector');
-    if (langSelector) {
-        langSelector.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const dropdown = document.getElementById('lang-dropdown');
-            if (dropdown) dropdown.classList.toggle('show');
-        });
-    }
-
-    // Close dropdown on outside click
-    document.addEventListener('click', () => {
-        const dropdown = document.getElementById('lang-dropdown');
-        if (dropdown) dropdown.classList.remove('show');
-    });
-
-    // Initial Interface Update
-    updateInterface();
-    updateLangSelectorUI();
-    
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     if(mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => toggleMobileMenu(true));
@@ -580,7 +565,7 @@ function loadCity(cityId) {
     
     // Set City Title
     const cityTitle = document.getElementById('selected-city-title');
-    if (cityTitle) cityTitle.textContent = data.name;
+    if (cityTitle) cityTitle.textContent = data.name || i18n.t(data.nameKey) || data.id;
     
     const mainContent = document.getElementById('main-content');
     if(mainContent) {
@@ -593,21 +578,22 @@ function loadCity(cityId) {
         // document.getElementById('city-title').innerText = data.name;
         
         // Sectiunea 4: Best Action Plan
-        const topZones = data.zones.map(z => z.name).join(', ');
+        const topZones = data.zones.map(z => z.name || i18n.t(z.nameKey) || '').join(', ');
         document.getElementById('act-zones').innerText = topZones;
-        document.getElementById('act-center').innerText = data.center;
+        document.getElementById('act-center').innerText = data.center || i18n.t(data.centerKey) || '--';
         document.getElementById('act-radius').innerText = data.radius;
         
         // Sectiunea 5: Comenzi Compact
-        if (document.getElementById('orders-mini-cards')) {
+        const ordersContainer = document.getElementById('orders-types');
+        if (ordersContainer) {
             const ordersHTML = data.orderTypes.map(ot => {
-                const icon = ot.type.includes('Scurta') ? '🚲' : ot.type.includes('Medie') ? '🏍️' : '🚗';
-                return `<div class="m-card">
-                    <span class="mc-type"><span class="mc-icon">${icon}</span> ${ot.type} (${ot.dist})</span>
-                    <span class="mc-freq">${ot.freq}</span>
-                </div>`;
+                const typeText = ot.type || i18n.t(ot.typeKey) || '';
+                const freqText = ot.freq || i18n.t(ot.freqKey) || '';
+                const tk = ot.typeKey || '';
+                const icon = tk === 'order_type_short' ? '🚲' : tk === 'order_type_medium' ? '🏍️' : tk === 'order_type_long' ? '🚗' : typeText.includes('Scurt') ? '🚲' : typeText.includes('Medi') ? '🏍️' : '🚗';
+                return `<div class="m-card"><span class="mc-type"><span class="mc-icon">${icon}</span> ${typeText} (${ot.dist})</span><span class="mc-freq">${freqText}</span></div>`;
             }).join('');
-            document.getElementById('orders-mini-cards').innerHTML = ordersHTML;
+            ordersContainer.innerHTML = ordersHTML;
         }
 
         // Sectiunea 6: Strategy
@@ -681,8 +667,8 @@ function loadCity(cityId) {
         }
         
         // 10. Rules & Mistakes
-        const rulesList = document.getElementById('rules-list');
-        const mistakesList = document.getElementById('mistakes-list');
+        const rulesList = document.getElementById('rules-do');
+        const mistakesList = document.getElementById('rules-dont');
         if (rulesList) {
             rulesList.innerHTML = commonData.rules.map(r => `
                 <div class="rule-item do-item">
@@ -763,7 +749,7 @@ function renderEarningsTable(vehicle, data) {
             <tbody>
                 ${rows.map(r => `
                     <tr>
-                        <td class="earn-hours">${r.hours}</td>
+                        <td class="earn-hours">${r.hours || i18n.t(r.hoursKey) || '--'}</td>
                         <td>${r.orders}</td>
                         <td class="earn-amount">${r.earning}</td>
                     </tr>
@@ -927,15 +913,15 @@ function calculateAndRenderLiveDashboard(wData, cityEvents, cityNews = [], natio
     
     // 1. Meteo Impact
     let wImpact = 0;
-    let wReason = 'Vreme normala';
-    
-    if (code >= 51 && code <= 67) { wImpact = 25; wReason = 'Ploaie'; }
-    else if (code >= 71 && code <= 77) { wImpact = 40; wReason = 'Zapada / Viscol'; }
-    else if (code >= 95) { wImpact = 45; wReason = 'Furtuna'; }
-    else if (temp < 0) { wImpact = 20; wReason = 'Inghet'; }
-    else if (temp > 35) { wImpact = 20; wReason = 'Canicula'; }
-    else if (wind > 25) { wImpact = 15; wReason = 'Vant puternic'; }
-    else if (code <= 3) { wImpact = 0; wReason = 'Vreme optima'; }
+    let wReasonKey = 'weather_normal';
+
+    if (code >= 51 && code <= 67) { wImpact = 25; wReasonKey = 'weather_rain'; }
+    else if (code >= 71 && code <= 77) { wImpact = 40; wReasonKey = 'weather_snow'; }
+    else if (code >= 95) { wImpact = 45; wReasonKey = 'weather_storm'; }
+    else if (temp < 0) { wImpact = 20; wReasonKey = 'weather_freeze'; }
+    else if (temp > 35) { wImpact = 20; wReasonKey = 'weather_heat'; }
+    else if (wind > 25) { wImpact = 15; wReasonKey = 'weather_wind'; }
+    else if (code <= 3) { wImpact = 0; wReasonKey = 'weather_optimal'; }
     
     // 2. Event Impact
     let eImpact = 0;

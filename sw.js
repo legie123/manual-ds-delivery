@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ds-manual-v32-FINAL';
+const CACHE_NAME = 'ds-manual-v33-FINAL';
 const urlsToCache = [
   './',
   './index.html',
